@@ -60,8 +60,32 @@
         "isGroup": false,
         "time": 1000,
         "__gohashid": 5
-      }
-    ],
-    "link": []
-  }
-}
+      }   ],
+        "link": [
+        { "from": 1000,
+        "to": 1001,
+        "__gohashid": 0
+        },
+        { "from": 1001,
+        "to": 1002,
+        "__gohashid": 1
+        },
+        { "from": 1002,
+        "to": 1003,
+        "__gohashid": 2
+        },
+        { "from": 1001,
+        "to": 1004,
+        "__gohashid": 3
+        },
+        { "from": 1004,
+        "to": 1005,
+        "__gohashid": 4
+        },
+        { "from": 1005,
+        "to": 1001,
+        "__gohashid": 5
+        }
+    ]
+    }
+    }

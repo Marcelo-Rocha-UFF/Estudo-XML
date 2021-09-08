@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-
-<employee xmlns="http://www.w3schools.com"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="employee.xsd">
-
- <firstname>John</firstname>
- <lastname>Smith</lastname>
-</employee>
