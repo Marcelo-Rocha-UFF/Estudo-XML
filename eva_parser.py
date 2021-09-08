@@ -82,16 +82,6 @@ def settings_process(node):
     # processar light-effects
     # processar sound-effects
 
-# # tail processing
-# def tail_process():
-#     tail = """
-#     ],
-#     "link": []
-#   }
-# }"""
-#     return tail
-
-
 # audio node processing
 def audio_process(audio_command):
     global gohashid, key
@@ -147,7 +137,6 @@ def listen_process(listen_command):
     gohashid += 1
     key += 1
     return listen_node
-
 
 # talk node processing
 def talk_process(talk_command):
@@ -262,8 +251,7 @@ def wait_process(wait_command):
     return wait_node
 
 
-
-# gera os elos
+# processamento dos elos
 qtd = len(root.find("interaction"))
 interaction = root.find("interaction")
 print("numero de nodes no bloco principal da interacao: ", qtd)
