@@ -25,22 +25,21 @@
       },
       {
         "key": 1002,
-        "name": "Random_10",
-        "type": "random",
+        "name": "Condition_2",
+        "type": "if",
         "color": "lightblue",
         "isGroup": false,
-        "group": "",
-        "min": 1,
-        "max": 3,
+        "text": "1",
+        "opt": 4,
         "__gohashid": 2
       },
       {
         "key": 1003,
-        "name": "Talk_1",
-        "type": "speak",
+        "name": "Wait_2",
+        "type": "wait",
         "color": "lightblue",
         "isGroup": false,
-        "text": "I will choose a number between 1 to 3",
+        "time": 1000,
         "__gohashid": 3
       },
       {
@@ -49,74 +48,18 @@
         "type": "if",
         "color": "lightblue",
         "isGroup": false,
-        "text": "1",
+        "text": "",
         "opt": 4,
         "__gohashid": 4
       },
       {
         "key": 1005,
-        "name": "Talk_1",
-        "type": "speak",
+        "name": "Wait_2",
+        "type": "wait",
         "color": "lightblue",
         "isGroup": false,
-        "text": "I choose the number $",
+        "time": 1000,
         "__gohashid": 5
-      },
-      {
-        "key": 1006,
-        "name": "Condition_2",
-        "type": "if",
-        "color": "lightblue",
-        "isGroup": false,
-        "text": "2",
-        "opt": 4,
-        "__gohashid": 6
-      },
-      {
-        "key": 1007,
-        "name": "Talk_1",
-        "type": "speak",
-        "color": "lightblue",
-        "isGroup": false,
-        "text": "I choose the number $",
-        "__gohashid": 7
-      },
-      {
-        "key": 1008,
-        "name": "Condition_2",
-        "type": "if",
-        "color": "lightblue",
-        "isGroup": false,
-        "text": "3",
-        "opt": 4,
-        "__gohashid": 8
-      },
-      {
-        "key": 1009,
-        "name": "Talk_1",
-        "type": "speak",
-        "color": "lightblue",
-        "isGroup": false,
-        "text": "I choose the number $",
-        "__gohashid": 9
-      },
-      {
-        "key": 1010,
-        "name": "Talk_1",
-        "type": "speak",
-        "color": "lightblue",
-        "isGroup": false,
-        "text": "And I will to restart the game. Let is go!",
-        "__gohashid": 10
-      },
-      {
-        "key": 1011,
-        "name": "Talk_1",
-        "type": "speak",
-        "color": "lightblue",
-        "isGroup": false,
-        "text": "That is all folks",
-        "__gohashid": 11
       }
     ],
     "link": []

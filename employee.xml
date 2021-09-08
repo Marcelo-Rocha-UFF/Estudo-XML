@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<employee xmlns="http://www.w3schools.com/RedsDevils"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://www.w3schools.com/RedsDevils employee.xsd">
-    <firstname>John</firstname>
-    <lastname>Smith</lastname>
+<?xml-stylesheet type="text/xsl" href="employee.xsd"?>
+<employee xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    
+   	
 </employee>

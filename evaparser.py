@@ -50,6 +50,13 @@ def block_process(root):
             output += case_process(command)
             block_process(command)
 
+        # default é um caso especial do comando case, onde value = ""
+        if (command.tag == 'default'):
+            command.attrib["value"] = ""
+            if (not inicio): output += ",\n"
+            output += case_process(command)
+            block_process(command)
+
         # switch is just an abstraction not a real node
         if (command.tag == 'switch'):
             block_process(command)
@@ -218,7 +225,7 @@ def random_process(random_command):
     return random_node
 
 
-# condition node processing
+# condition node (case and default) processing
 def case_process(case_command):
     global gohashid, key
     case_command.attrib["key"] = str(key)
