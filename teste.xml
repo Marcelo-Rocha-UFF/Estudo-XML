@@ -1,19 +1,15 @@
 <evaml>
+
 	<settings>
 		<voice tone="en-US_AllisonV3Voice" key="1000" />
 		<lighting-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
+
 	<interaction id="a1001-b3001" name="EvaML_Nodes" key="0">
-	<light label="BEGIN" state="on" color="#ffffff" key="1001" />
-	<switch>
-		<case value="1" key="1002">
-			<wait duration="1000" key="1003" />
-		</case>
-		<default value="" key="1004">
-			<wait duration="1000" key="1005" />
-			<goto target="BEGIN" />
-		</default>
-	</switch>
-	</interaction>
+    <wait label="BEGIN" duration="1500" key="1001" />
+    <light state="on" color="blue" key="1002" />
+    <goto target="BEGIN" />
+  </interaction>
+
 </evaml>
