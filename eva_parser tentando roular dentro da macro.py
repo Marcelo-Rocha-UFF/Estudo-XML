@@ -66,7 +66,6 @@ def block_process(root, set_key):
 
         # macro is just an abstraction
         if (command.tag == 'macro'):
-            print("processando macro")
             block_process(command, set_key)
 
         inicio = False
@@ -273,11 +272,19 @@ def macro_expander(macros_node):
         if interaction_node[i].tag == "use-macro":
             for m in range(len(macros_node)):
                 if macros_node[m].attrib["name"] == interaction_node[i].attrib["name"]:
+                    if interaction_node[i].get("id") != None: # se tem id, copia para primeiro elemento da macro
+                        print("entrou")
                         id_aux = interaction_node[i].get("id")
                         interaction_node.remove(interaction_node[i])
                         interaction_node.insert(i, macros_node[m])
-
-    root.remove(macros_node) # remove a secao de macros
+                        interaction_node[i][0].attrib["id"] = id_aux
+                        print("macro", m, macros_node[m].attrib)
+                        print("inter", m, interaction_node[i][0].attrib)
+                    else:
+                        print("nao tem id")
+                        #interaction_node.remove(interaction_node[i])
+                        #interaction_node.insert(i, macros_node[m])
+    #root.remove(macros_node) # remove a secao de macros
 
 
 ###############################################################################
@@ -357,21 +364,22 @@ output += settings_process(root.find("settings"))
 #block_process(root.find("macros"), False)
 
 # processamento da interação
-block_process(interaction_node, True) # true indica a geracao das keys
+#block_process(interaction_node, True) # true indica a geracao das keys
+
 
 
 tree.write("teste.xml")
 
-# gera os links
-link_process(root.find("settings").find("voice"), interaction_node)
-# print("numero de arestas: ", len(links))
-# print(links)
-
-# concatena a lista de links à lista de nós
-output += saida_links()
-
-# criação de um arquivo físico da interação em Json
-send_to_dbjson.create_json_file(interaction_node.attrib['name'], output)
+# # gera os links
+# link_process(root.find("settings").find("voice"), interaction)
+# # print("numero de arestas: ", len(links))
+# # print(links)
 #
-# insere a interação no banco de interações do robo
-send_to_dbjson.send_to_dbjson(output)
+# # concatena a lista de links à lista de nós
+# output += saida_links()
+
+# # criação de um arquivo físico da interação em Json
+# send_to_dbjson.create_json_file(root.find("interaction").attrib['name'], output)
+#
+# # insere a interação no banco de interações do robo
+# send_to_dbjson.send_to_dbjson(output)

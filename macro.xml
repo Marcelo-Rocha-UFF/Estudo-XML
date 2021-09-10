@@ -1,36 +1,29 @@
 <evaml>
-
 	<settings>
-		<voice tone="en-US_AllisonV3Voice" key="1000" />
+		<voice tone="en-US_AllisonV3Voice" />
 		<lighting-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
-
-	<interaction id="a1001-b3001" name="EvaML_Macros" key="0">
-    <talk key="1001">I will use the macro named greetings</talk>
-    <use-macro name="GREETINGS" />
-    <talk key="1002">Now I am using the macro named congrats</talk>
+	<interaction id="a1001-b3001" name="EvaML_Nodes">
+		<light state="on" color="#FFFFFF" />
+    <use-macro name="GREETINGS" id="INICIO"/>
     <use-macro name="CONGRATS" />
-  </interaction>
-
+    <use-macro name="GREETINGS" />
+    <use-macro name="CONGRATS" />
+    <use-macro name="GREETINGS" />
+    <use-macro name="CONGRATS" />
+    <use-macro name="GREETINGS" />
+    <use-macro name="CONGRATS" />
+    <use-macro name="GREETINGS" />
+    <use-macro name="CONGRATS" />
+    <use-macro name="GREETINGS" id="END"/>
+	</interaction>
   <macros>
     <macro name="GREETINGS">
-      <light state="on" color="#ffffff" />
-      <eva-emotion emotion="neutral" />
-      <wait duration="1000" />
-    	<talk>Hi I am the robot EVA</talk>
-      <eva-emotion emotion="happy" />
-      <light state="on" color="#00ff00" />
-      <talk>What is your name?</talk>
-      <eva-emotion emotion="neutral" />
+      <light state="on" color="#ff0000" />
     </macro>
     <macro name="CONGRATS">
-      <eva-emotion emotion="happy" />
-      <light state="on" color="#0000ff" />
-      <audio source="applause" wait="true" />
-    	<talk>Congratulations! You win!</talk>
-      <eva-emotion emotion="neutral" />
-      <light state="off" color="#00ff00" />
+      <wait duration="5678" />
     </macro>
   </macros>
 </evaml>

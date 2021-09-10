@@ -1,15 +1,43 @@
 <evaml>
-
 	<settings>
-		<voice tone="en-US_AllisonV3Voice" key="1000" />
+		<voice tone="en-US_AllisonV3Voice" />
 		<lighting-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
-
-	<interaction id="a1001-b3001" name="EvaML_Nodes" key="0">
-    <wait label="BEGIN" duration="1500" key="1001" />
-    <light state="on" color="blue" key="1002" />
-    <goto target="BEGIN" />
-  </interaction>
-
-</evaml>
+	<interaction id="a1001-b3001" name="EvaML_Nodes">
+		<light state="on" color="#FFFFFF" />
+    <macro name="GREETINGS">
+      <light state="on" color="#ff0000" id="INICIO" />
+    </macro>
+    <macro name="CONGRATS">
+      <wait duration="5678" />
+    </macro>
+  <macro name="GREETINGS">
+      <light state="on" color="#ff0000" />
+    </macro>
+    <macro name="CONGRATS">
+      <wait duration="5678" />
+    </macro>
+  <macro name="GREETINGS">
+      <light state="on" color="#ff0000" />
+    </macro>
+    <macro name="CONGRATS">
+      <wait duration="5678" />
+    </macro>
+  <macro name="GREETINGS">
+      <light state="on" color="#ff0000" />
+    </macro>
+    <macro name="CONGRATS">
+      <wait duration="5678" />
+    </macro>
+  <macro name="GREETINGS">
+      <light state="on" color="#ff0000" />
+    </macro>
+    <macro name="CONGRATS">
+      <wait duration="5678" />
+    </macro>
+  <macro name="GREETINGS">
+      <light state="on" color="#ff0000" id="END" />
+    </macro>
+    </interaction>
+  </evaml>

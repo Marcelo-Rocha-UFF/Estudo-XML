@@ -19,27 +19,28 @@
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "lcolor": "#ffffff",
+        "lcolor": "#FFFFFF",
         "state": "on",
         "__gohashid": 1
       },
       {
         "key": 1002,
-        "name": "Condition_2",
-        "type": "if",
+        "name": "Talk_1",
+        "type": "speak",
         "color": "lightblue",
         "isGroup": false,
-        "text": "1",
-        "opt": 4,
+        "text": "Hi, I will choose a number between 1 and 3",
         "__gohashid": 2
       },
       {
         "key": 1003,
-        "name": "Wait_2",
-        "type": "wait",
+        "name": "Random_10",
+        "type": "random",
         "color": "lightblue",
         "isGroup": false,
-        "time": 1000,
+        "group": "",
+        "min": 1,
+        "max": 3,
         "__gohashid": 3
       },
       {
@@ -48,18 +49,89 @@
         "type": "if",
         "color": "lightblue",
         "isGroup": false,
-        "text": "",
+        "text": "1",
         "opt": 4,
         "__gohashid": 4
       },
       {
         "key": 1005,
-        "name": "Wait_2",
-        "type": "wait",
+        "name": "Light_8",
+        "type": "light",
         "color": "lightblue",
         "isGroup": false,
-        "time": 1000,
+        "group": "",
+        "lcolor": "#FF0000",
+        "state": "on",
         "__gohashid": 5
+      },
+      {
+        "key": 1006,
+        "name": "Talk_1",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "I choose the number $",
+        "__gohashid": 6
+      },
+      {
+        "key": 1007,
+        "name": "Condition_2",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "2",
+        "opt": 4,
+        "__gohashid": 7
+      },
+      {
+        "key": 1008,
+        "name": "Light_8",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#00FF00",
+        "state": "on",
+        "__gohashid": 8
+      },
+      {
+        "key": 1009,
+        "name": "Talk_1",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "I choose the number $",
+        "__gohashid": 9
+      },
+      {
+        "key": 1010,
+        "name": "Condition_2",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "3",
+        "opt": 4,
+        "__gohashid": 10
+      },
+      {
+        "key": 1011,
+        "name": "Light_8",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#0000FF",
+        "state": "on",
+        "__gohashid": 11
+      },
+      {
+        "key": 1012,
+        "name": "Talk_1",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "I choose the number $",
+        "__gohashid": 12
       }   ],
         "link": [
         { "from": 1000,
@@ -74,7 +146,7 @@
         "to": 1003,
         "__gohashid": 2
         },
-        { "from": 1001,
+        { "from": 1003,
         "to": 1004,
         "__gohashid": 3
         },
@@ -83,8 +155,32 @@
         "__gohashid": 4
         },
         { "from": 1005,
-        "to": 1001,
+        "to": 1006,
         "__gohashid": 5
+        },
+        { "from": 1003,
+        "to": 1007,
+        "__gohashid": 6
+        },
+        { "from": 1007,
+        "to": 1008,
+        "__gohashid": 7
+        },
+        { "from": 1008,
+        "to": 1009,
+        "__gohashid": 8
+        },
+        { "from": 1003,
+        "to": 1010,
+        "__gohashid": 9
+        },
+        { "from": 1010,
+        "to": 1011,
+        "__gohashid": 10
+        },
+        { "from": 1011,
+        "to": 1012,
+        "__gohashid": 11
         }
     ]
     }
