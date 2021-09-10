@@ -301,9 +301,9 @@ def cria_link(node_from, node_to):
                     links.append(node_from.attrib["key"] + "," + elem.attrib["key"])
         return
 
-    # um switch nunca pode ser from
+    # um switch e uma macro nunca podem ser node_from
     if node_from.tag == "switch": return
-
+    if node_from.tag == "macro": return
     # no "to" e uma folha, que nao contem filhos
     if len(node_to) == 0:
         links.append(node_from.attrib["key"] + "," + node_to.attrib["key"])
@@ -312,9 +312,11 @@ def cria_link(node_from, node_to):
         for switch_elem in node_to:
             links.append(node_from.attrib["key"] + "," + switch_elem.attrib["key"])
             link_process(switch_elem, switch_elem)
-    else: # outros casos de nodes com filhos, como o node do tipo "case"
+    elif (node_to.tag == "case"): # trata o node "case"
         links.append(node_from.attrib["key"] + "," + node_to.attrib["key"])
         link_process(node_to, node_to)
+    elif (node_to.tag == "macro"): # trata de node "macro"
+        link_process(node_from, node_to)
 
 def link_process(node_from, node_list):
     qtd = len(node_list)
@@ -368,13 +370,13 @@ block_process(interaction_node, True) # true indica a geracao das keys
 tree.write("teste.xml")
 
 # gera os links
-#link_process(root.find("settings").find("voice"), interaction_node)
+link_process(root.find("settings").find("voice"), interaction_node)
 
 # concatena a lista de links à lista de nós
-#output += saida_links()
+output += saida_links()
 
 # criação de um arquivo físico da interação em Json
-#send_to_dbjson.create_json_file(interaction_node.attrib['name'], output)
+send_to_dbjson.create_json_file(interaction_node.attrib['name'], output)
 #
 # insere a interação no banco de interações do robo
 #send_to_dbjson.send_to_dbjson(output)

@@ -8,7 +8,9 @@
 	</settings>
   <!-- interação -->
 	<interaction id="a1001-b3001" name="EvaML_Nodes">
-		<light state="on" color="#FFFFFF" />
+		<light id="BEGIN" state="on" color="#FFFFFF" />
+    <use-macro name="GREETINGS" />
+    <light id="END" state="on" color="#FFFFFF" />
 	</interaction>
   <!-- secao de macros -->
   <macros>
@@ -19,4 +21,17 @@
       <wait duration="5678" />
     </macro>
   </macros>
+  <extras>
+        <switch>
+          <case value="1">
+            <wait duration="1" />
+            <goto target="BEGIN" />
+          </case>
+          <case value="2">
+            <wait duration="2" />
+            <goto target="END" />
+          </case>
+        </switch>
+  </extras>
+
 </evaml>
