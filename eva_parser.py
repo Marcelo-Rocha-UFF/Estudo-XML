@@ -1,3 +1,4 @@
+import copy # lib para a geracao de copias de objetos
 import sys
 import json
 import xml.etree.ElementTree as ET
@@ -269,13 +270,18 @@ print("numero de nodes no bloco principal da interacao: ", qtd)
 
 def macro_expander(macros_node):
     for i in range(len(interaction_node)):
-        print(interaction_node[i].tag, i)
         if interaction_node[i].tag == "use-macro":
             for m in range(len(macros_node)):
                 if macros_node[m].attrib["name"] == interaction_node[i].attrib["name"]:
-                        id_aux = interaction_node[i].get("id")
+                    mac_aux = copy.deepcopy(macros_node[m]) # duplica o obj.
+                    if interaction_node[i].get("id") != None: # se tem id, copia para primeiro elemento da macro
+                        id_aux = interaction_node[i].attrib["id"]
                         interaction_node.remove(interaction_node[i])
-                        interaction_node.insert(i, macros_node[m])
+                        interaction_node.insert(i, mac_aux)
+                        interaction_node[i][0].attrib["id"] = id_aux
+                    else:
+                        interaction_node.remove(interaction_node[i]) # expande sem inserir o id
+                        interaction_node.insert(i, mac_aux)
 
     root.remove(macros_node) # remove a secao de macros
 
@@ -352,9 +358,8 @@ output += head_process(interaction_node)
 output += settings_process(root.find("settings"))
 
 # expande as macros
-#macro_expander(macros_node)
+macro_expander(macros_node)
 
-#block_process(root.find("macros"), False)
 
 # processamento da interação
 block_process(interaction_node, True) # true indica a geracao das keys
@@ -363,15 +368,13 @@ block_process(interaction_node, True) # true indica a geracao das keys
 tree.write("teste.xml")
 
 # gera os links
-link_process(root.find("settings").find("voice"), interaction_node)
-# print("numero de arestas: ", len(links))
-# print(links)
+#link_process(root.find("settings").find("voice"), interaction_node)
 
 # concatena a lista de links à lista de nós
-output += saida_links()
+#output += saida_links()
 
 # criação de um arquivo físico da interação em Json
-send_to_dbjson.create_json_file(interaction_node.attrib['name'], output)
+#send_to_dbjson.create_json_file(interaction_node.attrib['name'], output)
 #
 # insere a interação no banco de interações do robo
-send_to_dbjson.send_to_dbjson(output)
+#send_to_dbjson.send_to_dbjson(output)
