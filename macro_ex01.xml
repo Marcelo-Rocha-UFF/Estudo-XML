@@ -8,23 +8,12 @@
 	</settings>
   <!-- interação -->
 	<interaction id="a1001-b3001" name="EvaML_Nodes">
-    <random min="1" max="3" />
-    <switch>
-      <case value="1">
-        <use-macro name="GREETINGS" />
-        <goto target="FIM" />
-      </case>
-      <case value="2">
-        <use-macro name="USING_THE_LIGHT" />
-        <goto target="FIM" />
-      </case>
-      <case value="3">
-        <use-macro name="EXPRESSING_EMOTIONS" />
-        <goto target="FIM" />
-      </case>
-    </switch>
-    <talk id="FIM">End of interaction</talk>
-    <light state="off" color="#000000" />
+    <!-- Saudação EVA -->
+    <use-macro name="GREETINGS" />
+    <!-- Controlando as cores -->
+    <use-macro name="USING_THE_LIGHT" />
+    <!-- Expressando emoções pelo olhar -->
+    <use-macro name="EXPRESSING_EMOTIONS" />
 	</interaction>
   <!-- secao de macros -->
   <macros>

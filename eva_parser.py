@@ -268,9 +268,10 @@ print("numero de nodes no bloco principal da interacao: ", qtd)
 # expansao das macros                                                         #
 ###############################################################################
 
-def macro_expander(macros_node):
+def macro_expander(interaction_node, macros_node):
     for i in range(len(interaction_node)):
         print(i)
+        if len(interaction_node[i]) != 0: macro_expander(interaction_node[i], macros_node)
         if interaction_node[i].tag == "use-macro":
             for m in range(len(macros_node)):
                 if macros_node[m].attrib["name"] == interaction_node[i].attrib["name"]:
@@ -281,7 +282,7 @@ def macro_expander(macros_node):
                         mac_elem_aux = copy.deepcopy(macros_node[m][j])
                         interaction_node.insert(i + j, mac_elem_aux)
                     break
-            macro_expander(macros_node)
+            macro_expander(interaction_node, macros_node)
         #macro_expander(macros_node)
                     # mac_aux = copy.deepcopy(macros_node[m]) # duplica o obj.
                     # if interaction_node[i].get("id") != None: # se tem id, copia para primeiro elemento da macro
@@ -368,7 +369,7 @@ output += head_process(interaction_node)
 output += settings_process(root.find("settings"))
 
 # expande as macros
-macro_expander(macros_node)
+macro_expander(interaction_node, macros_node)
 root.remove(macros_node) # remove a secao de macros
 
 # processamento da interação
