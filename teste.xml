@@ -7,24 +7,20 @@
 	</settings>
   
 	<interaction id="a1001-b3001" name="EvaML_Nodes" key="0">
-		<light id="BEGIN" state="on" color="#FFFFFF" key="1001" />
-    <macro name="GREETINGS">
+    <light state="on" color="#ff0000" key="1001" />
       <light state="on" color="#ff0000" key="1002" />
-    </macro>
-    <light id="END" state="on" color="#FFFFFF" key="1003" />
-	</interaction>
+      <light state="on" color="#ff0000" key="1003" />
+      <light state="on" color="#ff0000" key="1004" />
+      <light state="on" color="#ff0000" key="1005" />
+      <light state="on" color="#ff0000" key="1006" />
+      <light state="on" color="#ff0000" key="1007" />
+      <light state="on" color="#ff0000" key="1008" />
+    <wait duration="5678" key="1009" />
+      <wait duration="5678" key="1010" />
+      <wait duration="5678" key="1011" />
+      <wait duration="5678" key="1012" />
+      <wait duration="5678" key="1013" />
+      <wait duration="5678" key="1014" />
+    </interaction>
   
-  <extras>
-        <switch>
-          <case value="1">
-            <wait duration="1" />
-            <goto target="BEGIN" />
-          </case>
-          <case value="2">
-            <wait duration="2" />
-            <goto target="END" />
-          </case>
-        </switch>
-  </extras>
-
-</evaml>
+  </evaml>

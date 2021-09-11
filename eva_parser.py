@@ -270,20 +270,28 @@ print("numero de nodes no bloco principal da interacao: ", qtd)
 
 def macro_expander(macros_node):
     for i in range(len(interaction_node)):
+        print(i)
         if interaction_node[i].tag == "use-macro":
             for m in range(len(macros_node)):
                 if macros_node[m].attrib["name"] == interaction_node[i].attrib["name"]:
-                    mac_aux = copy.deepcopy(macros_node[m]) # duplica o obj.
-                    if interaction_node[i].get("id") != None: # se tem id, copia para primeiro elemento da macro
-                        id_aux = interaction_node[i].attrib["id"]
-                        interaction_node.remove(interaction_node[i])
-                        interaction_node.insert(i, mac_aux)
-                        interaction_node[i][0].attrib["id"] = id_aux
-                    else:
-                        interaction_node.remove(interaction_node[i]) # expande sem inserir o id
-                        interaction_node.insert(i, mac_aux)
-
-    root.remove(macros_node) # remove a secao de macros
+                    print("removendo i")
+                    interaction_node.remove(interaction_node[i])
+                    for j in range(len(macros_node[m])):
+                        print("inserindo")
+                        mac_elem_aux = copy.deepcopy(macros_node[m][j])
+                        interaction_node.insert(i + j, mac_elem_aux)
+                    break
+            macro_expander(macros_node)
+        #macro_expander(macros_node)
+                    # mac_aux = copy.deepcopy(macros_node[m]) # duplica o obj.
+                    # if interaction_node[i].get("id") != None: # se tem id, copia para primeiro elemento da macro
+                    #     id_aux = interaction_node[i].attrib["id"]
+                    #     interaction_node.remove(interaction_node[i])
+                    #     interaction_node.insert(i, mac_aux)
+                    #     interaction_node[i][0].attrib["id"] = id_aux
+                    # else:
+                    #     interaction_node.remove(interaction_node[i]) # expande sem inserir o id
+                    #     interaction_node.insert(i, mac_aux)
 
 
 ###############################################################################
@@ -361,7 +369,7 @@ output += settings_process(root.find("settings"))
 
 # expande as macros
 macro_expander(macros_node)
-
+root.remove(macros_node) # remove a secao de macros
 
 # processamento da interação
 block_process(interaction_node, True) # true indica a geracao das keys
