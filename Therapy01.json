@@ -1,0 +1,63 @@
+{
+  "_id": "12092021",
+  "nombre": "Therapy01",
+  "data": {
+    "node": [
+      {
+        "key": 1000,
+        "name": "Voice",
+        "type": "voice",
+        "color": "lightblue",
+        "isGroup": false,
+        "voice": "en-US_AllisonV3Voice",
+        "__gohashid": 0
+      },
+      {
+        "key": 1001,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#ff0000",
+        "state": "on",
+        "__gohashid": 1
+      },
+      {
+        "key": 1002,
+        "name": "Random",
+        "type": "random",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "min": 1,
+        "max": 3,
+        "__gohashid": 2
+      },
+      {
+        "key": 1003,
+        "name": "Listen",
+        "type": "listen",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "zzz",
+        "state": "zzz",
+        "__gohashid": 3
+      }   ],
+        "link": [
+        { "from": 1000,
+        "to": 1001,
+        "__gohashid": 0
+        },
+        { "from": 1001,
+        "to": 1002,
+        "__gohashid": 1
+        },
+        { "from": 1002,
+        "to": 1003,
+        "__gohashid": 2
+        }
+    ]
+    }
+    }

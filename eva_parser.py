@@ -12,6 +12,7 @@ output = ""
 key = 1000
 gohashid = 0
 inicio = True  # para nao iniciar com a virgula
+pilha = [] # pilha de nodes (enderecos)
 
 def block_process(root, set_key):
     global output, inicio
@@ -96,7 +97,7 @@ def audio_process(audio_command, set_key):
     if set_key: audio_command.attrib["key"] = str(key)
     audio_node = """      {
         "key": """ + str(key) + """,
-        "name": "Audio_0",
+        "name": "Audio",
         "type": "sound",
         "color": "lightblue",
         "isGroup": false,
@@ -114,7 +115,7 @@ def light_process(light_command, set_key):
     if set_key: light_command.attrib["key"] = str(key)
     light_node = """      {
         "key": """ + str(key) + """,
-        "name": "Light_8",
+        "name": "Light",
         "type": "light",
         "color": "lightblue",
         "isGroup": false,
@@ -133,7 +134,7 @@ def listen_process(listen_command, set_key):
     if set_key: listen_command.attrib["key"] = str(key)
     listen_node = """      {
         "key": """ + str(key) + """,
-        "name": "Listen_8",
+        "name": "Listen",
         "type": "listen",
         "color": "lightblue",
         "isGroup": false,
@@ -152,7 +153,7 @@ def talk_process(talk_command, set_key):
     if set_key: talk_command.attrib["key"] = str(key)
     talk_node = """      {
         "key": """ + str(key) + """,
-        "name": "Talk_1",
+        "name": "Talk",
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
@@ -170,7 +171,7 @@ def voice_process(voice_command):
     voice_command.attrib["key"] = str(key)
     voice_node = """      {
         "key": """ + str(key) + """,
-        "name": "Voice_1",
+        "name": "Voice",
         "type": "voice",
         "color": "lightblue",
         "isGroup": false,
@@ -182,13 +183,13 @@ def voice_process(voice_command):
     return voice_node
 
 
-# eva_emotion node processing
+# eva_emotion node processing 
 def eva_emotion_process(eva_emotion_command, set_key):
     global gohashid, key
     if set_key: eva_emotion_command.attrib["key"] = str(key)
     eva_emotion_node = """      {
         "key": """ + str(key) + """,
-        "name": "Eva_Emotion_13",
+        "name": "Eva_Emotion",
         "type": "emotion",
         "color": "lightyellow",
         "isGroup": false,
@@ -209,7 +210,7 @@ def random_process(random_command, set_key):
     if set_key: random_command.attrib["key"] = str(key)
     random_node = """      {
         "key": """ + str(key) + """,
-        "name": "Random_10",
+        "name": "Random",
         "type": "random",
         "color": "lightblue",
         "isGroup": false,
@@ -229,7 +230,7 @@ def case_process(case_command, set_key):
     if set_key: case_command.attrib["key"] = str(key)
     case_node = """      {
         "key": """ + str(key) + """,
-        "name": "Condition_2",
+        "name": "Condition",
         "type": "if",
         "color": "lightblue",
         "isGroup": false,
@@ -247,7 +248,7 @@ def wait_process(wait_command, set_key):
     if set_key: wait_command.attrib["key"] = str(key)
     wait_node = """      {
         "key": """ + str(key) + """,
-        "name": "Wait_2",
+        "name": "Wait",
         "type": "wait",
         "color": "lightblue",
         "isGroup": false,
@@ -313,7 +314,7 @@ def cria_link(node_from, node_to):
     # um switch e uma macro nunca podem ser node_from
     if node_from.tag == "switch": return
     if node_from.tag == "macro": return
-    # no "to" e uma folha, que nao contem filhos
+    # no "to" e' uma folha, que nao contem filhos
     if len(node_to) == 0:
         links.append(node_from.attrib["key"] + "," + node_to.attrib["key"])
     # trata os nodes com filhos
@@ -336,8 +337,19 @@ def link_process(node_from, node_list):
     for i in range(0, qtd-1):
         node_from = node_list[i]
         node_to = node_list[i+1]
+        ########################################
+        if node_to.tag == "switch":
+            print("Achei um switch")
+            if (i+1 != qtd-1): # verifica se existe algum node, dentro do fluxo corrent, depois do switch
+                print("numero de cases dentro do switch", len(node_to))
+                for p in range(0, len(node_to)): # empilhando no depois do switch
+                    pilha.append(node_list[i+2])
+                    print("O elemento", node_list[i+2].tag, "foi empilhado...")
+        ########################################
         print(node_from.tag, node_to.tag)
         cria_link(node_from, node_to)
+    if (len(pilha) != 0): # esse cara cria os links nos finais dos fluxos dos cases
+        cria_link(node_to, pilha.pop())
 
 def saida_links():
     output ="""   ],

@@ -1,51 +1,13 @@
 <evaml>
-  
 	<settings>
 		<voice tone="en-US_AllisonV3Voice" key="1000" />
 		<lighting-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
-  
-	<interaction id="a1001-b3001" name="EvaML_Nodes" key="0">
-    <random min="1" max="3" key="1001" />
-    <switch>
-      <case value="1" key="1002">
-        <eva-emotion emotion="neutral" key="1003" />
-    	<light state="on" color="#ffffff" key="1004" /> 
-      <talk key="1005">Hi, I am robot EVA</talk>
-    	<talk key="1006">I am a socially assistive robot</talk>
-    <goto target="FIM" />
-      </case>
-      <case value="2" key="1007">
-        <talk key="1008">I can also control the lighting</talk>
-    	<light state="on" color="#ff0000" key="1009" />
-    	<wait duration="1500" key="1010" /> 
-    	<light state="on" color="#00ff00" key="1011" />
-    	<wait duration="1500" key="1012" />
-    	<light state="on" color="#0000ff" key="1013" />
-    	<wait duration="1500" key="1014" />
-    <goto target="FIM" />
-      </case>
-      <case value="3" key="1015">
-        <talk key="1016">I can express emotions through my eyes</talk>
-    	<talk key="1017">I can express anger</talk>
-    	<light state="on" color="#ff0000" key="1018" />
-      <eva-emotion emotion="anger" key="1019" />
-      <wait duration="3000" key="1020" />
-    	<talk key="1021">I can be sad</talk>
-    	<light state="on" color="#0000ff" key="1022" />
-      <eva-emotion emotion="sad" key="1023" />
-      <wait duration="3000" key="1024" />
-    	<talk key="1025">I can be happy</talk>
-    	<light state="on" color="#ffff00" key="1026" />
-      <eva-emotion emotion="joy" key="1027" />
-      <wait duration="3000" key="1028" />
-    	<eva-emotion emotion="neutral" key="1029" />
-    <goto target="FIM" />
-      </case>
-    </switch>
-    <talk id="FIM" key="1030">End of interaction</talk>
-    <light state="off" color="#000000" key="1031" />
-	</interaction>
-  
+  <interaction id="12092021" name="Therapy01" key="0">
+    <light state="on" color="#ff0000" key="1001" />
+    <random min="1" max="3" key="1002" />
+
+    <listen key="1003" />
+  </interaction>
   </evaml>
