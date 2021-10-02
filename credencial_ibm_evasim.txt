@@ -1,0 +1,2 @@
+apikey 0UyIQDYcNO7SytoTLOE-hMRME8o7jeAxcD21Bcd7ZZ9E
+url https://api.au-syd.text-to-speech.watson.cloud.ibm.com/instances/5bd04cd8-cf86-4fbc-b76d-66ee10427604
