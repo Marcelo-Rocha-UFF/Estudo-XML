@@ -6,12 +6,26 @@
 		<lighting-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
-  <interaction id="12092021" name="Therapy01">
-    <light state="on" color="#ff0000"/>
-    <random min="1" max="3"/>
-
-    <listen/>
-  </interaction>
+	<interaction id="a1001-b3001" name="Therapy01">
+  <random min="1" max="3"/>
+  <switch>
+    <case value="1">
+      <wait duration="1000"/>
+        <switch>
+          <case value="2">
+            <wait duration="2000"/>
+          </case>
+          <case value="4">
+            <wait duration="4000"/>
+          </case>
+        </switch>
+    </case>
+    <case value="3">
+      <listen/>
+    </case>
+  </switch>
+  <talk>Fim do script</talk>
+	</interaction>
   <macros>
   </macros>
 </evaml>

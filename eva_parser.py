@@ -339,12 +339,20 @@ def link_process(node_from, node_list):
         node_to = node_list[i+1]
         ########################################
         if node_to.tag == "switch":
-            print("Achei um switch")
-            if (i+1 != qtd-1): # verifica se existe algum node, dentro do fluxo corrent, depois do switch
-                print("numero de cases dentro do switch", len(node_to))
-                for p in range(0, len(node_to)): # empilhando no depois do switch
+            if (i+1 != qtd-1): # verifica se existe algum node, dentro do fluxo corrente, depois do switch
+                for p in range(0, len(node_to)): # empilhando no' depois do switch
+                    # a qtd de empilhamentos e' igual ao numero de cases dentro do switch
                     pilha.append(node_list[i+2])
-                    print("O elemento", node_list[i+2].tag, "foi empilhado...")
+                print("num de elem. empilhados:", len(node_to))
+                print("pilha: ", pilha)
+            else: # quando não ha no' depois do switch
+                if len(pilha) != 0: # um switch com uma pilha nao vazia e' um switch interno a outro switch
+                    no_aux = pilha.pop() # pega o no mais exterior da pilha
+                    for p in range(0, len(node_to)+1): # 
+                        pilha.append(no_aux) 
+                    print("num de elem. empilhados:", len(node_to))
+                    print("pilha: ", pilha)               # o ou os cases deverao se conectar a no mais externo
+
         ########################################
         print(node_from.tag, node_to.tag)
         cria_link(node_from, node_to)
