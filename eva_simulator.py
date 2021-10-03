@@ -26,8 +26,8 @@ window = Tk()
 window.title("Eva Simulator for EvaML (A XML Language Based) - Version 1.0 - UFF/MidiaCom Lab")
 window.geometry("838x525")
 
-
-terminal = Text ( window, fg="black", bg="white", height="32", width="60")
+# Terminal text configuration
+terminal = Text ( window, fg="blue", bg="white", height="32", width="60")
 
 Font_tuple = ("DejaVu Sans Mono", 9)
 terminal.configure(font = Font_tuple)
@@ -47,7 +47,7 @@ l_angry_eyes = Label(window, image = angry_image)
 # Eva powerOn function
 def powerOn():
     print("Ola")
-    l_angry_eyes.place(x = 70, y = 128)
+    l_angry_eyes.place(x = 70, y = 130)
     playsound("my_sounds/power_up.wav", block = True)
     playsound("my_sounds/greetings.mp3", block = False)
 
@@ -55,21 +55,22 @@ def powerOn():
 # Eva Import Script function
 def importFile():
     print("Importing file...")
-    filetypes = (
-    ('evaML files', '*.xml'), )
-    script_file = fd.askopenfile(mode="r", title='Open a EvaML Script File', initialdir='./', filetypes=filetypes)
-    #evaTalk("Importing a script file")
+    filetypes = (('evaML files', '*.xml'), )
+    script_file = fd.askopenfile(mode = "r", title = 'Open an EvaML Script File', initialdir = './', filetypes = filetypes)
+    #evaTalk("Hi Marcio, how are you")
+    #terminal.insert(INSERT, "The file " + script_file.name. + " was imported...")
 
 b_power = Button ( window, text = "Power On", command = powerOn)
 b_import = Button ( window, text = "Import Script File...", command = importFile)
 
-terminal.insert(INSERT, "Eva Simulator for EvaML (A XML Language Based)\nVersion 1.0 - UFF/MidiaCom Lab\n")
-terminal.insert(INSERT, "===============================================\n\n")
-terminal.insert(INSERT, "Turn on the Robot, import a Script file and have fun!")
+terminal.insert(INSERT, "============================================================\n")
+terminal.insert(INSERT, "       Eva Simulator for EvaML (A XML Language Based)\n               Version 1.0 - UFF/MidiaCom Lab\n")
+terminal.insert(INSERT, "============================================================\n\n")
+terminal.insert(INSERT, "Turn on the Robot, import a Script file and have fun!\n")
 #label.pack()
 l_eva.place(x = 0, y = 50)
 l_bulb.place(x = 290, y = 200)
-
+l_angry_eyes.place(x = 70, y = 130)
 terminal.place(x = 400, y = 60)
 b_power.place(x = 470, y = 20)
 b_import.place(x = 580, y = 20)
