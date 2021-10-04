@@ -50,6 +50,9 @@ def block_process(root, set_key):
             if (not inicio): output += ",\n"
             output += eva_emotion_process(command, set_key)
 
+        if (command.tag == 'stop'): ################
+            print("tag <stop>")
+
         if (command.tag == 'case'):
             if (not inicio): output += ",\n"
             output += case_process(command, set_key)
@@ -163,6 +166,7 @@ def talk_process(talk_command, set_key):
     gohashid += 1
     key += 1
     return talk_node
+
 
 
 # voice node processing
@@ -347,8 +351,8 @@ def link_process(node_from, node_list):
                 print("pilha: ", pilha)
             else: # quando não ha no' depois do switch
                 if len(pilha) != 0: # um switch com uma pilha nao vazia e' um switch interno a outro switch
-                    no_aux = pilha.pop() # pega o no mais exterior da pilha
-                    for p in range(0, len(node_to)+1): # 
+                    no_aux = pilha.pop() # pega o no mais exterior da pilha fica com -1)
+                    for p in range(0, len(node_to)+1): # nao entendi o porque do + 1.
                         pilha.append(no_aux) 
                     print("num de elem. empilhados:", len(node_to))
                     print("pilha: ", pilha)               # o ou os cases deverao se conectar a no mais externo
@@ -356,8 +360,10 @@ def link_process(node_from, node_list):
         ########################################
         print(node_from.tag, node_to.tag)
         cria_link(node_from, node_to)
-    if (len(pilha) != 0): # esse cara cria os links nos finais dos fluxos dos cases
+    if (len(pilha) != 0): # esse cara cria os links nos finais dos fluxos dos cases, ou do fluxo principal
+        print("num de pilha:", len(pilha))
         cria_link(node_to, pilha.pop())
+        
 
 def saida_links():
     output ="""   ],

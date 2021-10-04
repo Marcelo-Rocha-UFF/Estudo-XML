@@ -12,9 +12,11 @@
         <switch>
           <case value="2" key="1004">
             <wait duration="2000" key="1005" />
+            
           </case>
           <case value="4" key="1006">
             <wait duration="4000" key="1007" />
+            
           </case>
         </switch>
     </case>

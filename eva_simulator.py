@@ -25,69 +25,92 @@ def evaTalk(eva_text):
 
 # Let's create the Tkinter window
 window = Tk()
-window.title("Eva Simulator for EvaML (A XML Based Language) - Version 1.0 - UFF/MidiaCom Lab")
+window.title("Eva Simulator for EvaML - Version 1.0 - UFF/MidiaCom Lab")
 window.geometry("838x525")
 canvas = Canvas(window, bg = "#d9d9d9", width = 838, height = 525) # o canvas e' necessario para usar imagens com transparencia
 canvas.pack()
 
 # Terminal text configuration
-terminal = Text ( window, fg = "blue", bg = "white", height = "32", width = "60")
+terminal = Text ( window, fg = "cyan", bg = "black", height = "32", width = "60")
 Font_tuple = ("DejaVu Sans Mono", 9)
 terminal.configure(font = Font_tuple)
 
 
 
 # In order to display the image in a GUI, you will use the 'PhotoImage' method of Tkinter. It will an image from the directory (specified path) and store the image in a variable.
-eva_image = PhotoImage(file = "eva.png")
-bulb_image = PhotoImage(file = "bulb.png")
+eva_image = PhotoImage(file = "images/eva.png") 
+bulb_image = PhotoImage(file = "images/bulb.png")
 
 # eva expressions images
-im_eyes_neutral = PhotoImage(file = "eyes_neutral.png")
-im_eyes_angry = PhotoImage(file = "eyes_angry.png")
-im_eyes_sad = PhotoImage(file = "eyes_sad.png")
-im_eyes_happy = PhotoImage(file = "eyes_happy.png")
-im_eyes_on = PhotoImage(file = "eyes_on.png")
+im_eyes_neutral = PhotoImage(file = "images/eyes_neutral.png")
+im_eyes_angry = PhotoImage(file = "images/eyes_angry.png")
+im_eyes_sad = PhotoImage(file = "images/eyes_sad.png")
+im_eyes_happy = PhotoImage(file = "images/eyes_happy.png")
+im_eyes_on = PhotoImage(file = "images/eyes_on.png")
 
 # matrix voice images
-im_matrix_blue = PhotoImage(file = "matrix_blue.png")
-im_matrix_green = PhotoImage(file = "matrix_green.png")
-im_matrix_yellow = PhotoImage(file = "matrix_yellow.png")
-im_matrix_white = PhotoImage(file = "matrix_white.png")
-im_matrix_red = PhotoImage(file = "matrix_red.png")
-im_matrix_grey = PhotoImage(file = "matrix_grey.png")
+im_matrix_blue = PhotoImage(file = "images/matrix_blue.png")
+im_matrix_green = PhotoImage(file = "images/matrix_green.png")
+im_matrix_yellow = PhotoImage(file = "images/matrix_yellow.png")
+im_matrix_white = PhotoImage(file = "images/matrix_white.png")
+im_matrix_red = PhotoImage(file = "images/matrix_red.png")
+im_matrix_grey = PhotoImage(file = "images/matrix_grey.png")
 
-im_bt_play = PhotoImage(file = "bt_play.png")
-im_bt_stop = PhotoImage(file = "bt_stop.png")
+im_bt_play = PhotoImage(file = "images/bt_play.png")
+im_bt_stop = PhotoImage(file = "images/bt_stop.png")
 
 # Finally, to display the image you will make use of the 'Label' method and pass the 'image' variriable as a parameter and use the pack() method to display inside the GUI.
 #l_eva = Label(canva, image = eva_image)
 #l_bulb = Label(canva, image = bulb_image)
 #l_angry_eyes = Label(canva, image = angry_image)
 canvas.create_image(160, 262, image = eva_image)
-canvas.create_image(340, 280, image = bulb_image)
+canvas.create_oval(300, 205, 377, 285, fill = "#000000", outline = "#000000" ) # cor preta indica light off
+canvas.create_image(340, 285, image = bulb_image)
 
 
 # Eva initialization function
 def evaInit():
-    b_power['state'] = DISABLED
-    b_import['state'] = NORMAL
+    bt_power['state'] = DISABLED
+    bt_import['state'] = NORMAL
     evaEmotion("power_on")
     playsound("my_sounds/power_on.mp3", block = True)
-    time.sleep(1)
     terminal.insert(INSERT, "\nstate: Initializing.")
-    time.sleep(1)
-    terminal.insert(INSERT, "\nstate: Turning on the blue light.")
-    light("blue", "on")
     time.sleep(1)
     evaMatrix("blue")
     terminal.insert(INSERT, "\nstate: Speaking a greeting text.")
     playsound("my_sounds/greetings.mp3", block = True)
-    time.sleep(1)
+    terminal.insert(INSERT, "\nstate: Turning on the blue light.")
+    light("blue", "on")
+    time.sleep(2)
+    terminal.insert(INSERT, "\nstate: Turning on the red light.")
+    light("red", "on")
+    time.sleep(2)
+    terminal.insert(INSERT, "\nstate: Turning on the green light.")
+    light("green", "on")
+    time.sleep(2)
+    terminal.insert(INSERT, "\nstate: Turning on the white light.")
+    light("white", "on")
+    time.sleep(2)
+    evaEmotion("angry")
+    light("white", "on")
+    evaMatrix("red")
+    terminal.insert(INSERT, "\nstate: Expressing anger.")
+    time.sleep(2)
+    evaEmotion("happy")
+    evaMatrix("yellow")
+    terminal.insert(INSERT, "\nstate: Expressing joy.")
+    time.sleep(2)
+    evaEmotion("sad")
+    evaMatrix("blue")
+    terminal.insert(INSERT, "\nstate: Expressing sadness.")
+    time.sleep(2)
+    evaEmotion("neutral")
     terminal.insert(INSERT, "\nstate: Turning off the light.")
-    evaMatrix("white")
     light("#ffffff", "off")
-    time.sleep(1)
-    terminal.insert(INSERT, "\nstate: Entering in stand by mode...")
+    time.sleep(2)
+    terminal.insert(INSERT, '\nstate: Speaking "Load a script file and enjoy."')
+    playsound("my_sounds/load_a_script.mp3", block = True)
+    terminal.insert(INSERT, "\nstate: Entering in standby mode.")
     while(True): # animacao da luz da matrix
         evaMatrix("white")
         time.sleep(0.5)
@@ -134,11 +157,11 @@ def evaMatrix(color):
 # light color and state
 def light(color, state):
     if state == "on":
-        canvas.create_oval(300, 205, 378, 285, fill = color, outline = color )
-        canvas.create_image(340, 280, image = bulb_image) # redesenha a lampada
+        canvas.create_oval(300, 205, 377, 285, fill = color, outline = color )
+        canvas.create_image(340, 285, image = bulb_image) # redesenha a lampada
     else:
-        canvas.create_oval(300, 205, 378, 285, fill = "#000000", outline = "#000000" ) # cor preta indica light off
-        canvas.create_image(340, 280, image = bulb_image) # redesenha a lampada
+        canvas.create_oval(300, 205, 377, 285, fill = "#000000", outline = "#000000" ) # cor preta indica light off
+        canvas.create_image(340, 285, image = bulb_image) # redesenha a lampada
 
     
 # Eva Import Script function
@@ -146,19 +169,19 @@ def importFile():
     print("Importing a file...")
     filetypes = (('evaML files', '*.xml'), )
     script_file = fd.askopenfile(mode = "r", title = 'Open an EvaML Script File', initialdir = './', filetypes = filetypes)
-    b_run['state'] = NORMAL
-    b_stop['state'] = DISABLED
-    #evaTalk("Hi Marcio, how are you")
+    bt_run['state'] = NORMAL
+    bt_stop['state'] = DISABLED
+    #evaTalk("Load a script file and enjoy")
     #terminal.insert(INSERT, "The file " + script_file.name. + " was imported...")
 
-b_power = Button ( window, text = "Power On", command = powerOn)
-b_import = Button ( window, text = "Import Script File...", state = DISABLED, command = importFile)
-b_run = Button ( window, text = "Run", image = im_bt_play, state = DISABLED, compound=LEFT)
-b_stop = Button ( window, text = "Stop", image = im_bt_stop, state = DISABLED, compound=LEFT)
+bt_power = Button ( window, text = "Power On", command = powerOn)
+bt_import = Button ( window, text = "Import Script File...", state = DISABLED, command = importFile)
+bt_run = Button ( window, text = "Run", image = im_bt_play, state = DISABLED, compound=LEFT)
+bt_stop = Button ( window, text = "Stop", image = im_bt_stop, state = DISABLED, compound=LEFT)
 
 # intro terminal text
 terminal.insert(INSERT, " ========================================================== \n")
-terminal.insert(INSERT, "       Eva Simulator for EvaML (A XML Based Language)\n               Version 1.0 - UFF/MidiaCom Lab\n")
+terminal.insert(INSERT, "                  Eva Simulator for EvaML\n               Version 1.0 - UFF/MidiaCom Lab\n")
 terminal.insert(INSERT, " ========================================================== ")
 
 #label.pack()
@@ -167,10 +190,10 @@ terminal.insert(INSERT, " ======================================================
 #l_angry_eyes.place(x = 70, y = 130)
 terminal.place(x = 400, y = 60)
 
-b_power.place(x = 400, y = 20)
-b_import.place(x = 496, y = 20)
-b_run.place(x = 652, y = 20)
-b_stop.place(x = 742, y = 20)
+bt_power.place(x = 400, y = 20)
+bt_import.place(x = 496, y = 20)
+bt_run.place(x = 652, y = 20)
+bt_stop.place(x = 742, y = 20)
     
 
 window.mainloop()
