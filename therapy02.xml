@@ -7,23 +7,20 @@
 		<audio-effects mode="on" vol="100%" />
 	</settings>
 	<interaction id="a1001-b3001" name="Therapy02">
-  <random min="1" max="3"/>
+  <random id="BEGIN" min="1" max="3"/>
   <switch>
     <case value="1">
-      <wait duration="1000"/>
-        <switch>
-          <case value="2">
-            <wait duration="2000"/>
-          </case>
-          <case value="4">
-            <wait duration="4000"/>
-          </case>
-        </switch>
+      <light color="ff0000" state="on"/>
+    </case>
+    <case value="2">
+      <light color="00ff00" state="on"/>
     </case>
     <case value="3">
-      <listen/>
+      <light color="0000ff" state="on"/>
     </case>
   </switch>
+  <wait duration="500"/>
+  <goto target="BEGIN"/>
 	</interaction>
   <macros>
   </macros>

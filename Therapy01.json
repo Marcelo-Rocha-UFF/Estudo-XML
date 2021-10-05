@@ -100,15 +100,6 @@
         "lcolor": "zzz",
         "state": "zzz",
         "__gohashid": 9
-      },
-      {
-        "key": 1010,
-        "name": "Talk",
-        "type": "speak",
-        "color": "lightblue",
-        "isGroup": false,
-        "text": "Fim do script",
-        "__gohashid": 10
       }   ],
         "link": [
         { "from": 1000,
@@ -132,7 +123,7 @@
         "__gohashid": 4
         },
         { "from": 1005,
-        "to": 1010,
+        "to": 1009,
         "__gohashid": 5
         },
         { "from": 1003,
@@ -144,7 +135,7 @@
         "__gohashid": 7
         },
         { "from": 1007,
-        "to": 1010,
+        "to": 1001,
         "__gohashid": 8
         },
         { "from": 1001,
