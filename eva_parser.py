@@ -307,7 +307,11 @@ def macro_expander(interaction_node, macros_node):
 links = [] # lista provisoria com os links gerados
 
 def cria_link(node_from, node_to):
-    # node goto
+    # node stop como node_to
+    if (node_to.tag == "stop"): # stop nao pode ser node_to
+        return
+
+    # node goto com node_to
     if node_to.tag == "goto":
         for elem in interaction_node.iter(): # procura por target na interação
             if elem.get("id") != None:
@@ -315,9 +319,12 @@ def cria_link(node_from, node_to):
                     links.append(node_from.attrib["key"] + "," + elem.attrib["key"])
         return
 
-    # um switch e uma macro nunca podem ser node_from
+    # um switch, uma macro, um goto ou um stop nunca podem ser node_from
     if node_from.tag == "switch": return
     if node_from.tag == "macro": return
+    if node_from.tag == "stop": return
+    if node_from.tag == "goto": return
+
     # no "to" e' uma folha, que nao contem filhos
     if len(node_to) == 0:
         links.append(node_from.attrib["key"] + "," + node_to.attrib["key"])
@@ -360,6 +367,7 @@ def link_process(node_from, node_list):
         ########################################
         print(node_from.tag, node_to.tag)
         cria_link(node_from, node_to)
+
     if (len(pilha) != 0): # esse cara cria os links nos finais dos fluxos dos cases, ou do fluxo principal
         print("num de pilha:", len(pilha))
         cria_link(node_to, pilha.pop())

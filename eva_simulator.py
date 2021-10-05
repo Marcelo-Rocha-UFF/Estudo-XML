@@ -171,7 +171,7 @@ def importFile():
     script_file = fd.askopenfile(mode = "r", title = 'Open an EvaML Script File', initialdir = './', filetypes = filetypes)
     bt_run['state'] = NORMAL
     bt_stop['state'] = DISABLED
-    #evaTalk("Load a script file and enjoy")
+    #evaTalk("Hi Philip, let's go to play guitar")
     #terminal.insert(INSERT, "The file " + script_file.name. + " was imported...")
 
 bt_power = Button ( window, text = "Power On", command = powerOn)

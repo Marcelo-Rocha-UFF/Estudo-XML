@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <evaml>
 	<settings>
 		<voice tone="en-US_AllisonV3Voice" />
@@ -7,23 +6,22 @@
 		<audio-effects mode="on" vol="100%" />
 	</settings>
 	<interaction id="a1001-b3001" name="Therapy01">
-  <random min="1" max="3"/>
+  <random id="INICIO" min="1" max="3"/>
   <switch>
     <case value="1">
       <wait duration="1000"/>
         <switch>
           <case value="2">
             <wait duration="2000"/>
-            <!--<stop/>-->
           </case>
           <case value="4">
             <wait duration="4000"/>
-            <!--<stop/>-->
           </case>
         </switch>
     </case>
     <case value="3">
       <listen/>
+      <goto target="INICIO"/>
     </case>
   </switch>
   <talk>Fim do script</talk>
