@@ -6,7 +6,7 @@ import send_to_dbjson
 
 tree = ET.parse(sys.argv[1])  # arquivo de codigo xml
 root = tree.getroot() # evaml root node
-interaction_node = root.find("interaction")
+script_node = root.find("script")
 macros_node = root.find("macros")
 output = ""
 key = 1000
@@ -46,12 +46,9 @@ def block_process(root, set_key):
             if (not inicio): output += ",\n"
             output += listen_process(command, set_key)
 
-        if (command.tag == 'eva-emotion'):
+        if (command.tag == 'evaEmotion'):
             if (not inicio): output += ",\n"
             output += eva_emotion_process(command, set_key)
-
-        if (command.tag == 'stop'): ################
-            print("tag <stop>")
 
         if (command.tag == 'case'):
             if (not inicio): output += ",\n"
@@ -265,7 +262,7 @@ def wait_process(wait_command, set_key):
 
 
 # processamento dos elos
-qtd = len(interaction_node)
+qtd = len(script_node)
 # interaction = root.find("interaction")
 print("numero de nodes no bloco principal da interacao: ", qtd)
 
@@ -273,31 +270,31 @@ print("numero de nodes no bloco principal da interacao: ", qtd)
 # expansao das macros                                                         #
 ###############################################################################
 
-def macro_expander(interaction_node, macros_node):
-    for i in range(len(interaction_node)):
+def macro_expander(script_node, macros_node):
+    for i in range(len(script_node)):
         print(i)
-        if len(interaction_node[i]) != 0: macro_expander(interaction_node[i], macros_node)
-        if interaction_node[i].tag == "use-macro":
+        if len(script_node[i]) != 0: macro_expander(script_node[i], macros_node)
+        if script_node[i].tag == "useMacro":
             for m in range(len(macros_node)):
-                if macros_node[m].attrib["name"] == interaction_node[i].attrib["name"]:
+                if macros_node[m].attrib["name"] == script_node[i].attrib["name"]:
                     print("removendo i")
-                    interaction_node.remove(interaction_node[i])
+                    script_node.remove(script_node[i])
                     for j in range(len(macros_node[m])):
                         print("inserindo")
                         mac_elem_aux = copy.deepcopy(macros_node[m][j])
-                        interaction_node.insert(i + j, mac_elem_aux)
+                        script_node.insert(i + j, mac_elem_aux)
                     break
-            macro_expander(interaction_node, macros_node)
+            macro_expander(script_node, macros_node)
         #macro_expander(macros_node)
                     # mac_aux = copy.deepcopy(macros_node[m]) # duplica o obj.
-                    # if interaction_node[i].get("id") != None: # se tem id, copia para primeiro elemento da macro
-                    #     id_aux = interaction_node[i].attrib["id"]
-                    #     interaction_node.remove(interaction_node[i])
-                    #     interaction_node.insert(i, mac_aux)
-                    #     interaction_node[i][0].attrib["id"] = id_aux
+                    # if script_node[i].get("id") != None: # se tem id, copia para primeiro elemento da macro
+                    #     id_aux = script_node[i].attrib["id"]
+                    #     script_node.remove(script_node[i])
+                    #     script_node.insert(i, mac_aux)
+                    #     script_node[i][0].attrib["id"] = id_aux
                     # else:
-                    #     interaction_node.remove(interaction_node[i]) # expande sem inserir o id
-                    #     interaction_node.insert(i, mac_aux)
+                    #     script_node.remove(script_node[i]) # expande sem inserir o id
+                    #     script_node.insert(i, mac_aux)
 
 
 ###############################################################################
@@ -319,7 +316,7 @@ def cria_link(node_from, node_to):
 
     # node goto com node_to
     if node_to.tag == "goto":
-        for elem in interaction_node.iter(): # procura por target na interação
+        for elem in script_node.iter(): # procura por target na interação
             if elem.get("id") != None:
                 if elem.attrib["id"] == node_to.attrib["target"]:
                     links.append(node_from.attrib["key"] + "," + elem.attrib["key"])
@@ -398,29 +395,29 @@ def saida_links():
 
 # gerando o cabeçalho do Json
 # onde são inseridos o id e o nome da interação baseados nos dados xml
-output += head_process(interaction_node)
+output += head_process(root) # usa os atributos id e name da tag <evaml>
 
 # o proximo comando pega o parametro do elemnto voice (timbre)
 output += settings_process(root.find("settings"))
 
 # expande as macros
-macro_expander(interaction_node, macros_node)
+macro_expander(script_node, macros_node)
 root.remove(macros_node) # remove a secao de macros
 
 # processamento da interação
-block_process(interaction_node, True) # true indica a geracao das keys
+block_process(script_node, True) # true indica a geracao das keys
 
 
 tree.write("teste.xml")
 
 # gera os links
-link_process(root.find("settings").find("voice"), interaction_node)
+link_process(root.find("settings").find("voice"), script_node)
 
 # concatena a lista de links à lista de nós
 output += saida_links()
 
 # criação de um arquivo físico da interação em Json
-send_to_dbjson.create_json_file(interaction_node.attrib['name'], output)
+send_to_dbjson.create_json_file(root.attrib['name'], output)
 #
 # insere a interação no banco de interações do robo
 #send_to_dbjson.send_to_dbjson(output)
