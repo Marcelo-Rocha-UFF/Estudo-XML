@@ -1,6 +1,6 @@
-<evaml id="a1001-b3001" name="Therapy04" key="0">
+<evaml id="a1001-b3001" name="Therapy04">
 	<settings>
-		<voice tone="en-US_AllisonV3Voice" key="1000" />
+		<voice tone="en-US_AllisonV3Voice" />
 		<light-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>

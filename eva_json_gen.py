@@ -1,4 +1,3 @@
-import copy # lib para a geracao de copias de objetos
 import sys
 import json
 import xml.etree.ElementTree as ET
@@ -14,20 +13,20 @@ gohashid = 0
 inicio = True  # para nao iniciar com a virgula
 pilha = [] # pilha de nodes (enderecos)
 
-def block_process(root, set_key):
+def block_process(root):
     global output, inicio
     for command in root:
         if (command.tag == 'audio'):
             if (not inicio): output += ",\n"
-            output += audio_process(command, set_key)
+            output += audio_process(command)
 
         if (command.tag == 'light'):
             if (not inicio): output += ",\n"
-            output += light_process(command, set_key)
+            output += light_process(command)
 
         if (command.tag == 'wait'):
             if (not inicio): output += ",\n"
-            output += wait_process(command, set_key)
+            output += wait_process(command)
 
         # the voice nodes are only process in the settings section
         # if (command.tag == 'voice'):
@@ -36,40 +35,40 @@ def block_process(root, set_key):
 
         if (command.tag == 'talk'):
             if (not inicio): output += ",\n"
-            output += talk_process(command, set_key)
+            output += talk_process(command)
 
         if (command.tag == 'random'):
             if (not inicio): output += ",\n"
-            output += random_process(command, set_key)
+            output += random_process(command)
 
         if (command.tag == 'listen'):
             if (not inicio): output += ",\n"
-            output += listen_process(command, set_key)
+            output += listen_process(command)
 
         if (command.tag == 'evaEmotion'):
             if (not inicio): output += ",\n"
-            output += eva_emotion_process(command, set_key)
+            output += eva_emotion_process(command)
 
         if (command.tag == 'case'):
             if (not inicio): output += ",\n"
-            output += case_process(command, set_key)
-            block_process(command, set_key)
+            output += case_process(command)
+            block_process(command)
 
         # default é um caso especial do comando case, onde value = ""
         if (command.tag == 'default'):
             command.attrib["value"] = ""
             if (not inicio): output += ",\n"
-            output += case_process(command, set_key)
-            block_process(command, set_key)
+            output += case_process(command)
+            block_process(command)
 
         # switch is just an abstraction not a real node
         if (command.tag == 'switch'):
-            block_process(command, set_key)
+            block_process(command)
 
         # macro is just an abstraction
         if (command.tag == 'macro'):
             print("processando macro")
-            block_process(command, set_key)
+            block_process(command)
 
         inicio = False
 
@@ -92,11 +91,10 @@ def settings_process(node):
     # processar sound-effects
 
 # audio node processing
-def audio_process(audio_command, set_key):
-    global gohashid, key
-    if set_key: audio_command.attrib["key"] = str(key)
+def audio_process(audio_command):
+    global gohashid
     audio_node = """      {
-        "key": """ + str(key) + """,
+        "key": """ + audio_command.attrib["key"] + """,
         "name": "Audio",
         "type": "sound",
         "color": "lightblue",
@@ -106,15 +104,13 @@ def audio_process(audio_command, set_key):
         "__gohashid": """ + str(gohashid) + """
       }"""
     gohashid += 1
-    key += 1
     return audio_node
 
 # light node processing
-def light_process(light_command, set_key):
-    global gohashid, key
-    if set_key: light_command.attrib["key"] = str(key)
+def light_process(light_command):
+    global gohashid
     light_node = """      {
-        "key": """ + str(key) + """,
+        "key": """ + light_command.attrib["key"] + """,
         "name": "Light",
         "type": "light",
         "color": "lightblue",
@@ -125,15 +121,13 @@ def light_process(light_command, set_key):
         "__gohashid": """ + str(gohashid) + """
       }"""
     gohashid += 1
-    key += 1
     return light_node
 
 # listen node processing
-def listen_process(listen_command, set_key):
+def listen_process(listen_command):
     global gohashid, key
-    if set_key: listen_command.attrib["key"] = str(key)
     listen_node = """      {
-        "key": """ + str(key) + """,
+        "key": """ + listen_command.attrib["key"] + """,
         "name": "Listen",
         "type": "listen",
         "color": "lightblue",
@@ -144,15 +138,13 @@ def listen_process(listen_command, set_key):
         "__gohashid": """ + str(gohashid) + """
       }"""
     gohashid += 1
-    key += 1
     return listen_node
 
 # talk node processing
-def talk_process(talk_command, set_key):
+def talk_process(talk_command):
     global gohashid, key
-    if set_key: talk_command.attrib["key"] = str(key)
     talk_node = """      {
-        "key": """ + str(key) + """,
+        "key": """ + talk_command.attrib["key"] + """,
         "name": "Talk",
         "type": "speak",
         "color": "lightblue",
@@ -161,17 +153,15 @@ def talk_process(talk_command, set_key):
         "__gohashid": """ + str(gohashid) + """
       }"""
     gohashid += 1
-    key += 1
     return talk_node
 
 
 
 # voice node processing
 def voice_process(voice_command):
-    global gohashid, key
-    voice_command.attrib["key"] = str(key)
+    global gohashid
     voice_node = """      {
-        "key": """ + str(key) + """,
+        "key": """ + voice_command.attrib["key"] + """,
         "name": "Voice",
         "type": "voice",
         "color": "lightblue",
@@ -180,16 +170,14 @@ def voice_process(voice_command):
         "__gohashid": """ + str(gohashid) + """
       }"""
     gohashid += 1
-    key += 1
     return voice_node
 
 
 # eva_emotion node processing 
-def eva_emotion_process(eva_emotion_command, set_key):
-    global gohashid, key
-    if set_key: eva_emotion_command.attrib["key"] = str(key)
+def eva_emotion_process(eva_emotion_command):
+    global gohashid
     eva_emotion_node = """      {
-        "key": """ + str(key) + """,
+        "key": """ + eva_emotion_command.attrib["key"] + """,
         "name": "Eva_Emotion",
         "type": "emotion",
         "color": "lightyellow",
@@ -201,16 +189,14 @@ def eva_emotion_process(eva_emotion_command, set_key):
         "__gohashid": """ + str(gohashid) + """
       }"""
     gohashid += 1
-    key += 1
     return eva_emotion_node
 
 
 # random node processing
-def random_process(random_command, set_key):
-    global gohashid, key
-    if set_key: random_command.attrib["key"] = str(key)
+def random_process(random_command):
+    global gohashid
     random_node = """      {
-        "key": """ + str(key) + """,
+        "key": """ + random_command.attrib["key"] + """,
         "name": "Random",
         "type": "random",
         "color": "lightblue",
@@ -221,16 +207,14 @@ def random_process(random_command, set_key):
         "__gohashid": """ + str(gohashid) + """
       }"""
     gohashid += 1
-    key += 1
     return random_node
 
 
 # condition node (case and default) processing
-def case_process(case_command, set_key):
-    global gohashid, key
-    if set_key: case_command.attrib["key"] = str(key)
+def case_process(case_command):
+    global gohashid
     case_node = """      {
-        "key": """ + str(key) + """,
+        "key": """ + case_command.attrib["key"] + """,
         "name": "Condition",
         "type": "if",
         "color": "lightblue",
@@ -240,15 +224,13 @@ def case_process(case_command, set_key):
         "__gohashid": """ + str(gohashid) + """
       }"""
     gohashid += 1
-    key += 1
     return case_node
 
 # wait node processing
-def wait_process(wait_command, set_key):
-    global gohashid, key
-    if set_key: wait_command.attrib["key"] = str(key)
+def wait_process(wait_command):
+    global gohashid
     wait_node = """      {
-        "key": """ + str(key) + """,
+        "key": """ + wait_command.attrib["key"] + """,
         "name": "Wait",
         "type": "wait",
         "color": "lightblue",
@@ -257,7 +239,6 @@ def wait_process(wait_command, set_key):
         "__gohashid": """ + str(gohashid) + """
       }"""
     gohashid += 1
-    key += 1
     return wait_node
 
 
@@ -265,37 +246,6 @@ def wait_process(wait_command, set_key):
 qtd = len(script_node)
 # interaction = root.find("interaction")
 print("numero de nodes no bloco principal da interacao: ", qtd)
-
-###############################################################################
-# expansao das macros                                                         #
-###############################################################################
-
-def macro_expander(script_node, macros_node):
-    for i in range(len(script_node)):
-        print(i)
-        if len(script_node[i]) != 0: macro_expander(script_node[i], macros_node)
-        if script_node[i].tag == "useMacro":
-            for m in range(len(macros_node)):
-                if macros_node[m].attrib["name"] == script_node[i].attrib["name"]:
-                    print("removendo i")
-                    script_node.remove(script_node[i])
-                    for j in range(len(macros_node[m])):
-                        print("inserindo")
-                        mac_elem_aux = copy.deepcopy(macros_node[m][j])
-                        script_node.insert(i + j, mac_elem_aux)
-                    break
-            macro_expander(script_node, macros_node)
-        #macro_expander(macros_node)
-                    # mac_aux = copy.deepcopy(macros_node[m]) # duplica o obj.
-                    # if script_node[i].get("id") != None: # se tem id, copia para primeiro elemento da macro
-                    #     id_aux = script_node[i].attrib["id"]
-                    #     script_node.remove(script_node[i])
-                    #     script_node.insert(i, mac_aux)
-                    #     script_node[i][0].attrib["id"] = id_aux
-                    # else:
-                    #     script_node.remove(script_node[i]) # expande sem inserir o id
-                    #     script_node.insert(i, mac_aux)
-
 
 ###############################################################################
 # aqui estão os métodos que geram os links que conectam os nós                #
@@ -400,14 +350,8 @@ output += head_process(root) # usa os atributos id e name da tag <evaml>
 # o proximo comando pega o parametro do elemnto voice (timbre)
 output += settings_process(root.find("settings"))
 
-# expande as macros
-macro_expander(script_node, macros_node)
-root.remove(macros_node) # remove a secao de macros
-tree.write("teste.xml")
-
-
 # processamento da interação
-block_process(script_node, True) # true indica a geracao das keys
+block_process(script_node) # true indica a geracao das keys
 
 
 
@@ -417,6 +361,8 @@ link_process(root.find("settings").find("voice"), script_node)
 
 # concatena a lista de links à lista de nós
 output += saida_links()
+
+print("step 04 and 05 - Generating and Sending JSON file")
 
 # criação de um arquivo físico da interação em Json
 send_to_dbjson.create_json_file(root.attrib['name'], output)
