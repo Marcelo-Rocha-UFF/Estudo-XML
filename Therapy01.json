@@ -100,56 +100,69 @@
         "lcolor": "zzz",
         "state": "zzz",
         "__gohashid": 9
-      }   ],
-        "link": [
-        { "from": 1000,
-        "to": 1001,
-        "__gohashid": 0
+      }
+      ],
+      "link": [
+        { 
+          "from": 1000,
+          "to": 1001,
+          "__gohashid": 0
         },
-        { "from": 1001,
-        "to": 1002,
-        "__gohashid": 1
+        { 
+          "from": 1001,
+          "to": 1002,
+          "__gohashid": 1
         },
-        { "from": 1002,
-        "to": 1003,
-        "__gohashid": 2
+        { 
+          "from": 1002,
+          "to": 1003,
+          "__gohashid": 2
         },
-        { "from": 1003,
-        "to": 1004,
-        "__gohashid": 3
+        { 
+          "from": 1003,
+          "to": 1004,
+          "__gohashid": 3
         },
-        { "from": 1004,
-        "to": 1005,
-        "__gohashid": 4
+        { 
+          "from": 1004,
+          "to": 1005,
+          "__gohashid": 4
         },
-        { "from": 1005,
-        "to": 1009,
-        "__gohashid": 5
+        { 
+          "from": 1005,
+          "to": 1009,
+          "__gohashid": 5
         },
-        { "from": 1003,
-        "to": 1006,
-        "__gohashid": 6
+        { 
+          "from": 1003,
+          "to": 1006,
+          "__gohashid": 6
         },
-        { "from": 1006,
-        "to": 1007,
-        "__gohashid": 7
+        { 
+          "from": 1006,
+          "to": 1007,
+          "__gohashid": 7
         },
-        { "from": 1007,
-        "to": 1001,
-        "__gohashid": 8
+        { 
+          "from": 1007,
+          "to": 1001,
+          "__gohashid": 8
         },
-        { "from": 1001,
-        "to": 1008,
-        "__gohashid": 9
+        { 
+          "from": 1001,
+          "to": 1008,
+          "__gohashid": 9
         },
-        { "from": 1008,
-        "to": 1009,
-        "__gohashid": 10
+        { 
+          "from": 1008,
+          "to": 1009,
+          "__gohashid": 10
         },
-        { "from": 1009,
-        "to": 1001,
-        "__gohashid": 11
+        { 
+          "from": 1009,
+          "to": 1001,
+          "__gohashid": 11
         }
-    ]
+      ]
     }
-    }
+  }

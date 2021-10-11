@@ -1,76 +1,59 @@
 import sys
-import json
 import xml.etree.ElementTree as ET
 import send_to_dbjson
 
 tree = ET.parse(sys.argv[1])  # arquivo de codigo xml
 root = tree.getroot() # evaml root node
 script_node = root.find("script")
-macros_node = root.find("macros")
 output = ""
-key = 1000
 gohashid = 0
-inicio = True  # para nao iniciar com a virgula
-pilha = [] # pilha de nodes (enderecos)
 
-def block_process(root):
-    global output, inicio
-    for command in root:
-        if (command.tag == 'audio'):
-            if (not inicio): output += ",\n"
-            output += audio_process(command)
+# percorre os elementos xml mapeando-os nos respectivos no modelo Json do Eva
+def mapping_xml_to_json():
+    global output
+    # conjunto de nodes abstratos que nao sao mapeados no Json do robô
+    excluded_nodes = set(['script', 'switch', 'stop', 'goto'])
+    for elem in script_node.iter():
+        if not(elem.tag in excluded_nodes):
 
-        if (command.tag == 'light'):
-            if (not inicio): output += ",\n"
-            output += light_process(command)
+            if (elem.tag == 'audio'):
+                output += ",\n"
+                output += audio_process(elem)
 
-        if (command.tag == 'wait'):
-            if (not inicio): output += ",\n"
-            output += wait_process(command)
+            if (elem.tag == 'light'):
+                output += ",\n"
+                output += light_process(elem)
 
-        # the voice nodes are only process in the settings section
-        # if (command.tag == 'voice'):
-        #     if (not inicio): output += ",\n"
-        #     output += voice_process(command)
+            if (elem.tag == 'wait'):
+                output += ",\n"
+                output += wait_process(elem)
 
-        if (command.tag == 'talk'):
-            if (not inicio): output += ",\n"
-            output += talk_process(command)
+            if (elem.tag == 'talk'):
+                output += ",\n"
+                output += talk_process(elem)
 
-        if (command.tag == 'random'):
-            if (not inicio): output += ",\n"
-            output += random_process(command)
+            if (elem.tag == 'random'):
+                output += ",\n"
+                output += random_process(elem)
 
-        if (command.tag == 'listen'):
-            if (not inicio): output += ",\n"
-            output += listen_process(command)
+            if (elem.tag == 'listen'):
+                output += ",\n"
+                output += listen_process(elem)
 
-        if (command.tag == 'evaEmotion'):
-            if (not inicio): output += ",\n"
-            output += eva_emotion_process(command)
+            if (elem.tag == 'evaEmotion'):
+                output += ",\n"
+                output += eva_emotion_process(elem)
 
-        if (command.tag == 'case'):
-            if (not inicio): output += ",\n"
-            output += case_process(command)
-            block_process(command)
+            if (elem.tag == 'case'):
+                output += ",\n"
+                output += case_process(elem)
 
-        # default é um caso especial do comando case, onde value = ""
-        if (command.tag == 'default'):
-            command.attrib["value"] = ""
-            if (not inicio): output += ",\n"
-            output += case_process(command)
-            block_process(command)
+            # default é um caso especial do comando case, onde value = ""
+            if (elem.tag == 'default'):
+                elem.attrib["value"] = ""
+                output += ",\n"
+                output += case_process(elem)
 
-        # switch is just an abstraction not a real node
-        if (command.tag == 'switch'):
-            block_process(command)
-
-        # macro is just an abstraction
-        if (command.tag == 'macro'):
-            print("processando macro")
-            block_process(command)
-
-        inicio = False
 
 # head processing (generates the head of json file)
 def head_process(node):
@@ -86,7 +69,7 @@ def head_process(node):
 # processing the settings nodes
 # always be the first node in the interaccion
 def settings_process(node):
-    return voice_process(node.find("voice")) + ",\n"
+    return voice_process(node.find("voice"))
     # processar light-effects
     # processar sound-effects
 
@@ -125,7 +108,7 @@ def light_process(light_command):
 
 # listen node processing
 def listen_process(listen_command):
-    global gohashid, key
+    global gohashid
     listen_node = """      {
         "key": """ + listen_command.attrib["key"] + """,
         "name": "Listen",
@@ -142,7 +125,7 @@ def listen_process(listen_command):
 
 # talk node processing
 def talk_process(talk_command):
-    global gohashid, key
+    global gohashid
     talk_node = """      {
         "key": """ + talk_command.attrib["key"] + """,
         "name": "Talk",
@@ -240,132 +223,51 @@ def wait_process(wait_command):
       }"""
     gohashid += 1
     return wait_node
-
-
-# processamento dos elos
-qtd = len(script_node)
-# interaction = root.find("interaction")
-print("numero de nodes no bloco principal da interacao: ", qtd)
-
-###############################################################################
-# aqui estão os métodos que geram os links que conectam os nós                #
-###############################################################################
-
-links = [] # lista provisoria com os links gerados
-
-def cria_link(node_from, node_to):
-    # node stop como node_to
-    if (node_to.tag == "stop"): # stop nao pode ser node_to
-        return
-
-    # um switch, uma macro, um goto ou um stop nunca podem ser node_from
-    if node_from.tag == "switch": return
-    if node_from.tag == "macro": return
-    if node_from.tag == "stop": return
-    if node_from.tag == "goto": return
-
-    # node goto com node_to
-    if node_to.tag == "goto":
-        for elem in script_node.iter(): # procura por target na interação
-            if elem.get("id") != None:
-                if elem.attrib["id"] == node_to.attrib["target"]:
-                    links.append(node_from.attrib["key"] + "," + elem.attrib["key"])
-        return
-
-    # no "to" e' uma folha, que nao contem filhos
-    if len(node_to) == 0:
-        links.append(node_from.attrib["key"] + "," + node_to.attrib["key"])
-        
-    # trata os nodes com filhos
-    elif (node_to.tag == "switch"): # trata o node "switch"
-        for switch_elem in node_to:
-            links.append(node_from.attrib["key"] + "," + switch_elem.attrib["key"])
-            link_process(switch_elem, switch_elem)
-    elif (node_to.tag == "case"): # trata o node "case"
-        links.append(node_from.attrib["key"] + "," + node_to.attrib["key"])
-        link_process(node_to, node_to)
-    elif (node_to.tag == "macro"): # trata de node "macro"
-        link_process(node_from, node_to)
-
-def link_process(node_from, node_list):
-    qtd = len(node_list)
-    print("+", node_from.tag, node_list.tag, qtd, node_list[0].tag)
-    node_to = node_list[0]
-    print(node_from.tag, node_to.tag)
-    cria_link(node_from, node_to)
-    for i in range(0, qtd-1):
-        node_from = node_list[i]
-        node_to = node_list[i+1]
-        ########################################
-        if node_to.tag == "switch":
-            if (i+1 != qtd-1): # verifica se existe algum node, dentro do fluxo corrente, depois do switch
-                for p in range(0, len(node_to)): # empilhando no' depois do switch
-                    # a qtd de empilhamentos e' igual ao numero de cases dentro do switch
-                    pilha.append(node_list[i+2])
-                print("num de elem. empilhados:", len(node_to))
-                print("pilha: ", pilha)
-            else: # quando não ha no' depois do switch
-                if len(pilha) != 0: # um switch com uma pilha nao vazia e' um switch interno a outro switch
-                    no_aux = pilha.pop() # pega o no mais exterior da pilha fica com -1)
-                    for p in range(0, len(node_to)+1): # nao entendi o porque do + 1.
-                        pilha.append(no_aux) 
-                    print("num de elem. empilhados:", len(node_to))
-                    print("pilha: ", pilha)               # o ou os cases deverao se conectar a no mais externo
-
-        ########################################
-        print(node_from.tag, node_to.tag)
-        cria_link(node_from, node_to)
-
-    if (len(pilha) != 0): # esse cara cria os links nos finais dos fluxos dos cases, ou do fluxo principal
-        print("num de pilha:", len(pilha))
-        cria_link(node_to, pilha.pop())
         
 
 def saida_links():
-    output ="""   ],
-        "link": [""" + """
-        { "from": """ + links[0].split(",")[0] + "," + """
-        "to": """ + links[0].split(",")[1] + "," + """
-        "__gohashid": 0
+    node_links = root.find("links")
+    output ="""
+      ],
+      "link": [""" + """
+        { 
+          "from": """ + node_links[0].attrib["from"] + "," + """
+          "to": """ + node_links[0].attrib["to"] + "," + """
+          "__gohashid": 0
         }"""
 
-    for i in range(len(links)-1):
+    for i in range(len(node_links) - 1):
         output += """,
-        { "from": """ + links[i+1].split(",")[0] + "," + """
-        "to": """ + links[i+1].split(",")[1] + "," + """
-        "__gohashid": """ + str(i + 1) + """
+        { 
+          "from": """ + node_links[i+1].attrib["from"] + "," + """
+          "to": """ + node_links[i+1].attrib["to"] + "," + """
+          "__gohashid": """ + str(i + 1) + """
         }"""
 
     output += """
-    ]
+      ]
     }
-    }"""
-
+  }"""
+  
     return output
 
 # gerando o cabeçalho do Json
 # onde são inseridos o id e o nome da interação baseados nos dados xml
 output += head_process(root) # usa os atributos id e name da tag <evaml>
 
-# o proximo comando pega o parametro do elemnto voice (timbre)
+# o proximo comando pega o parametro do elemento voice (timbre) e gera o primeiro elem. do script Json
 output += settings_process(root.find("settings"))
 
 # processamento da interação
-block_process(script_node) # true indica a geracao das keys
+mapping_xml_to_json() # nova versao
 
-
-
-
-# gera os links
-link_process(root.find("settings").find("voice"), script_node)
-
-# concatena a lista de links à lista de nós
+# mapeia os links xml para json
 output += saida_links()
 
-print("step 04 and 05 - Generating and Sending JSON file")
+print("step 04 - Mapping XML nodes and links to a JSON file...")
 
 # criação de um arquivo físico da interação em Json
 send_to_dbjson.create_json_file(root.attrib['name'], output)
-#
+
 # insere a interação no banco de interações do robo
 #send_to_dbjson.send_to_dbjson(output)

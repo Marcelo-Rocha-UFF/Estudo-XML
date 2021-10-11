@@ -1,6 +1,6 @@
 {
   "_id": "a1001-b3001",
-  "nombre": "Therapy04",
+  "nombre": "Script01",
   "data": {
     "node": [
       {
@@ -9,11 +9,49 @@
         "type": "voice",
         "color": "lightblue",
         "isGroup": false,
-        "voice": "en-US_AllisonV3Voice",
+        "voice": "pt-BR_IsabelaV3Voice",
         "__gohashid": 0
       },
       {
         "key": 1001,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "ffffff",
+        "state": "on",
+        "__gohashid": 1
+      },
+      {
+        "key": 1002,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Olá, eu sou o robô Eva. Vou sortear um número de um a três",
+        "__gohashid": 2
+      },
+      {
+        "key": 1003,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Para cada um, vou acender a luz numa cor diferente",
+        "__gohashid": 3
+      },
+      {
+        "key": 1004,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Só vou parar quando o número sorteado for o três",
+        "__gohashid": 4
+      },
+      {
+        "key": 1005,
         "name": "Random",
         "type": "random",
         "color": "lightblue",
@@ -21,59 +59,16 @@
         "group": "",
         "min": 1,
         "max": 3,
-        "__gohashid": 1
-      },
-      {
-        "key": 1002,
-        "name": "Wait",
-        "type": "wait",
-        "color": "lightblue",
-        "isGroup": false,
-        "time": 1000,
-        "__gohashid": 2
-      },
-      {
-        "key": 1003,
-        "name": "Listen",
-        "type": "listen",
-        "color": "lightblue",
-        "isGroup": false,
-        "group": "",
-        "lcolor": "zzz",
-        "state": "zzz",
-        "__gohashid": 3
-      },
-      {
-        "key": 1004,
-        "name": "Listen",
-        "type": "listen",
-        "color": "lightblue",
-        "isGroup": false,
-        "group": "",
-        "lcolor": "zzz",
-        "state": "zzz",
-        "__gohashid": 4
-      },
-      {
-        "key": 1005,
-        "name": "Listen",
-        "type": "listen",
-        "color": "lightblue",
-        "isGroup": false,
-        "group": "",
-        "lcolor": "zzz",
-        "state": "zzz",
         "__gohashid": 5
       },
       {
         "key": 1006,
-        "name": "Listen",
-        "type": "listen",
+        "name": "Condition",
+        "type": "if",
         "color": "lightblue",
         "isGroup": false,
-        "group": "",
-        "lcolor": "zzz",
-        "state": "zzz",
+        "text": "1",
+        "opt": 4,
         "__gohashid": 6
       },
       {
@@ -83,104 +78,125 @@
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "lcolor": "#00ff00",
+        "lcolor": "00ff00",
         "state": "on",
         "__gohashid": 7
       },
       {
         "key": 1008,
-        "name": "Light",
-        "type": "light",
+        "name": "Talk",
+        "type": "speak",
         "color": "lightblue",
         "isGroup": false,
-        "group": "",
-        "lcolor": "#00ff00",
-        "state": "on",
+        "text": "O número foi o um",
         "__gohashid": 8
       },
       {
         "key": 1009,
-        "name": "Light",
-        "type": "light",
+        "name": "Wait",
+        "type": "wait",
         "color": "lightblue",
         "isGroup": false,
-        "group": "",
-        "lcolor": "#00ff00",
-        "state": "on",
+        "time": 1500,
         "__gohashid": 9
       },
       {
         "key": 1010,
+        "name": "Condition",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "2",
+        "opt": 4,
+        "__gohashid": 10
+      },
+      {
+        "key": 1011,
         "name": "Light",
         "type": "light",
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "lcolor": "#00ff00",
+        "lcolor": "0000ff",
         "state": "on",
-        "__gohashid": 10
-      },
-      {
-        "key": 1011,
-        "name": "Wait",
-        "type": "wait",
-        "color": "lightblue",
-        "isGroup": false,
-        "time": 1000,
         "__gohashid": 11
       },
       {
         "key": 1012,
-        "name": "Listen",
-        "type": "listen",
+        "name": "Talk",
+        "type": "speak",
         "color": "lightblue",
         "isGroup": false,
-        "group": "",
-        "lcolor": "zzz",
-        "state": "zzz",
+        "text": "O número foi o dois",
         "__gohashid": 12
       },
       {
         "key": 1013,
-        "name": "Listen",
-        "type": "listen",
-        "color": "lightblue",
-        "isGroup": false,
-        "group": "",
-        "lcolor": "zzz",
-        "state": "zzz",
-        "__gohashid": 13
-      },
-      {
-        "key": 1014,
-        "name": "Listen",
-        "type": "listen",
-        "color": "lightblue",
-        "isGroup": false,
-        "group": "",
-        "lcolor": "zzz",
-        "state": "zzz",
-        "__gohashid": 14
-      },
-      {
-        "key": 1015,
-        "name": "Listen",
-        "type": "listen",
-        "color": "lightblue",
-        "isGroup": false,
-        "group": "",
-        "lcolor": "zzz",
-        "state": "zzz",
-        "__gohashid": 15
-      },
-      {
-        "key": 1016,
         "name": "Wait",
         "type": "wait",
         "color": "lightblue",
         "isGroup": false,
-        "time": 2345,
+        "time": 1500,
+        "__gohashid": 13
+      },
+      {
+        "key": 1014,
+        "name": "Condition",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "3",
+        "opt": 4,
+        "__gohashid": 14
+      },
+      {
+        "key": 1015,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "ff0000",
+        "state": "on",
+        "__gohashid": 15
+      },
+      {
+        "key": 1016,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "O número foi o três",
         "__gohashid": 16
+      },
+      {
+        "key": 1017,
+        "name": "Wait",
+        "type": "wait",
+        "color": "lightblue",
+        "isGroup": false,
+        "time": 1500,
+        "__gohashid": 17
+      },
+      {
+        "key": 1018,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Já vou embora. Até mais",
+        "__gohashid": 18
+      },
+      {
+        "key": 1019,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "000000",
+        "state": "off",
+        "__gohashid": 19
       }
       ],
       "link": [
@@ -231,38 +247,63 @@
         },
         { 
           "from": 1009,
-          "to": 1010,
+          "to": 1005,
           "__gohashid": 9
+        },
+        { 
+          "from": 1005,
+          "to": 1010,
+          "__gohashid": 10
         },
         { 
           "from": 1010,
           "to": 1011,
-          "__gohashid": 10
+          "__gohashid": 11
         },
         { 
           "from": 1011,
           "to": 1012,
-          "__gohashid": 11
+          "__gohashid": 12
         },
         { 
           "from": 1012,
           "to": 1013,
-          "__gohashid": 12
+          "__gohashid": 13
         },
         { 
           "from": 1013,
+          "to": 1005,
+          "__gohashid": 14
+        },
+        { 
+          "from": 1005,
           "to": 1014,
-          "__gohashid": 13
+          "__gohashid": 15
         },
         { 
           "from": 1014,
           "to": 1015,
-          "__gohashid": 14
+          "__gohashid": 16
         },
         { 
           "from": 1015,
           "to": 1016,
-          "__gohashid": 15
+          "__gohashid": 17
+        },
+        { 
+          "from": 1016,
+          "to": 1017,
+          "__gohashid": 18
+        },
+        { 
+          "from": 1017,
+          "to": 1018,
+          "__gohashid": 19
+        },
+        { 
+          "from": 1018,
+          "to": 1019,
+          "__gohashid": 20
         }
       ]
     }

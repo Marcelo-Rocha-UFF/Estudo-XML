@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- voz portugues: pt-BR_IsabelaV3Voice -->
+<!-- voz portugues: en-US_AllisonV3Voice" -->
 <evaml id="a1001-b3001" name="Script01">
 	<settings>
 		<voice tone="pt-BR_IsabelaV3Voice" />
@@ -6,30 +9,38 @@
 	</settings>
   <script>
 		<light state="on" color="ffffff" />
-		<talk>Ol&#225;, eu sou o rob&#244; Eva. Vou sortear um n&#250;mero de um a tr&#234;s</talk>
-			<talk>Para cada um, vou acender a luz numa cor diferente</talk>
-			<talk>S&#243; vou parar quando o n&#250;mero sorteado for o tr&#234;s</talk>
+		<useMacro name="ABERTURA" />
 		<random id="INICIO" min="1" max="3" />
 		<switch>
 			<case value="1">
 				<light state="on" color="00ff00" />
-				<talk>O n&#250;mero foi o um</talk>
+				<talk>O número foi o um</talk>
 				<wait duration="1500" />
 				<goto target="INICIO" />
 			</case>
 			<case value="2">
 				<light state="on" color="0000ff" />
-				<talk>O n&#250;mero foi o dois</talk>
+				<talk>O número foi o dois</talk>
 				<wait duration="1500" />
 				<goto target="INICIO" />
 			</case>
 			<case value="3">
 				<light state="on" color="ff0000" />
-				<talk>O n&#250;mero foi o tr&#234;s</talk>
+				<talk>O número foi o três</talk>
 				<wait duration="1500" />
 			</case>
 		</switch>
-		<talk>J&#225; vou embora. At&#233; mais</talk>
+		<useMacro name="FINAL" />
 		<light state="off" color="000000" />
 	</script>
-  </evaml>
+  <macros>
+		<macro name="ABERTURA">
+			<talk>Olá, eu sou o robô Eva. Vou sortear um número de um a três</talk>
+			<talk>Para cada um, vou acender a luz numa cor diferente</talk>
+			<talk>Só vou parar quando o número sorteado for o três</talk>
+		</macro>
+		<macro name="FINAL">
+			<talk>Já vou embora. Até mais</talk>
+		</macro>
+  </macros>
+</evaml>
