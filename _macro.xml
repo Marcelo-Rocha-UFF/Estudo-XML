@@ -1,35 +1,30 @@
-<evaml id="a1001-b3001" name="Script01">
+<evaml id="a1001-b3001" name="Therapy02">
 	<settings>
-		<voice tone="pt-BR_IsabelaV3Voice" />
-		<light-effects mode="on" />
+		<voice tone="en-US_AllisonV3Voice" />
+		<lighting-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
-  <script>
-		<light state="on" color="ffffff" />
-		<talk>Ol&#225;, eu sou o rob&#244; Eva. Vou sortear um n&#250;mero de um a tr&#234;s</talk>
-			<talk>Para cada um, vou acender a luz numa cor diferente</talk>
-			<talk>S&#243; vou parar quando o n&#250;mero sorteado for o tr&#234;s</talk>
-		<random id="INICIO" min="1" max="3" />
-		<switch>
-			<case value="1">
-				<light state="on" color="00ff00" />
-				<talk>O n&#250;mero foi o um</talk>
-				<wait duration="1500" />
-				<goto target="INICIO" />
-			</case>
-			<case value="2">
-				<light state="on" color="0000ff" />
-				<talk>O n&#250;mero foi o dois</talk>
-				<wait duration="1500" />
-				<goto target="INICIO" />
-			</case>
-			<case value="3">
-				<light state="on" color="ff0000" />
-				<talk>O n&#250;mero foi o tr&#234;s</talk>
-				<wait duration="1500" />
-			</case>
-		</switch>
-		<talk>J&#225; vou embora. At&#233; mais</talk>
-		<light state="off" color="000000" />
+	<script>
+    <random id="BEGIN" min="1" max="3" />
+    <switch>
+      <case value="1">
+        <listen />
+      </case>
+      <case value="2">
+        <talk>Oi sou o marcelo</talk>
+        <talk>Oi sou o marcelo</talk>
+        <talk>Oi sou o marcelo</talk>
+      </case>
+      <case value="3">
+        <wait duration="1" />
+        <wait duration="1" />
+        <wait duration="1" />
+      </case>
+      <case value="4">
+        <light color="000000" state="ff" />
+        <listen />
+        <listen />
+      </case>
+    </switch>
 	</script>
   </evaml>
