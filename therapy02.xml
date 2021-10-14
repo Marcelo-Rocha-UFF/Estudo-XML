@@ -6,32 +6,26 @@
 		<audio-effects mode="on" vol="100%" />
 	</settings>
 	<script>
-    <userEmotion />
-    <userEmotion />
-    <userEmotion />
-    <random id="BEGIN" min="1" max="4"/>
+    <random id="BEGIN" min="1" max="2"/>
     <switch>
       <case value="1">
         <listen/>
-        <listen/>
-        <listen/>
       </case>
       <case value="2">
-        <talk>Oi sou o marcelo</talk>
-        <talk>Oi sou o marcelo</talk>
-        <talk>Oi sou o marcelo</talk>
-      </case>
-      <case value="3">
-        <wait duration="1" />
-        <wait duration="1" />
-        <wait duration="1" />
-      </case>
-      <case value="4">
-        <light color="000000" state="ff"/>
-        <light color="000000" state="ff"/>
-        <light color="000000" state="ff"/>
+        <wait duration="1234" />
+        <random min="3" max="4" />
+        <switch>
+          <case value="3">
+            <talk>Oi</talk>
+          </case>
+          <case value="4">
+            <light state="on" color="ff0000" />
+            <goto target="BEGIN" />
+          </case>
+        </switch>
       </case>
     </switch>
+    <userEmotion />
 	</script>
   <macros>
   </macros>

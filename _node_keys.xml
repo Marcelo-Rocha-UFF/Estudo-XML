@@ -5,31 +5,25 @@
 		<audio-effects mode="on" vol="100%" />
 	</settings>
 	<script>
-    <userEmotion key="1001" />
-    <userEmotion key="1002" />
-    <userEmotion key="1003" />
-    <random id="BEGIN" min="1" max="4" key="1004" />
+    <random id="BEGIN" min="1" max="2" key="1001" />
     <switch>
-      <case value="1" key="1005">
-        <listen key="1006" />
-        <listen key="1007" />
-        <listen key="1008" />
+      <case value="1" key="1002">
+        <listen key="1003" />
       </case>
-      <case value="2" key="1009">
-        <talk key="1010">Oi sou o marcelo</talk>
-        <talk key="1011">Oi sou o marcelo</talk>
-        <talk key="1012">Oi sou o marcelo</talk>
-      </case>
-      <case value="3" key="1013">
-        <wait duration="1" key="1014" />
-        <wait duration="1" key="1015" />
-        <wait duration="1" key="1016" />
-      </case>
-      <case value="4" key="1017">
-        <light color="000000" state="ff" key="1018" />
-        <light color="000000" state="ff" key="1019" />
-        <light color="000000" state="ff" key="1020" />
+      <case value="2" key="1004">
+        <wait duration="1234" key="1005" />
+        <random min="3" max="4" key="1006" />
+        <switch>
+          <case value="3" key="1007">
+            <talk key="1008">Oi</talk>
+          </case>
+          <case value="4" key="1009">
+            <light state="on" color="ff0000" key="1010" />
+            <goto target="BEGIN" />
+          </case>
+        </switch>
       </case>
     </switch>
+    <userEmotion key="1011" />
 	</script>
   </evaml>

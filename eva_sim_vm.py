@@ -1,6 +1,7 @@
 import random as rnd
 import sys
 import xml.etree.ElementTree as ET
+import eva_memory
 
 tree = ET.parse(sys.argv[1])  # arquivo de codigo xml
 root = tree.getroot() # evaml root node
@@ -9,77 +10,56 @@ links_node = root.find("links")
 fila_links =  [] # fila de links (comandos)
 eva_global_var = []
 
-def voice():
-	print("voice command")
-	return True
-
-def light():
-	print("light command")
-	return True
-
-def wait():
-	print("wait command")
-	return True
-
-def random(min, max):
-	global eva_global_var # $ do software do robot no nodejs
-	eva_global_var = str(rnd.randint(int(min), int(max)))
-	print("random command, min = " + min + ", max = " + max + ", valor = " + eva_global_var[-1])
-	return True
-
-def listen():
-	print("listen command")
-	return True
-
-def talk():
-	print("talk command")
-	return True
-
-def userEmotion():
-	print("userEmotion command")
-	return True
-
-def case(value):
-	global fila_links
-	print("valor ", value, type(value))
-	if value == eva_global_var:
-		node_tmp = fila_links[0] # guarda o no corrente em execucao
-		fila_links = [] # esvazia a fila
-		fila_links.append(node_tmp) # add o no corrente na fila
-		print("case command")
-		return True
-	else:
-		return False
-	
 
 # executa os comandos
 def exec_comando(node):
 	if node.tag == "voice":
-		return voice()
+		print("voice command")
+		return True
 
 	elif node.tag == "light":
-		return light()
+		print("light command")
+		return True
 
 	elif node.tag == "wait":
-		return wait()
+		print("wait command")
+		return True
 
 	elif node.tag == "random":
-		return random(node.attrib["min"], node.attrib["max"])
+		global eva_global_var # $ do software do robot no nodejs
+		min = node.attrib["min"]
+		max = node.attrib["max"]
+		eva_memory.var_dolar.append(str(rnd.randint(int(min), int(max))))
+		print("random command, min = " + min + ", max = " + max + ", valor = " + eva_memory.var_dolar[-1])
+		return True
 
 	elif node.tag == "listen":
-		return listen()
+		print("listen command")
+		return True
 
 	elif node.tag == "talk":
-		return talk()
+		print("talk command")
+		return True
 
 	elif node.tag == "userEmotion":
-		return userEmotion()
+		print("userEmotion command")
+		return True
 
 	elif node.tag == "case":
-		return case(node.attrib["value"])
+		global fila_links
+		valor = node.attrib["value"]
+		print("valor ", valor, type(valor))
+		if valor == eva_memory.var_dolar[-1]:
+			node_tmp = fila_links[0] # guarda o no corrente em execucao
+			fila_links = [] # esvazia a fila, pois o fluxo seguira deste no em diante
+			fila_links.append(node_tmp) # add o no corrente na fila
+			print("case command")
+			return True
+		else:
+			return False
 
 
-def busca_commando(key):
+def busca_commando(key): # keys são strings
 	# busca em settings. Isto porque "voice" fica em settings
 	for elem in root.find("settings").iter():
 		if elem.get("key") != None: # verifica se node tem atributo id
@@ -103,10 +83,12 @@ def busca_links(att_from):
 
 
 # executa os comandos que estão na pilha de links
-def link_process():
-	global anterior
+def link_process(anterior = -1):
+	anterior
 	while len(fila_links) != 0:
 		from_comando = fila_links[0].attrib["from"]
+		comando_from = busca_commando(from_comando).tag # DEBUG
+
 		# evita que um mesmo nó seja executado consecutivamente
 		if anterior != from_comando:
 			result = exec_comando(busca_commando(from_comando))
@@ -114,18 +96,15 @@ def link_process():
 			
 		if result == True:
 				to_comando = fila_links[0].attrib["to"]
+				comando_to = busca_commando(to_comando).tag # DEBUG
 				fila_links.pop(0)
 				if not(busca_links(to_comando)):
 					exec_comando(busca_commando(to_comando))
 					print("fim de bloco.............")
 		else:
-				anterior = from_comando
 				fila_links.pop(0)
 				print("false")
 
 
-
-
-anterior = -1
-busca_links("1000")
-link_process()
+#busca_links("1000")
+#link_process(-1)
