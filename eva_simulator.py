@@ -1,3 +1,6 @@
+import xml.etree.ElementTree as ET
+
+
 from tkinter import *
 from tkinter import filedialog as fd
 from playsound import playsound
@@ -169,6 +172,7 @@ def importFile():
     print("Importing a file...")
     filetypes = (('evaML files', '*.xml'), )
     script_file = fd.askopenfile(mode = "r", title = 'Open an EvaML Script File', initialdir = './', filetypes = filetypes)
+    tree = ET.parse(script_file)
     bt_run['state'] = NORMAL
     bt_stop['state'] = DISABLED
     #evaTalk("Hi Philip, let's go to play guitar")

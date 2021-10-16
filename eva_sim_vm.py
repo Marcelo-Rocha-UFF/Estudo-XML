@@ -3,60 +3,45 @@ import sys
 import xml.etree.ElementTree as ET
 import eva_memory
 
+
 tree = ET.parse(sys.argv[1])  # arquivo de codigo xml
 root = tree.getroot() # evaml root node
 script_node = root.find("script")
 links_node = root.find("links")
 fila_links =  [] # fila de links (comandos)
-eva_global_var = []
-
 
 # executa os comandos
 def exec_comando(node):
 	if node.tag == "voice":
 		print("voice command")
-		return True
 
 	elif node.tag == "light":
 		print("light command")
-		return True
 
 	elif node.tag == "wait":
 		print("wait command")
-		return True
 
 	elif node.tag == "random":
-		global eva_global_var # $ do software do robot no nodejs
 		min = node.attrib["min"]
 		max = node.attrib["max"]
 		eva_memory.var_dolar.append(str(rnd.randint(int(min), int(max))))
 		print("random command, min = " + min + ", max = " + max + ", valor = " + eva_memory.var_dolar[-1])
-		return True
 
 	elif node.tag == "listen":
 		print("listen command")
-		return True
 
 	elif node.tag == "talk":
 		print("talk command")
-		return True
 
 	elif node.tag == "userEmotion":
 		print("userEmotion command")
-		return True
 
 	elif node.tag == "case":
-		global fila_links
+		eva_memory.reg_case = 0 # limpa o flag do case
 		valor = node.attrib["value"]
 		print("valor ", valor, type(valor))
 		if valor == eva_memory.var_dolar[-1]:
-			node_tmp = fila_links[0] # guarda o no corrente em execucao
-			fila_links = [] # esvazia a fila, pois o fluxo seguira deste no em diante
-			fila_links.append(node_tmp) # add o no corrente na fila
-			print("case command")
-			return True
-		else:
-			return False
+			eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
 
 def busca_commando(key): # keys são strings
@@ -84,27 +69,35 @@ def busca_links(att_from):
 
 # executa os comandos que estão na pilha de links
 def link_process(anterior = -1):
-	anterior
+	global fila_links
 	while len(fila_links) != 0:
-		from_comando = fila_links[0].attrib["from"]
-		comando_from = busca_commando(from_comando).tag # DEBUG
+		from_key = fila_links[0].attrib["from"] # chave do comando a executar
+		to_key = fila_links[0].attrib["to"] # chave do próximo comando
+		comando_from = busca_commando(from_key).tag # Tag do comando a ser executado
+		comando_to = busca_commando(to_key).tag # DEBUG
 
 		# evita que um mesmo nó seja executado consecutivamente
-		if anterior != from_comando:
-			result = exec_comando(busca_commando(from_comando))
-			anterior = from_comando
-			
-		if result == True:
-				to_comando = fila_links[0].attrib["to"]
-				comando_to = busca_commando(to_comando).tag # DEBUG
-				fila_links.pop(0)
-				if not(busca_links(to_comando)):
-					exec_comando(busca_commando(to_comando))
+		if anterior != from_key:
+			exec_comando(busca_commando(from_key))
+			anterior = from_key
+		
+		if comando_from == "case": # se o comando executado foi um case
+			if eva_memory.reg_case == 1: # verifica a flag pra saber se o case foi verdadeiro
+				fila_links = [] # esvazia a fila, pois o fluxo seguira deste no case em diante
+				print("case command")
+				# segue o fluxo do case de sucesso buscando o prox. link
+				if not(busca_links(to_key)): # se nao tem mais link, o comando indicado por to_key é o ultimo do fluxo
+					exec_comando(busca_commando(to_key))
 					print("fim de bloco.............")
-		else:
-				fila_links.pop(0)
+			else:
+				fila_links.pop(0) # se o case falhou, ele é retirado da fila e consequentemente seu fluxo é descartado
 				print("false")
+		else: # se o comando nao foi um case
+			fila_links.pop(0) # remove o link da fila
+			if not(busca_links(to_key)): # como já comentado anteriormente
+				exec_comando(busca_commando(to_key))
+				print("fim de bloco.............")
 
 
-#busca_links("1000")
-#link_process(-1)
+busca_links("1000")
+link_process(-1)
