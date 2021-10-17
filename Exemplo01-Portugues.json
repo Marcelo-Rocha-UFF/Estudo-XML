@@ -1,0 +1,66 @@
+{
+  "_id": "a1001-b3001",
+  "nombre": "Exemplo01-Portugues",
+  "data": {
+    "node": [
+      {
+        "key": 1000,
+        "name": "Voice",
+        "type": "voice",
+        "color": "lightblue",
+        "isGroup": false,
+        "voice": "pt-BR_IsabelaV3Voice",
+        "__gohashid": 0
+      },
+      {
+        "key": 1001,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "ffffff",
+        "state": "on",
+        "__gohashid": 1
+      },
+      {
+        "key": 1002,
+        "name": "Eva_Emotion",
+        "type": "emotion",
+        "color": "lightyellow",
+        "isGroup": false,
+        "group": "",
+        "emotion": "neutral",
+        "level": 0,
+        "speed": 0,
+        "__gohashid": 2
+      },
+      {
+        "key": 1003,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Olá, eu sou o robô Eva",
+        "__gohashid": 3
+      }
+      ],
+      "link": [
+        { 
+          "from": 1000,
+          "to": 1001,
+          "__gohashid": 0
+        },
+        { 
+          "from": 1001,
+          "to": 1002,
+          "__gohashid": 1
+        },
+        { 
+          "from": 1002,
+          "to": 1003,
+          "__gohashid": 2
+        }
+      ]
+    }
+  }

@@ -140,9 +140,9 @@ def runScript():
 def evaEmotion(expression):
     if expression == "neutral":
         canvas.create_image(156, 161, image = im_eyes_neutral)
-    elif expression == "angry":
+    elif expression == "anger":
         canvas.create_image(156, 161, image = im_eyes_angry)
-    elif expression == "happy":
+    elif expression == "joy":
         canvas.create_image(156, 161, image = im_eyes_happy)
     elif expression == "sad":
         canvas.create_image(156, 161, image = im_eyes_sad)
@@ -232,7 +232,7 @@ def exec_comando(node):
             terminal.insert(INSERT, "\nstate: Turnning off the light.")
             terminal.see(tkinter.END)
         light(color , state)
-        time.sleep(1) # emula o tempo da lampada real
+        time.sleep(.5) # emula o tempo da lampada real
 
     elif node.tag == "wait":
         duration = node.attrib["duration"]
@@ -261,13 +261,14 @@ def exec_comando(node):
         hash_object = hashlib.md5(texto.encode())
         file_name = "_audio" + hash_object.hexdigest()
 
-        if not (os.path.isfile("my_sounds/" + file_name + ".mp3")):
+        # verifica se o audio da fala já existe na pasta
+        if not (os.path.isfile("my_sounds/" + file_name + ".mp3")): # se nao existe chama o watson
             # Eva tts functions
             with open("my_sounds/" + file_name + ".mp3", 'wb') as audio_file:
-                res = tts.synthesize(texto, accept = "audio/mp3", voice = 'en-US_AllisonV3Voice').get_result()
+                res = tts.synthesize(texto, accept = "audio/mp3", voice = root.find("settings")[0].attrib["tone"]).get_result()
                 audio_file.write(res.content)
         evaMatrix("blue")
-        playsound("my_sounds/" + file_name + ".mp3", block = True)
+        playsound("my_sounds/" + file_name + ".mp3", block = True) # toca o audio da fala
         evaMatrix("white")
 
     elif node.tag == "evaEmotion":
@@ -275,14 +276,15 @@ def exec_comando(node):
         terminal.insert(INSERT, "\nstate: Expressing an emotion: " + emotion)
         terminal.see(tkinter.END)
         evaEmotion(emotion)
-        if emotion == "angry":
+        if emotion == "anger":
             evaMatrix("red")
-        elif emotion == "happy":
+        elif emotion == "joy":
             evaMatrix("yellow")
         elif emotion == "sad":
             evaMatrix("blue")
         elif emotion == "neutral":
             evaMatrix("white")
+        time.sleep(1) # emulando o tempo do robô
 
     elif node.tag == "audio":
         playsound("my_sounds/load_a_script.mp3", block = True)
@@ -352,7 +354,6 @@ def link_process(anterior = -1):
                 exec_comando(busca_commando(to_key))
                 print("fim de bloco.............")
     terminal.insert(INSERT, "\nstate: End of script.")
-    terminal.insert(INSERT, "\n---------------------------------------------------")
     terminal.see(tkinter.END)
 
 window.mainloop()

@@ -23,5 +23,5 @@ def key_gen(script):
 # os elementos switch, stop e goto nao possuem chaves
 print("Step 02 - Generating Elements keys...")
 key_gen(script_node)
-tree.write("_node_keys.xml")
+tree.write("_node_keys.xml", "UTF-8")
 

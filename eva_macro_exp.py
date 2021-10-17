@@ -41,4 +41,4 @@ macro_expander(script_node, macros_node)
 root.remove(macros_node) # remove a secao de macros
 
 # gera o arquivo com as macros expandidas para a proxima etap
-tree.write("_macro.xml")
+tree.write("_macro.xml", "UTF-8")

@@ -20,13 +20,13 @@
     <talk>Turnning off the light</talk>
     <light color="0000ff" state="off" />
     <talk>I will express anger</talk>
-    <evaEmotion emotion="angry" />
+    <evaEmotion emotion="anger" />
     <wait duration="1000" />
     <talk>I'm so sad</talk>
     <evaEmotion emotion="sad" />
     <wait duration="1000" />
     <talk>I am happy now</talk>
-    <evaEmotion emotion="happy" />
+    <evaEmotion emotion="joy" />
     <wait duration="1000" />
     <talk>Bye bye</talk>
 	</script>

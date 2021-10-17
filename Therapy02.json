@@ -26,11 +26,13 @@
       },
       {
         "key": 1002,
-        "name": "Talk",
-        "type": "speak",
+        "name": "Light",
+        "type": "light",
         "color": "lightblue",
         "isGroup": false,
-        "text": "I will choose a number between 1 and 3",
+        "group": "",
+        "lcolor": "ffffff",
+        "state": "on",
         "__gohashid": 2
       },
       {
@@ -39,11 +41,20 @@
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
-        "text": "When the number is 3 I will finish",
+        "text": "I will choose a number between 1 and 3",
         "__gohashid": 3
       },
       {
         "key": 1004,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "When the number is 3 I will finish",
+        "__gohashid": 4
+      },
+      {
+        "key": 1005,
         "name": "Random",
         "type": "random",
         "color": "lightblue",
@@ -51,20 +62,31 @@
         "group": "",
         "min": 1,
         "max": 3,
-        "__gohashid": 4
+        "__gohashid": 5
       },
       {
-        "key": 1005,
+        "key": 1006,
         "name": "Condition",
         "type": "if",
         "color": "lightblue",
         "isGroup": false,
         "text": "1",
         "opt": 4,
-        "__gohashid": 5
+        "__gohashid": 6
       },
       {
-        "key": 1006,
+        "key": 1007,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "0000ff",
+        "state": "on",
+        "__gohashid": 7
+      },
+      {
+        "key": 1008,
         "name": "Eva_Emotion",
         "type": "emotion",
         "color": "lightyellow",
@@ -73,114 +95,136 @@
         "emotion": "sad",
         "level": 0,
         "speed": 0,
-        "__gohashid": 6
+        "__gohashid": 8
       },
       {
-        "key": 1007,
+        "key": 1009,
         "name": "Wait",
         "type": "wait",
         "color": "lightblue",
         "isGroup": false,
         "time": 1000,
-        "__gohashid": 7
+        "__gohashid": 9
       },
       {
-        "key": 1008,
+        "key": 1010,
         "name": "Talk",
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
         "text": "The number chosen was the $",
-        "__gohashid": 8
+        "__gohashid": 10
       },
       {
-        "key": 1009,
+        "key": 1011,
         "name": "Condition",
         "type": "if",
         "color": "lightblue",
         "isGroup": false,
         "text": "2",
         "opt": 4,
-        "__gohashid": 9
+        "__gohashid": 11
       },
       {
-        "key": 1010,
+        "key": 1012,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "ff0000",
+        "state": "on",
+        "__gohashid": 12
+      },
+      {
+        "key": 1013,
         "name": "Eva_Emotion",
         "type": "emotion",
         "color": "lightyellow",
         "isGroup": false,
         "group": "",
-        "emotion": "sad",
+        "emotion": "anger",
         "level": 0,
         "speed": 0,
-        "__gohashid": 10
+        "__gohashid": 13
       },
       {
-        "key": 1011,
+        "key": 1014,
         "name": "Wait",
         "type": "wait",
         "color": "lightblue",
         "isGroup": false,
         "time": 1000,
-        "__gohashid": 11
+        "__gohashid": 14
       },
       {
-        "key": 1012,
+        "key": 1015,
         "name": "Talk",
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
         "text": "The number chosen was the $",
-        "__gohashid": 12
+        "__gohashid": 15
       },
       {
-        "key": 1013,
+        "key": 1016,
         "name": "Condition",
         "type": "if",
         "color": "lightblue",
         "isGroup": false,
         "text": "3",
         "opt": 4,
-        "__gohashid": 13
+        "__gohashid": 16
       },
       {
-        "key": 1014,
+        "key": 1017,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "00ff00",
+        "state": "on",
+        "__gohashid": 17
+      },
+      {
+        "key": 1018,
         "name": "Eva_Emotion",
         "type": "emotion",
         "color": "lightyellow",
         "isGroup": false,
         "group": "",
-        "emotion": "happy",
+        "emotion": "joy",
         "level": 0,
         "speed": 0,
-        "__gohashid": 14
+        "__gohashid": 18
       },
       {
-        "key": 1015,
+        "key": 1019,
         "name": "Wait",
         "type": "wait",
         "color": "lightblue",
         "isGroup": false,
         "time": 1000,
-        "__gohashid": 15
+        "__gohashid": 19
       },
       {
-        "key": 1016,
+        "key": 1020,
         "name": "Talk",
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
         "text": "The number chosen was the $",
-        "__gohashid": 16
+        "__gohashid": 20
       },
       {
-        "key": 1017,
+        "key": 1021,
         "name": "Talk",
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
         "text": "Bye bye",
-        "__gohashid": 17
+        "__gohashid": 21
       }
       ],
       "link": [
@@ -226,21 +270,21 @@
         },
         { 
           "from": 1008,
-          "to": 1001,
-          "__gohashid": 8
-        },
-        { 
-          "from": 1004,
           "to": 1009,
-          "__gohashid": 9
+          "__gohashid": 8
         },
         { 
           "from": 1009,
           "to": 1010,
-          "__gohashid": 10
+          "__gohashid": 9
         },
         { 
           "from": 1010,
+          "to": 1001,
+          "__gohashid": 10
+        },
+        { 
+          "from": 1005,
           "to": 1011,
           "__gohashid": 11
         },
@@ -251,26 +295,26 @@
         },
         { 
           "from": 1012,
-          "to": 1001,
-          "__gohashid": 13
-        },
-        { 
-          "from": 1004,
           "to": 1013,
-          "__gohashid": 14
+          "__gohashid": 13
         },
         { 
           "from": 1013,
           "to": 1014,
-          "__gohashid": 15
+          "__gohashid": 14
         },
         { 
           "from": 1014,
           "to": 1015,
-          "__gohashid": 16
+          "__gohashid": 15
         },
         { 
           "from": 1015,
+          "to": 1001,
+          "__gohashid": 16
+        },
+        { 
+          "from": 1005,
           "to": 1016,
           "__gohashid": 17
         },
@@ -278,6 +322,26 @@
           "from": 1016,
           "to": 1017,
           "__gohashid": 18
+        },
+        { 
+          "from": 1017,
+          "to": 1018,
+          "__gohashid": 19
+        },
+        { 
+          "from": 1018,
+          "to": 1019,
+          "__gohashid": 20
+        },
+        { 
+          "from": 1019,
+          "to": 1020,
+          "__gohashid": 21
+        },
+        { 
+          "from": 1020,
+          "to": 1021,
+          "__gohashid": 22
         }
       ]
     }

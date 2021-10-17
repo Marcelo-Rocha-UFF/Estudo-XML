@@ -156,7 +156,7 @@
         "color": "lightyellow",
         "isGroup": false,
         "group": "",
-        "emotion": "angry",
+        "emotion": "anger",
         "level": 0,
         "speed": 0,
         "__gohashid": 15
@@ -216,7 +216,7 @@
         "color": "lightyellow",
         "isGroup": false,
         "group": "",
-        "emotion": "happy",
+        "emotion": "joy",
         "level": 0,
         "speed": 0,
         "__gohashid": 21
