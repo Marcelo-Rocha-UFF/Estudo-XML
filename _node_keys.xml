@@ -1,12 +1,39 @@
-<evaml id="a1001-b3001" name="Exemplo01-Portugues">
-	<settings>     
+<evaml id="a1001-b3001" name="Script02">
+	<settings>
 		<voice tone="pt-BR_IsabelaV3Voice" key="1000" />
 		<light-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
   <script>
-		<light state="on" color="ffffff" key="1001" />
-		<evaEmotion emotion="neutral" key="1002" />
-		<talk key="1003">Olá, eu sou o robô Eva</talk>
+		<random id="PONTO1" min="1" max="2" key="1001" />
+		<switch>
+			<case value="1" key="1002">
+				<light state="on" color="red" key="1003" />
+				<random min="3" max="4" key="1004" />
+				<switch>
+					<case value="3" key="1005">
+						<light state="on" color="blue" key="1006" />
+					</case>
+					<case value="4" key="1007">
+						<light state="on" color="pink" key="1008" />
+					</case>
+				</switch>
+			</case>
+			<case value="2" key="1009">
+				<light id="PONTO2" state="on" color="green" key="1010" />
+				<random min="5" max="6" key="1011" />
+				<switch>
+					<case value="5" key="1012">
+						<light state="on" color="blue" key="1013" />
+						<goto target="PONTO1" />
+					</case>
+					<case value="6" key="1014">
+						<light state="on" color="pink" key="1015" />
+						<goto target="PONTO2" />
+					</case>
+				</switch>
+			</case>
+		</switch>
+		<talk key="1016">Fim do script</talk>
 	</script>
   </evaml>

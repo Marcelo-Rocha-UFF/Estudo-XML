@@ -92,6 +92,10 @@ def audio_process(audio_command):
 # light node processing
 def light_process(light_command):
     global gohashid
+    color = light_command.attrib['color']
+    color_map = {"white":"#ffffff", "black":"#000000", "red":"#ff0000", "pink":"#e6007e", "green":"#00ff00", "yellow":"#ffff00", "blue":"#0000ff"}
+    if color_map.get(color) != None:
+        color = color_map.get(color)
     light_node = """      {
         "key": """ + light_command.attrib["key"] + """,
         "name": "Light",
@@ -99,7 +103,7 @@ def light_process(light_command):
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "lcolor": """ + '"' + light_command.attrib['color'] + '",' + """
+        "lcolor": """ + '"' + color + '",' + """
         "state": """ + '"' + light_command.attrib['state'] + '",' + """
         "__gohashid": """ + str(gohashid) + """
       }"""

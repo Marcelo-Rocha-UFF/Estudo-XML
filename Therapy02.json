@@ -31,7 +31,7 @@
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "lcolor": "ffffff",
+        "lcolor": "#ffffff",
         "state": "on",
         "__gohashid": 2
       },
@@ -81,7 +81,7 @@
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "lcolor": "0000ff",
+        "lcolor": "#0000ff",
         "state": "on",
         "__gohashid": 7
       },
@@ -132,7 +132,7 @@
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "lcolor": "ff0000",
+        "lcolor": "#ff0000",
         "state": "on",
         "__gohashid": 12
       },
@@ -183,7 +183,7 @@
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "lcolor": "00ff00",
+        "lcolor": "#00ff00",
         "state": "on",
         "__gohashid": 17
       },

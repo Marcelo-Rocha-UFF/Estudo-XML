@@ -150,6 +150,7 @@ def evaEmotion(expression):
         canvas.create_image(156, 161, image = im_eyes_on)
     else: 
         print("Wrong expression")
+    time.sleep(1)
 
 # set the Eva emotion
 def evaMatrix(color):
@@ -170,6 +171,9 @@ def evaMatrix(color):
 
 # light color and state
 def light(color, state):
+    color_map = {"white":"#ffffff", "black":"#000000", "red":"#ff0000", "pink":"#e6007e", "green":"#00ff00", "yellow":"#ffff00", "blue":"#0000ff"}
+    if color_map.get(color) != None:
+        color = color_map.get(color)
     if state == "on":
         canvas.create_oval(300, 205, 377, 285, fill = color, outline = color )
         canvas.create_image(340, 285, image = bulb_image) # redesenha a lampada
@@ -224,7 +228,7 @@ def exec_comando(node):
 
     elif node.tag == "light":
         state = node.attrib["state"]
-        color = "#" + node.attrib["color"]
+        color = node.attrib["color"]
         if state == "on":
             terminal.insert(INSERT, "\nstate: Turnning on the light. Color = " + color + ".")
             terminal.see(tkinter.END) # autoscrolling
@@ -232,13 +236,13 @@ def exec_comando(node):
             terminal.insert(INSERT, "\nstate: Turnning off the light.")
             terminal.see(tkinter.END)
         light(color , state)
-        time.sleep(.5) # emula o tempo da lampada real
+        time.sleep(1) # emula o tempo da lampada real
 
     elif node.tag == "wait":
         duration = node.attrib["duration"]
-        terminal.insert(INSERT, "\nstate: Pausing. Duration = " + duration)
+        terminal.insert(INSERT, "\nstate: Pausing. Duration = " + duration + " ms")
         terminal.see(tkinter.END)
-        time.sleep(int(duration)/1000) # converte para ms
+        time.sleep(int(duration)/1000) # converte para segundos
 
     elif node.tag == "random":
         min = node.attrib["min"]
@@ -257,7 +261,8 @@ def exec_comando(node):
             texto = texto.replace("$", eva_memory.var_dolar[-1])
         terminal.insert(INSERT, '\nstate: Speaking: "' + texto + '"')
         terminal.see(tkinter.END)
-        # Assumes the default UTF-8 (Gera o hashing do arquivo de audio)
+
+        # Assume the default UTF-8 (Gera o hashing do arquivo de audio)
         hash_object = hashlib.md5(texto.encode())
         file_name = "_audio" + hash_object.hexdigest()
 
@@ -275,7 +280,6 @@ def exec_comando(node):
         emotion = node.attrib["emotion"]
         terminal.insert(INSERT, "\nstate: Expressing an emotion: " + emotion)
         terminal.see(tkinter.END)
-        evaEmotion(emotion)
         if emotion == "anger":
             evaMatrix("red")
         elif emotion == "joy":
@@ -284,7 +288,7 @@ def exec_comando(node):
             evaMatrix("blue")
         elif emotion == "neutral":
             evaMatrix("white")
-        time.sleep(1) # emulando o tempo do robô
+        evaEmotion(emotion)
 
     elif node.tag == "audio":
         playsound("my_sounds/load_a_script.mp3", block = True)

@@ -26,11 +26,13 @@
       },
       {
         "key": 1002,
-        "name": "Talk",
-        "type": "speak",
+        "name": "Light",
+        "type": "light",
         "color": "lightblue",
         "isGroup": false,
-        "text": "Hi, I am the Eva simulator software",
+        "group": "",
+        "lcolor": "#ffffff",
+        "state": "on",
         "__gohashid": 2
       },
       {
@@ -39,118 +41,127 @@
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
-        "text": "Turning on the red light",
+        "text": "Hi, I am the Eva simulator software",
         "__gohashid": 3
       },
       {
         "key": 1004,
-        "name": "Light",
-        "type": "light",
-        "color": "lightblue",
-        "isGroup": false,
-        "group": "",
-        "lcolor": "ff0000",
-        "state": "on",
-        "__gohashid": 4
-      },
-      {
-        "key": 1005,
-        "name": "Wait",
-        "type": "wait",
-        "color": "lightblue",
-        "isGroup": false,
-        "time": 1000,
-        "__gohashid": 5
-      },
-      {
-        "key": 1006,
         "name": "Talk",
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
-        "text": "Turning on the green light",
-        "__gohashid": 6
+        "text": "Turning on the red light",
+        "__gohashid": 4
       },
       {
-        "key": 1007,
+        "key": 1005,
         "name": "Light",
         "type": "light",
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "lcolor": "00ff00",
+        "lcolor": "#ff0000",
         "state": "on",
-        "__gohashid": 7
+        "__gohashid": 5
       },
       {
-        "key": 1008,
+        "key": 1006,
         "name": "Wait",
         "type": "wait",
         "color": "lightblue",
         "isGroup": false,
         "time": 1000,
+        "__gohashid": 6
+      },
+      {
+        "key": 1007,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Turning on the pink light",
+        "__gohashid": 7
+      },
+      {
+        "key": 1008,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#e6007e",
+        "state": "on",
         "__gohashid": 8
       },
       {
         "key": 1009,
+        "name": "Wait",
+        "type": "wait",
+        "color": "lightblue",
+        "isGroup": false,
+        "time": 1000,
+        "__gohashid": 9
+      },
+      {
+        "key": 1010,
         "name": "Talk",
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
         "text": "Turning on the blue light",
-        "__gohashid": 9
+        "__gohashid": 10
       },
       {
-        "key": 1010,
+        "key": 1011,
         "name": "Light",
         "type": "light",
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "lcolor": "0000ff",
+        "lcolor": "#0000ff",
         "state": "on",
-        "__gohashid": 10
+        "__gohashid": 11
       },
       {
-        "key": 1011,
+        "key": 1012,
         "name": "Wait",
         "type": "wait",
         "color": "lightblue",
         "isGroup": false,
         "time": 1000,
-        "__gohashid": 11
+        "__gohashid": 12
       },
       {
-        "key": 1012,
+        "key": 1013,
         "name": "Talk",
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
         "text": "Turnning off the light",
-        "__gohashid": 12
+        "__gohashid": 13
       },
       {
-        "key": 1013,
+        "key": 1014,
         "name": "Light",
         "type": "light",
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "lcolor": "0000ff",
+        "lcolor": "#000000",
         "state": "off",
-        "__gohashid": 13
+        "__gohashid": 14
       },
       {
-        "key": 1014,
+        "key": 1015,
         "name": "Talk",
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
         "text": "I will express anger",
-        "__gohashid": 14
+        "__gohashid": 15
       },
       {
-        "key": 1015,
+        "key": 1016,
         "name": "Eva_Emotion",
         "type": "emotion",
         "color": "lightyellow",
@@ -159,24 +170,15 @@
         "emotion": "anger",
         "level": 0,
         "speed": 0,
-        "__gohashid": 15
+        "__gohashid": 16
       },
       {
-        "key": 1016,
+        "key": 1017,
         "name": "Wait",
         "type": "wait",
         "color": "lightblue",
         "isGroup": false,
         "time": 1000,
-        "__gohashid": 16
-      },
-      {
-        "key": 1017,
-        "name": "Talk",
-        "type": "speak",
-        "color": "lightblue",
-        "isGroup": false,
-        "text": "I'm so sad",
         "__gohashid": 17
       },
       {
@@ -193,20 +195,20 @@
       },
       {
         "key": 1019,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "I'm so sad",
+        "__gohashid": 19
+      },
+      {
+        "key": 1020,
         "name": "Wait",
         "type": "wait",
         "color": "lightblue",
         "isGroup": false,
         "time": 1000,
-        "__gohashid": 19
-      },
-      {
-        "key": 1020,
-        "name": "Talk",
-        "type": "speak",
-        "color": "lightblue",
-        "isGroup": false,
-        "text": "I am happy now",
         "__gohashid": 20
       },
       {
@@ -223,21 +225,42 @@
       },
       {
         "key": 1022,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "I am happy now",
+        "__gohashid": 22
+      },
+      {
+        "key": 1023,
         "name": "Wait",
         "type": "wait",
         "color": "lightblue",
         "isGroup": false,
         "time": 1000,
-        "__gohashid": 22
+        "__gohashid": 23
       },
       {
-        "key": 1023,
+        "key": 1024,
         "name": "Talk",
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
         "text": "Bye bye",
-        "__gohashid": 23
+        "__gohashid": 24
+      },
+      {
+        "key": 1025,
+        "name": "Eva_Emotion",
+        "type": "emotion",
+        "color": "lightyellow",
+        "isGroup": false,
+        "group": "",
+        "emotion": "neutral",
+        "level": 0,
+        "speed": 0,
+        "__gohashid": 25
       }
       ],
       "link": [
@@ -355,6 +378,16 @@
           "from": 1022,
           "to": 1023,
           "__gohashid": 22
+        },
+        { 
+          "from": 1023,
+          "to": 1024,
+          "__gohashid": 23
+        },
+        { 
+          "from": 1024,
+          "to": 1025,
+          "__gohashid": 24
         }
       ]
     }
