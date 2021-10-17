@@ -1,5 +1,11 @@
-import xml.etree.ElementTree as ET
+import hashlib
+import os
 
+import random as rnd
+import sys
+import tkinter
+import xml.etree.ElementTree as ET
+import eva_memory
 
 from tkinter import *
 from tkinter import filedialog as fd
@@ -9,7 +15,14 @@ import threading
 from ibm_watson import TextToSpeechV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
-# watson
+
+# variaveis globais da vm
+root = {}
+script_node = {}
+links_node = {}
+fila_links =  [] # fila de links (comandos)
+
+# watson config
 apikey = "0UyIQDYcNO7SytoTLOE-hMRME8o7jeAxcD21Bcd7ZZ9E"
 url = "https://api.au-syd.text-to-speech.watson.cloud.ibm.com/instances/5bd04cd8-cf86-4fbc-b76d-66ee10427604"
 
@@ -19,12 +32,6 @@ authenticator = IAMAuthenticator(apikey)
 tts = TextToSpeechV1(authenticator = authenticator)
 tts.set_service_url(url)
 
-# Eva tts function
-def evaTalk(eva_text):
-    with open("my_sounds/tts.mp3", 'wb') as audio_file:
-        res = tts.synthesize(eva_text, accept = "audio/mp3", voice = 'en-US_AllisonV3Voice').get_result()
-        audio_file.write(res.content)
-    playsound("my_sounds/tts.mp3", block = False)
 
 # Let's create the Tkinter window
 window = Tk()
@@ -37,7 +44,6 @@ canvas.pack()
 terminal = Text ( window, fg = "cyan", bg = "black", height = "32", width = "60")
 Font_tuple = ("DejaVu Sans Mono", 9)
 terminal.configure(font = Font_tuple)
-
 
 
 # In order to display the image in a GUI, you will use the 'PhotoImage' method of Tkinter. It will an image from the directory (specified path) and store the image in a variable.
@@ -80,50 +86,55 @@ def evaInit():
     terminal.insert(INSERT, "\nstate: Initializing.")
     time.sleep(1)
     evaMatrix("blue")
-    terminal.insert(INSERT, "\nstate: Speaking a greeting text.")
-    playsound("my_sounds/greetings.mp3", block = True)
-    terminal.insert(INSERT, "\nstate: Turning on the blue light.")
-    light("blue", "on")
-    time.sleep(2)
-    terminal.insert(INSERT, "\nstate: Turning on the red light.")
-    light("red", "on")
-    time.sleep(2)
-    terminal.insert(INSERT, "\nstate: Turning on the green light.")
-    light("green", "on")
-    time.sleep(2)
-    terminal.insert(INSERT, "\nstate: Turning on the white light.")
-    light("white", "on")
-    time.sleep(2)
-    evaEmotion("angry")
-    light("white", "on")
-    evaMatrix("red")
-    terminal.insert(INSERT, "\nstate: Expressing anger.")
-    time.sleep(2)
-    evaEmotion("happy")
-    evaMatrix("yellow")
-    terminal.insert(INSERT, "\nstate: Expressing joy.")
-    time.sleep(2)
-    evaEmotion("sad")
-    evaMatrix("blue")
-    terminal.insert(INSERT, "\nstate: Expressing sadness.")
-    time.sleep(2)
-    evaEmotion("neutral")
-    terminal.insert(INSERT, "\nstate: Turning off the light.")
-    light("#ffffff", "off")
-    time.sleep(2)
-    terminal.insert(INSERT, '\nstate: Speaking "Load a script file and enjoy."')
+    # terminal.insert(INSERT, "\nstate: Speaking a greeting text.")
+    # playsound("my_sounds/greetings.mp3", block = True)
+    # terminal.insert(INSERT, "\nstate: Turning on the blue light.")
+    # light("blue", "on")
+    # time.sleep(2)
+    # terminal.insert(INSERT, "\nstate: Turning on the red light.")
+    # light("red", "on")
+    # time.sleep(2)
+    # terminal.insert(INSERT, "\nstate: Turning on the green light.")
+    # light("green", "on")
+    # time.sleep(2)
+    # terminal.insert(INSERT, "\nstate: Turning on the white light.")
+    # light("white", "on")
+    # time.sleep(2)
+    # evaEmotion("angry")
+    # light("white", "on")
+    # evaMatrix("red")
+    # terminal.insert(INSERT, "\nstate: Expressing anger.")
+    # time.sleep(2)
+    # evaEmotion("happy")
+    # evaMatrix("yellow")
+    # terminal.insert(INSERT, "\nstate: Expressing joy.")
+    # time.sleep(2)
+    # evaEmotion("sad")
+    # evaMatrix("blue")
+    # terminal.insert(INSERT, "\nstate: Expressing sadness.")
+    # time.sleep(2)
+    # evaEmotion("neutral")
+    # terminal.insert(INSERT, "\nstate: Turning off the light.")
+    # light("#ffffff", "off")
+    # time.sleep(2)
+    terminal.insert(INSERT, '\nstate: Speaking: "Load a script file and enjoy."')
     playsound("my_sounds/load_a_script.mp3", block = True)
     terminal.insert(INSERT, "\nstate: Entering in standby mode.")
-    while(True): # animacao da luz da matrix
-        evaMatrix("white")
-        time.sleep(0.5)
-        evaMatrix("grey")
-        time.sleep(0.5)
+    # while(True): # animacao da luz da matrix
+    #     evaMatrix("white")
+    #     time.sleep(0.5)
+    #     evaMatrix("grey")
+    #     time.sleep(0.5)
+
 
 # Eva powerOn function
 def powerOn():
-    x = threading.Thread(target=evaInit, args=())
-    x.start()
+    threading.Thread(target=evaInit, args=()).start()
+
+def runScript():
+    busca_links("1000")
+    threading.Thread(target=link_process, args=()).start()
+    
 
 # set the Eva emotion
 def evaEmotion(expression):
@@ -169,10 +180,15 @@ def light(color, state):
     
 # Eva Import Script function
 def importFile():
+    global root, script_node, links_node
     print("Importing a file...")
     filetypes = (('evaML files', '*.xml'), )
     script_file = fd.askopenfile(mode = "r", title = 'Open an EvaML Script File', initialdir = './', filetypes = filetypes)
-    tree = ET.parse(script_file)
+    # variaveis da vm
+    tree = ET.parse(script_file)  # arquivo de codigo xml
+    root = tree.getroot() # evaml root node
+    script_node = root.find("script")
+    links_node = root.find("links")
     bt_run['state'] = NORMAL
     bt_stop['state'] = DISABLED
     #evaTalk("Hi Philip, let's go to play guitar")
@@ -180,13 +196,13 @@ def importFile():
 
 bt_power = Button ( window, text = "Power On", command = powerOn)
 bt_import = Button ( window, text = "Import Script File...", state = DISABLED, command = importFile)
-bt_run = Button ( window, text = "Run", image = im_bt_play, state = DISABLED, compound=LEFT)
-bt_stop = Button ( window, text = "Stop", image = im_bt_stop, state = DISABLED, compound=LEFT)
+bt_run = Button ( window, text = "Run", image = im_bt_play, state = DISABLED, compound = LEFT, command = runScript)
+bt_stop = Button ( window, text = "Stop", image = im_bt_stop, state = DISABLED, compound = LEFT)
 
 # intro terminal text
-terminal.insert(INSERT, " ========================================================== \n")
+terminal.insert(INSERT, "============================================================\n")
 terminal.insert(INSERT, "                  Eva Simulator for EvaML\n               Version 1.0 - UFF/MidiaCom Lab\n")
-terminal.insert(INSERT, " ========================================================== ")
+terminal.insert(INSERT, "============================================================")
 
 #label.pack()
 #l_eva.place(x = 0, y = 50)
@@ -198,6 +214,145 @@ bt_power.place(x = 400, y = 20)
 bt_import.place(x = 496, y = 20)
 bt_run.place(x = 652, y = 20)
 bt_stop.place(x = 742, y = 20)
-    
+
+# funcoes da vm
+# executa os comandos
+def exec_comando(node):
+    if node.tag == "voice":
+        terminal.insert(INSERT, "\nstate: Selected Voice: " + node.attrib["tone"])
+        terminal.see(tkinter.END)
+
+    elif node.tag == "light":
+        state = node.attrib["state"]
+        color = "#" + node.attrib["color"]
+        if state == "on":
+            terminal.insert(INSERT, "\nstate: Turnning on the light. Color = " + color + ".")
+            terminal.see(tkinter.END) # autoscrolling
+        else:
+            terminal.insert(INSERT, "\nstate: Turnning off the light.")
+            terminal.see(tkinter.END)
+        light(color , state)
+        time.sleep(1) # emula o tempo da lampada real
+
+    elif node.tag == "wait":
+        duration = node.attrib["duration"]
+        terminal.insert(INSERT, "\nstate: Pausing. Duration = " + duration)
+        terminal.see(tkinter.END)
+        time.sleep(int(duration)/1000) # converte para ms
+
+    elif node.tag == "random":
+        min = node.attrib["min"]
+        max = node.attrib["max"]
+        eva_memory.var_dolar.append(str(rnd.randint(int(min), int(max))))
+        terminal.insert(INSERT, "\nstate: Generating a random number: " + eva_memory.var_dolar[-1])
+        terminal.see(tkinter.END)
+        print("random command, min = " + min + ", max = " + max + ", valor = " + eva_memory.var_dolar[-1])
+
+    elif node.tag == "listen":
+        print("listen command")
+
+    elif node.tag == "talk":
+        texto = node.text
+        if len(eva_memory.var_dolar) != 0:
+            texto = texto.replace("$", eva_memory.var_dolar[-1])
+        terminal.insert(INSERT, '\nstate: Speaking: "' + texto + '"')
+        terminal.see(tkinter.END)
+        # Assumes the default UTF-8 (Gera o hashing do arquivo de audio)
+        hash_object = hashlib.md5(texto.encode())
+        file_name = "_audio" + hash_object.hexdigest()
+
+        if not (os.path.isfile("my_sounds/" + file_name + ".mp3")):
+            # Eva tts functions
+            with open("my_sounds/" + file_name + ".mp3", 'wb') as audio_file:
+                res = tts.synthesize(texto, accept = "audio/mp3", voice = 'en-US_AllisonV3Voice').get_result()
+                audio_file.write(res.content)
+        evaMatrix("blue")
+        playsound("my_sounds/" + file_name + ".mp3", block = True)
+        evaMatrix("white")
+
+    elif node.tag == "evaEmotion":
+        emotion = node.attrib["emotion"]
+        terminal.insert(INSERT, "\nstate: Expressing an emotion: " + emotion)
+        terminal.see(tkinter.END)
+        evaEmotion(emotion)
+        if emotion == "angry":
+            evaMatrix("red")
+        elif emotion == "happy":
+            evaMatrix("yellow")
+        elif emotion == "sad":
+            evaMatrix("blue")
+        elif emotion == "neutral":
+            evaMatrix("white")
+
+    elif node.tag == "audio":
+        playsound("my_sounds/load_a_script.mp3", block = True)
+
+    elif node.tag == "case":
+        eva_memory.reg_case = 0 # limpa o flag do case
+        valor = node.attrib["value"]
+        print("valor ", valor, type(valor))
+        if valor == eva_memory.var_dolar[-1]:
+            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+
+def busca_commando(key): # keys são strings
+	# busca em settings. Isto porque "voice" fica em settings
+	for elem in root.find("settings").iter():
+		if elem.get("key") != None: # verifica se node tem atributo id
+			if elem.attrib["key"] == key:
+				return elem
+	# busca dentro do script
+	for elem in root.find("script").iter(): # passa por todos os nodes do script
+		if elem.get("key") != None: # verifica se node tem atributo id
+			if elem.attrib["key"] == key:
+				return elem
+
+
+# busca e insere na lista os links que tem att_from igual ao from do link
+def busca_links(att_from):
+    achou_link = False
+    for i in range(len(links_node)):
+        if att_from == links_node[i].attrib["from"]:
+            fila_links.append(links_node[i])
+            achou_link = True
+    return achou_link
+
+
+# executa os comandos que estão na pilha de links
+def link_process(anterior = -1):
+    terminal.insert(INSERT, "\n---------------------------------------------------")
+    terminal.insert(INSERT, "\nstate: Starting the script: " + root.attrib["name"])
+    terminal.see(tkinter.END)
+    global fila_links
+    while len(fila_links) != 0:
+        from_key = fila_links[0].attrib["from"] # chave do comando a executar
+        to_key = fila_links[0].attrib["to"] # chave do próximo comando
+        comando_from = busca_commando(from_key).tag # Tag do comando a ser executado
+        comando_to = busca_commando(to_key).tag # DEBUG
+
+        # evita que um mesmo nó seja executado consecutivamente
+        if anterior != from_key:
+            exec_comando(busca_commando(from_key))
+            anterior = from_key
+        
+        if comando_from == "case": # se o comando executado foi um case
+            if eva_memory.reg_case == 1: # verifica a flag pra saber se o case foi verdadeiro
+                fila_links = [] # esvazia a fila, pois o fluxo seguira deste no case em diante
+                print("case command")
+                # segue o fluxo do case de sucesso buscando o prox. link
+                if not(busca_links(to_key)): # se nao tem mais link, o comando indicado por to_key é o ultimo do fluxo
+                    exec_comando(busca_commando(to_key))
+                    print("fim de bloco.............")
+            else:
+                fila_links.pop(0) # se o case falhou, ele é retirado da fila e consequentemente seu fluxo é descartado
+                print("false")
+        else: # se o comando nao foi um case
+            fila_links.pop(0) # remove o link da fila
+            if not(busca_links(to_key)): # como já comentado anteriormente
+                exec_comando(busca_commando(to_key))
+                print("fim de bloco.............")
+    terminal.insert(INSERT, "\nstate: End of script.")
+    terminal.insert(INSERT, "\n---------------------------------------------------")
+    terminal.see(tkinter.END)
 
 window.mainloop()

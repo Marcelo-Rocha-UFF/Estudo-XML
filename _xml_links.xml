@@ -1,44 +1,32 @@
-<evaml id="a1001-b3001" name="Therapy02">
+<evaml id="a1001-b3001" name="Therapy01">
 	<settings>
 		<voice tone="en-US_AllisonV3Voice" key="1000" />
-		<lighting-effects mode="on" />
+		<light-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
 	<script>
-    <random id="BEGIN" min="1" max="2" key="1001" />
-    <switch>
-      <case value="1" key="1002">
-        <listen key="1003" />
-      </case>
-      <case value="2" key="1004">
-        <wait duration="1234" key="1005" />
-        <random min="3" max="4" key="1006" />
-        <switch>
-          <case value="3" key="1007">
-            <talk key="1008">Oi</talk>
-          </case>
-          <case value="4" key="1009">
-            <light state="on" color="ff0000" key="1010" />
-            <goto target="BEGIN" />
-          </case>
-        </switch>
-      </case>
-    </switch>
-    <userEmotion key="1011" />
+    <evaEmotion emotion="neutral" key="1001" />
+    <talk key="1002">Hi, I am the Eva simulator software</talk>
+    <talk key="1003">Turning on the red light</talk>
+    <light color="ff0000" state="on" key="1004" />
+    <wait duration="1000" key="1005" />
+    <talk key="1006">Turning on the green light</talk>
+    <light color="00ff00" state="on" key="1007" />
+    <wait duration="1000" key="1008" />
+    <talk key="1009">Turning on the blue light</talk>
+    <light color="0000ff" state="on" key="1010" />
+    <wait duration="1000" key="1011" />
+    <talk key="1012">Turnning off the light</talk>
+    <light color="0000ff" state="off" key="1013" />
+    <talk key="1014">I will express anger</talk>
+    <evaEmotion emotion="angry" key="1015" />
+    <wait duration="1000" key="1016" />
+    <talk key="1017">I'm so sad</talk>
+    <evaEmotion emotion="sad" key="1018" />
+    <wait duration="1000" key="1019" />
+    <talk key="1020">I am happy now</talk>
+    <evaEmotion emotion="happy" key="1021" />
+    <wait duration="1000" key="1022" />
+    <talk key="1023">Bye bye</talk>
 	</script>
-  <links>
-    <link from="1000" to="1001" />
-    <link from="1001" to="1002" />
-    <link from="1002" to="1003" />
-    <link from="1003" to="1011" />
-    <link from="1001" to="1004" />
-    <link from="1004" to="1005" />
-    <link from="1005" to="1006" />
-    <link from="1006" to="1007" />
-    <link from="1007" to="1008" />
-    <link from="1008" to="1011" />
-    <link from="1006" to="1009" />
-    <link from="1009" to="1010" />
-    <link from="1010" to="1001" />
-  </links>
-</evaml>
+  <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1007" /><link from="1007" to="1008" /><link from="1008" to="1009" /><link from="1009" to="1010" /><link from="1010" to="1011" /><link from="1011" to="1012" /><link from="1012" to="1013" /><link from="1013" to="1014" /><link from="1014" to="1015" /><link from="1015" to="1016" /><link from="1016" to="1017" /><link from="1017" to="1018" /><link from="1018" to="1019" /><link from="1019" to="1020" /><link from="1020" to="1021" /><link from="1021" to="1022" /><link from="1022" to="1023" /></links></evaml>
