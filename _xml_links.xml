@@ -1,39 +1,35 @@
-<evaml id="a1001-b3001" name="Script02">
+<evaml id="a1001-b3001" name="Script01">
 	<settings>
 		<voice tone="pt-BR_IsabelaV3Voice" key="1000" />
 		<light-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
   <script>
-		<random id="PONTO1" min="1" max="2" key="1001" />
+		<light state="on" color="white" key="1001" />
+		<talk key="1002">Olá, eu sou o robô Eva. Vou sortear um número de um a três</talk>
+			<talk key="1003">Para cada um, vou acender a luz numa cor diferente</talk>
+			<talk key="1004">Só vou parar quando o número sorteado for o três</talk>
+		<random id="INICIO" min="1" max="3" key="1005" />
 		<switch>
-			<case value="1" key="1002">
-				<light state="on" color="red" key="1003" />
-				<random min="3" max="4" key="1004" />
-				<switch>
-					<case value="3" key="1005">
-						<light state="on" color="blue" key="1006" />
-					</case>
-					<case value="4" key="1007">
-						<light state="on" color="pink" key="1008" />
-					</case>
-				</switch>
+			<case value="1" key="1006">
+				<light state="on" color="green" key="1007" />
+				<talk key="1008">O número sorteado foi o um</talk>
+				<wait duration="1500" key="1009" />
+				<goto target="INICIO" />
 			</case>
-			<case value="2" key="1009">
-				<light id="PONTO2" state="on" color="green" key="1010" />
-				<random min="5" max="6" key="1011" />
-				<switch>
-					<case value="5" key="1012">
-						<light state="on" color="blue" key="1013" />
-						<goto target="PONTO1" />
-					</case>
-					<case value="6" key="1014">
-						<light state="on" color="pink" key="1015" />
-						<goto target="PONTO2" />
-					</case>
-				</switch>
+			<case value="2" key="1010">
+				<light state="on" color="blue" key="1011" />
+				<talk key="1012">O número sorteado foi o dois</talk>
+				<wait duration="1500" key="1013" />
+				<goto target="INICIO" />
+			</case>
+			<case value="3" key="1014">
+				<light state="on" color="red" key="1015" />
+				<talk key="1016">O número sorteado foi o três</talk>
+				<wait duration="1500" key="1017" />
 			</case>
 		</switch>
-		<talk key="1016">Fim do script</talk>
+		<talk key="1018">Já vou embora. Até mais</talk>
+		<light state="off" color="000000" key="1019" />
 	</script>
-  <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1016" /><link from="1004" to="1007" /><link from="1007" to="1008" /><link from="1008" to="1016" /><link from="1001" to="1009" /><link from="1009" to="1010" /><link from="1010" to="1011" /><link from="1011" to="1012" /><link from="1012" to="1013" /><link from="1013" to="1001" /><link from="1011" to="1014" /><link from="1014" to="1015" /><link from="1015" to="1010" /></links></evaml>
+  <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1007" /><link from="1007" to="1008" /><link from="1008" to="1009" /><link from="1009" to="1005" /><link from="1005" to="1010" /><link from="1010" to="1011" /><link from="1011" to="1012" /><link from="1012" to="1013" /><link from="1013" to="1005" /><link from="1005" to="1014" /><link from="1014" to="1015" /><link from="1015" to="1016" /><link from="1016" to="1017" /><link from="1017" to="1018" /><link from="1018" to="1019" /></links></evaml>

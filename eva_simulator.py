@@ -264,16 +264,16 @@ def exec_comando(node):
 
         # Assume the default UTF-8 (Gera o hashing do arquivo de audio)
         hash_object = hashlib.md5(texto.encode())
-        file_name = "_audio" + hash_object.hexdigest()
+        file_name = "_audio_" + hash_object.hexdigest()
 
         # verifica se o audio da fala já existe na pasta
-        if not (os.path.isfile("my_sounds/" + file_name + ".mp3")): # se nao existe chama o watson
+        if not (os.path.isfile("audio_cache_files/" + file_name + ".mp3")): # se nao existe chama o watson
             # Eva tts functions
-            with open("my_sounds/" + file_name + ".mp3", 'wb') as audio_file:
+            with open("audio_cache_files/" + file_name + ".mp3", 'wb') as audio_file:
                 res = tts.synthesize(texto, accept = "audio/mp3", voice = root.find("settings")[0].attrib["tone"]).get_result()
                 audio_file.write(res.content)
         evaMatrix("blue")
-        playsound("my_sounds/" + file_name + ".mp3", block = True) # toca o audio da fala
+        playsound("audio_cache_files/" + file_name + ".mp3", block = True) # toca o audio da fala
         evaMatrix("white")
 
     elif node.tag == "evaEmotion":

@@ -1,39 +1,35 @@
-<evaml id="a1001-b3001" name="Script02">
+<evaml id="a1001-b3001" name="Script01">
 	<settings>
 		<voice tone="pt-BR_IsabelaV3Voice" key="1000" />
 		<light-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
   <script>
-		<random id="PONTO1" min="1" max="2" key="1001" />
+		<light state="on" color="white" key="1001" />
+		<talk key="1002">Olá, eu sou o robô Eva. Vou sortear um número de um a três</talk>
+			<talk key="1003">Para cada um, vou acender a luz numa cor diferente</talk>
+			<talk key="1004">Só vou parar quando o número sorteado for o três</talk>
+		<random id="INICIO" min="1" max="3" key="1005" />
 		<switch>
-			<case value="1" key="1002">
-				<light state="on" color="red" key="1003" />
-				<random min="3" max="4" key="1004" />
-				<switch>
-					<case value="3" key="1005">
-						<light state="on" color="blue" key="1006" />
-					</case>
-					<case value="4" key="1007">
-						<light state="on" color="pink" key="1008" />
-					</case>
-				</switch>
+			<case value="1" key="1006">
+				<light state="on" color="green" key="1007" />
+				<talk key="1008">O número sorteado foi o um</talk>
+				<wait duration="1500" key="1009" />
+				<goto target="INICIO" />
 			</case>
-			<case value="2" key="1009">
-				<light id="PONTO2" state="on" color="green" key="1010" />
-				<random min="5" max="6" key="1011" />
-				<switch>
-					<case value="5" key="1012">
-						<light state="on" color="blue" key="1013" />
-						<goto target="PONTO1" />
-					</case>
-					<case value="6" key="1014">
-						<light state="on" color="pink" key="1015" />
-						<goto target="PONTO2" />
-					</case>
-				</switch>
+			<case value="2" key="1010">
+				<light state="on" color="blue" key="1011" />
+				<talk key="1012">O número sorteado foi o dois</talk>
+				<wait duration="1500" key="1013" />
+				<goto target="INICIO" />
+			</case>
+			<case value="3" key="1014">
+				<light state="on" color="red" key="1015" />
+				<talk key="1016">O número sorteado foi o três</talk>
+				<wait duration="1500" key="1017" />
 			</case>
 		</switch>
-		<talk key="1016">Fim do script</talk>
+		<talk key="1018">Já vou embora. Até mais</talk>
+		<light state="off" color="000000" key="1019" />
 	</script>
   </evaml>
