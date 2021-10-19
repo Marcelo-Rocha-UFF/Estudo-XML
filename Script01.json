@@ -29,7 +29,7 @@
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
-        "text": "Olá, eu sou o robô Eva. Vou sortear um número de um a três",
+        "text": "Olá, eu sou o robô Eva. Vou sortear um número de um a nove",
         "__gohashid": 2
       },
       {
@@ -58,7 +58,7 @@
         "isGroup": false,
         "group": "",
         "min": 1,
-        "max": 3,
+        "max": 9,
         "__gohashid": 5
       },
       {
@@ -180,15 +180,34 @@
       },
       {
         "key": 1018,
+        "name": "Condition",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "",
+        "opt": 4,
+        "__gohashid": 18
+      },
+      {
+        "key": 1019,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Não foi nem o 1 nem o 2 nem o 3",
+        "__gohashid": 19
+      },
+      {
+        "key": 1020,
         "name": "Talk",
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
         "text": "Já vou embora. Até mais",
-        "__gohashid": 18
+        "__gohashid": 20
       },
       {
-        "key": 1019,
+        "key": 1021,
         "name": "Light",
         "type": "light",
         "color": "lightblue",
@@ -196,7 +215,7 @@
         "group": "",
         "lcolor": "000000",
         "state": "off",
-        "__gohashid": 19
+        "__gohashid": 21
       }
       ],
       "link": [
@@ -297,13 +316,28 @@
         },
         { 
           "from": 1017,
-          "to": 1018,
+          "to": 1020,
           "__gohashid": 19
+        },
+        { 
+          "from": 1005,
+          "to": 1018,
+          "__gohashid": 20
         },
         { 
           "from": 1018,
           "to": 1019,
-          "__gohashid": 20
+          "__gohashid": 21
+        },
+        { 
+          "from": 1019,
+          "to": 1020,
+          "__gohashid": 22
+        },
+        { 
+          "from": 1020,
+          "to": 1021,
+          "__gohashid": 23
         }
       ]
     }

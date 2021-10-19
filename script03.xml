@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- voz portugues: pt-BR_IsabelaV3Voice -->
+<!-- voz portugues: en-US_AllisonV3Voice" -->
+<evaml id="a1001-b3001" name="Script03">
+	<settings>
+		<voice tone="pt-BR_IsabelaV3Voice" />
+		<light-effects mode="on" />
+		<audio-effects mode="on" vol="100%" />
+	</settings>
+  <script>
+	<wait id="INICIO" duration="1000" />
+	<talk>Iniciando o script</talk>
+	<switch>
+		<case value="1">
+			<light state="on" color="blue" />
+			<switch>
+				<case value="11">
+					<light state="on" color="blue" />
+					<light state="on" color="blue" />
+					<light state="on" color="blue" />
+				</case>
+				<case value="111">
+					<wait duration="1000" />
+					<wait duration="1000" />
+					<wait duration="1000" />
+				</case>
+			</switch>
+			<listen />
+		</case>
+		<case value="2">
+			<wait duration="1000" />
+			<switch>
+				<case value="22">
+					<light state="on" color="blue" />
+					<light state="on" color="blue" />
+					<light state="on" color="blue" />
+					<stop />
+				</case>
+				<case value="222">
+					<wait duration="1000" />
+					<wait duration="1000" />
+					<wait duration="1000" />
+					<goto target="INICIO" />
+				</case>
+			</switch>
+		</case>
+	</switch>
+	<talk>Fim do script</talk>
+	</script>
+  <macros>
+  </macros>
+</evaml>

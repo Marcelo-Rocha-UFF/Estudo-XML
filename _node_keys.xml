@@ -6,10 +6,10 @@
 	</settings>
   <script>
 		<light state="on" color="white" key="1001" />
-		<talk key="1002">Olá, eu sou o robô Eva. Vou sortear um número de um a três</talk>
+		<talk key="1002">Olá, eu sou o robô Eva. Vou sortear um número de um a nove</talk>
 			<talk key="1003">Para cada um, vou acender a luz numa cor diferente</talk>
 			<talk key="1004">Só vou parar quando o número sorteado for o três</talk>
-		<random id="INICIO" min="1" max="3" key="1005" />
+		<random id="INICIO" min="1" max="9" key="1005" />
 		<switch>
 			<case value="1" key="1006">
 				<light state="on" color="green" key="1007" />
@@ -28,8 +28,11 @@
 				<talk key="1016">O número sorteado foi o três</talk>
 				<wait duration="1500" key="1017" />
 			</case>
+			<default key="1018">
+				<talk key="1019">Não foi nem o 1 nem o 2 nem o 3</talk>
+			</default>
 		</switch>
-		<talk key="1018">Já vou embora. Até mais</talk>
-		<light state="off" color="000000" key="1019" />
+		<talk key="1020">Já vou embora. Até mais</talk>
+		<light state="off" color="000000" key="1021" />
 	</script>
   </evaml>

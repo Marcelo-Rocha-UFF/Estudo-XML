@@ -6,10 +6,10 @@
 	</settings>
   <script>
 		<light state="on" color="white" key="1001" />
-		<talk key="1002">Olá, eu sou o robô Eva. Vou sortear um número de um a três</talk>
+		<talk key="1002">Olá, eu sou o robô Eva. Vou sortear um número de um a nove</talk>
 			<talk key="1003">Para cada um, vou acender a luz numa cor diferente</talk>
 			<talk key="1004">Só vou parar quando o número sorteado for o três</talk>
-		<random id="INICIO" min="1" max="3" key="1005" />
+		<random id="INICIO" min="1" max="9" key="1005" />
 		<switch>
 			<case value="1" key="1006">
 				<light state="on" color="green" key="1007" />
@@ -28,8 +28,11 @@
 				<talk key="1016">O número sorteado foi o três</talk>
 				<wait duration="1500" key="1017" />
 			</case>
+			<default key="1018">
+				<talk key="1019">Não foi nem o 1 nem o 2 nem o 3</talk>
+			</default>
 		</switch>
-		<talk key="1018">Já vou embora. Até mais</talk>
-		<light state="off" color="000000" key="1019" />
+		<talk key="1020">Já vou embora. Até mais</talk>
+		<light state="off" color="000000" key="1021" />
 	</script>
-  <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1007" /><link from="1007" to="1008" /><link from="1008" to="1009" /><link from="1009" to="1005" /><link from="1005" to="1010" /><link from="1010" to="1011" /><link from="1011" to="1012" /><link from="1012" to="1013" /><link from="1013" to="1005" /><link from="1005" to="1014" /><link from="1014" to="1015" /><link from="1015" to="1016" /><link from="1016" to="1017" /><link from="1017" to="1018" /><link from="1018" to="1019" /></links></evaml>
+  <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1007" /><link from="1007" to="1008" /><link from="1008" to="1009" /><link from="1009" to="1005" /><link from="1005" to="1010" /><link from="1010" to="1011" /><link from="1011" to="1012" /><link from="1012" to="1013" /><link from="1013" to="1005" /><link from="1005" to="1014" /><link from="1014" to="1015" /><link from="1015" to="1016" /><link from="1016" to="1017" /><link from="1017" to="1020" /><link from="1005" to="1018" /><link from="1018" to="1019" /><link from="1019" to="1020" /><link from="1020" to="1021" /></links></evaml>
