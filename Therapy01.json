@@ -19,7 +19,7 @@
         "color": "lightyellow",
         "isGroup": false,
         "group": "",
-        "emotion": "neutral",
+        "emotion": "ini",
         "level": 0,
         "speed": 0,
         "__gohashid": 1
@@ -257,7 +257,7 @@
         "color": "lightyellow",
         "isGroup": false,
         "group": "",
-        "emotion": "neutral",
+        "emotion": "ini",
         "level": 0,
         "speed": 0,
         "__gohashid": 25

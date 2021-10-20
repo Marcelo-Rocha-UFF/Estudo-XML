@@ -140,9 +140,9 @@ def runScript():
 def evaEmotion(expression):
     if expression == "neutral":
         canvas.create_image(156, 161, image = im_eyes_neutral)
-    elif expression == "anger":
+    elif expression == "angry":
         canvas.create_image(156, 161, image = im_eyes_angry)
-    elif expression == "joy":
+    elif expression == "happy":
         canvas.create_image(156, 161, image = im_eyes_happy)
     elif expression == "sad":
         canvas.create_image(156, 161, image = im_eyes_sad)
@@ -257,20 +257,26 @@ def exec_comando(node):
 
     elif node.tag == "talk":
         texto = node.text
+        # esta parte substitui o $ no texto
         if len(eva_memory.var_dolar) != 0:
             texto = texto.replace("$", eva_memory.var_dolar[-1])
-        terminal.insert(INSERT, '\nstate: Speaking: "' + texto + '"')
+
+        # esta parte implementa o texto aleatorio gerado pelo uso do caractere /
+        texto = texto.split(sep="/") # texto vira um lista com a qtd de elementos divididas pelo caract. /
+        ind_random = rnd.randint(0, len(texto)-1)
+        print("ind_random", ind_random, texto[ind_random])
+        terminal.insert(INSERT, '\nstate: Speaking: "' + texto[ind_random] + '"')
         terminal.see(tkinter.END)
 
         # Assume the default UTF-8 (Gera o hashing do arquivo de audio)
-        hash_object = hashlib.md5(texto.encode())
+        hash_object = hashlib.md5(texto[ind_random].encode())
         file_name = "_audio_" + hash_object.hexdigest()
 
         # verifica se o audio da fala já existe na pasta
         if not (os.path.isfile("audio_cache_files/" + file_name + ".mp3")): # se nao existe chama o watson
             # Eva tts functions
             with open("audio_cache_files/" + file_name + ".mp3", 'wb') as audio_file:
-                res = tts.synthesize(texto, accept = "audio/mp3", voice = root.find("settings")[0].attrib["tone"]).get_result()
+                res = tts.synthesize(texto[ind_random], accept = "audio/mp3", voice = root.find("settings")[0].attrib["tone"]).get_result()
                 audio_file.write(res.content)
         evaMatrix("blue")
         playsound("audio_cache_files/" + file_name + ".mp3", block = True) # toca o audio da fala
@@ -280,9 +286,9 @@ def exec_comando(node):
         emotion = node.attrib["emotion"]
         terminal.insert(INSERT, "\nstate: Expressing an emotion: " + emotion)
         terminal.see(tkinter.END)
-        if emotion == "anger":
+        if emotion == "angry":
             evaMatrix("red")
-        elif emotion == "joy":
+        elif emotion == "happy":
             evaMatrix("yellow")
         elif emotion == "sad":
             evaMatrix("blue")

@@ -163,6 +163,17 @@ def voice_process(voice_command):
 # eva_emotion node processing 
 def eva_emotion_process(eva_emotion_command):
     global gohashid
+    # speed 0 é o valor default. Não vejo necessidade de implementar isso
+
+    if eva_emotion_command.attrib['emotion'] == "happy": # compatibiliza com o Eva. O Eva usa joy.
+      eva_emotion_command.attrib['emotion'] = "joy"
+
+    if eva_emotion_command.attrib['emotion'] == "angry": # compatibiliza com o Eva.
+      eva_emotion_command.attrib['emotion'] = "anger"
+
+    if eva_emotion_command.attrib['emotion'] == "neutral": # compatibiliza com o Eva.
+      eva_emotion_command.attrib['emotion'] = "ini"
+
     eva_emotion_node = """      {
         "key": """ + eva_emotion_command.attrib["key"] + """,
         "name": "Eva_Emotion",
@@ -212,6 +223,8 @@ def case_process(case_command):
       }"""
     gohashid += 1
     return case_node
+
+    
 
 # wait node processing
 def wait_process(wait_command):
