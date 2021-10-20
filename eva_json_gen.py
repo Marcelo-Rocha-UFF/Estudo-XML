@@ -83,7 +83,7 @@ def audio_process(audio_command):
         "color": "lightblue",
         "isGroup": false,
         "src": """ + '"' + audio_command.attrib['source'] + '",' + """
-        "wait": """ + audio_command.attrib['wait'] + ',' + """
+        "wait": """ + audio_command.attrib['block'] + ',' + """
         "__gohashid": """ + str(gohashid) + """
       }"""
     gohashid += 1

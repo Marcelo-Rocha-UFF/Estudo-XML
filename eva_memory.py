@@ -4,3 +4,7 @@ var_dolar = []
 
 # case flag
 reg_case = 0
+
+# memória ram do Eva
+vars = {}
+

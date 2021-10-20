@@ -33,7 +33,7 @@ tts = TextToSpeechV1(authenticator = authenticator)
 tts.set_service_url(url)
 
 
-# Let's create the Tkinter window
+# Create the Tkinter window
 window = Tk()
 window.title("Eva Simulator for EvaML - Version 1.0 - UFF/MidiaCom Lab")
 window.geometry("838x525")
@@ -46,7 +46,7 @@ Font_tuple = ("DejaVu Sans Mono", 9)
 terminal.configure(font = Font_tuple)
 
 
-# In order to display the image in a GUI, you will use the 'PhotoImage' method of Tkinter. It will an image from the directory (specified path) and store the image in a variable.
+# Defining the image files
 eva_image = PhotoImage(file = "images/eva.png") 
 bulb_image = PhotoImage(file = "images/bulb.png")
 
@@ -262,7 +262,7 @@ def exec_comando(node):
             texto = texto.replace("$", eva_memory.var_dolar[-1])
 
         # esta parte implementa o texto aleatorio gerado pelo uso do caractere /
-        texto = texto.split(sep="/") # texto vira um lista com a qtd de elementos divididas pelo caract. /
+        texto = texto.split(sep="/") # texto vira um lista com a qtd de frases divididas pelo caract. /
         ind_random = rnd.randint(0, len(texto)-1)
         print("ind_random", ind_random, texto[ind_random])
         terminal.insert(INSERT, '\nstate: Speaking: "' + texto[ind_random] + '"')
@@ -297,15 +297,43 @@ def exec_comando(node):
         evaEmotion(emotion)
 
     elif node.tag == "audio":
-        playsound("my_sounds/load_a_script.mp3", block = True)
+        audio_file = "sonidos/" + node.attrib["source"] + ".wav"
+        block = False # o play do audio não bloqueia a execucao do script
+        if node.attrib["block"].lower() == "true":
+            block = True
+        terminal.insert(INSERT, '\nstate: Playing a sound: "' + node.attrib["source"] + ".wav" + '", block=' + str(block))
+        terminal.see(tkinter.END)
+        playsound(audio_file, block = block)
 
     elif node.tag == "case":
         eva_memory.reg_case = 0 # limpa o flag do case
         valor = node.attrib["value"]
         print("valor ", valor, type(valor))
-        if valor == eva_memory.var_dolar[-1]:
+        if valor == eva_memory.var_dolar[-1]: # compara valor com o topo da pilha da variavel var_dolar
             eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
+    elif node.tag == "counter":
+        var_name = node.attrib["var"]
+        var_value = int(node.attrib["value"])
+        op = node.attrib["op"]
+        if op == "=": # efetua a atribuicao
+            eva_memory.vars[var_name] = var_value
+
+        if op == "+": # efetua a adição
+            eva_memory.vars[var_name] += var_value
+
+        if op == "*": # efetua o produto
+            eva_memory.vars[var_name] *= var_value
+
+        if op == "/": # efetua a divisão
+            eva_memory.vars[var_name] /= var_value
+
+        if op == "%": # calcula o módulo
+            eva_memory.vars[var_name] %= var_value
+        
+        print("Eva ram => ", eva_memory.vars)
+        terminal.insert(INSERT, "\nstate: Counter : var=" + var_name + ", value=" + str(var_value) + ", op(" + op + "), result=" + str(eva_memory.vars[var_name]))
+        terminal.see(tkinter.END)
 
 def busca_commando(key): # keys são strings
 	# busca em settings. Isto porque "voice" fica em settings
