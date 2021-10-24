@@ -39,6 +39,9 @@ def cria_link(node_from, node_to):
     elif (node_to.tag == "switch"): # trata o node "switch"
         for switch_elem in node_to:
             switch_elem.attrib["var"] = node_to.attrib["var"]
+            if switch_elem.tag == "default": # preenche o defailt com os parametros default
+                switch_elem.attrib["value"] = ""
+                switch_elem.attrib["op"] = "exact"
             lista_links.append(node_from.attrib["key"] + "," + switch_elem.attrib["key"])
             link_process(switch_elem, switch_elem)
     elif (node_to.tag == "case"): # trata o node "case"
