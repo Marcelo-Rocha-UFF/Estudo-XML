@@ -3,15 +3,18 @@ import os
 
 import random as rnd
 import sys
-import tkinter
 import xml.etree.ElementTree as ET
 import eva_memory
 
 from tkinter import *
 from tkinter import filedialog as fd
+import tkinter
+
 from playsound import playsound
+
 import time
 import threading
+
 from ibm_watson import TextToSpeechV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
@@ -36,8 +39,8 @@ tts.set_service_url(url)
 # Create the Tkinter window
 window = Tk()
 window.title("Eva Simulator for EvaML - Version 1.0 - UFF/MidiaCom Lab")
-window.geometry("838x525")
-canvas = Canvas(window, bg = "#d9d9d9", width = 838, height = 525) # o canvas e' necessario para usar imagens com transparencia
+window.geometry("835x525")
+canvas = Canvas(window, bg = "#d9d9d9", width = 835, height = 525) # o canvas e' necessario para usar imagens com transparencia
 canvas.pack()
 
 # Terminal text configuration
@@ -68,10 +71,7 @@ im_matrix_grey = PhotoImage(file = "images/matrix_grey.png")
 im_bt_play = PhotoImage(file = "images/bt_play.png")
 im_bt_stop = PhotoImage(file = "images/bt_stop.png")
 
-# Finally, to display the image you will make use of the 'Label' method and pass the 'image' variriable as a parameter and use the pack() method to display inside the GUI.
-#l_eva = Label(canva, image = eva_image)
-#l_bulb = Label(canva, image = bulb_image)
-#l_angry_eyes = Label(canva, image = angry_image)
+# desenha o eva e a lampada desligada
 canvas.create_image(160, 262, image = eva_image)
 canvas.create_oval(300, 205, 377, 285, fill = "#000000", outline = "#000000" ) # cor preta indica light off
 canvas.create_image(340, 285, image = bulb_image)
@@ -305,6 +305,9 @@ def exec_comando(node):
         terminal.see(tkinter.END)
         playsound(audio_file, block = block)
 
+    ##
+    ## falta implementar o default
+    ##
     elif node.tag == "case":
         eva_memory.reg_case = 0 # limpa o flag do case
         valor = node.attrib["value"]

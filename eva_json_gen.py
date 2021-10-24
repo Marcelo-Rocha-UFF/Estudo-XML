@@ -40,6 +40,10 @@ def mapping_xml_to_json():
                 output += ",\n"
                 output += listen_process(elem)
 
+            if (elem.tag == 'counter'):
+                output += ",\n"
+                output += counter_process(elem)
+
             if (elem.tag == 'evaEmotion'):
                 output += ",\n"
                 output += eva_emotion_process(elem)
@@ -89,6 +93,36 @@ def audio_process(audio_command):
     gohashid += 1
     return audio_node
 
+# counter node processing #########################################################################
+def counter_process(counter_command):
+    global gohashid
+    if counter_command.attrib['op'] == "=":
+      op_eva = "assign"
+    elif counter_command.attrib['op'] == "+":
+      op_eva = "sum"
+    elif counter_command.attrib['op'] == "*":
+      op_eva = "mul"
+    elif counter_command.attrib['op'] == "/":
+      op_eva = "div"
+    elif counter_command.attrib['op'] == "%":
+      op_eva = "rest"
+
+    counter_node = """      {
+        "key": """ + counter_command.attrib["key"] + """,
+        "name": "Counter",
+        "type": "counter",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "count": """ + '"' + counter_command.attrib['var'] + '",' + """
+        "ops": """ + '"' + op_eva + '",' + """
+        "value": """ + counter_command.attrib['value'] + ',' + """
+        "__gohashid": """ + str(gohashid) + """
+      }"""
+    gohashid += 1
+    return counter_node
+
+
 # light node processing
 def light_process(light_command):
     global gohashid
@@ -110,7 +144,8 @@ def light_process(light_command):
     gohashid += 1
     return light_node
 
-# listen node processing
+# listen node processing 
+####################################################################################### falta implementar os filtros
 def listen_process(listen_command):
     global gohashid
     listen_node = """      {
@@ -119,9 +154,7 @@ def listen_process(listen_command):
         "type": "listen",
         "color": "lightblue",
         "isGroup": false,
-        "group": "",
-        "lcolor": "zzz",
-        "state": "zzz",
+        "opt": "",
         "__gohashid": """ + str(gohashid) + """
       }"""
     gohashid += 1
@@ -211,18 +244,56 @@ def random_process(random_command):
 # condition node (case and default) processing
 def case_process(case_command):
     global gohashid
-    case_node = """      {
-        "key": """ + case_command.attrib["key"] + """,
-        "name": "Condition",
-        "type": "if",
-        "color": "lightblue",
-        "isGroup": false,
-        "text": """ + '"' + case_command.attrib['value'] + '",' + """
-        "opt": 4,
-        "__gohashid": """ + str(gohashid) + """
-      }"""
-    gohashid += 1
-    return case_node
+    if case_command.attrib["var"] == "$": # testando um valor em relacao ao $
+      # verifica qual o tipo de comparacao para $. Exact ou contain
+      if case_command.attrib["op"] == "exact":
+        case_node = """      {
+            "key": """ + case_command.attrib["key"] + """,
+            "name": "Condition",
+            "type": "if",
+            "color": "lightblue",
+            "isGroup": false,
+            "text": """ + '"' + case_command.attrib['value'] + '",' + """
+            "opt": 4,
+            "__gohashid": """ + str(gohashid) + """
+          }"""
+        gohashid += 1
+        return case_node
+      elif case_command.attrib["op"] == "contain": # se é "contain"
+        case_node = """      {
+            "key": """ + case_command.attrib["key"] + """,
+            "name": "Condition",
+            "type": "if",
+            "color": "lightblue",
+            "isGroup": false,
+            "text": """ + '"' + case_command.attrib['value'] + '",' + """
+            "opt": 2,
+            "__gohashid": """ + str(gohashid) + """
+          }"""
+        gohashid += 1
+        return case_node
+    else: # testando um valor em relacao a outra variavel qualquer
+      # é preciso que haja um espaço entre os operandos e o operador. ex #x == 1
+      # opt": 5 é comparacao matematica, isto é, com operadores do tipo ==, >, <, >=, <= ou !=
+      if case_command.attrib['op'] == "lt": op = "<"
+      if case_command.attrib['op'] == "gt": op = ">"
+      if case_command.attrib['op'] == "eq": op = "=="
+      if case_command.attrib['op'] == "lq": op = "<="
+      if case_command.attrib['op'] == "gq": op = ">="
+      if case_command.attrib['op'] == "nt": op = "!=" # preciso verificar este
+      case_node = """      {
+          "key": """ + case_command.attrib["key"] + """,
+          "name": "Condition",
+          "type": "if",
+          "color": "lightblue",
+          "isGroup": false,
+          "text": """ + '"#' + case_command.attrib['var'] + ' ' + op + ' ' + case_command.attrib['value'] + '",' + """
+          "opt": 5,
+          "__gohashid": """ + str(gohashid) + """
+        }"""
+      gohashid += 1
+      return case_node
+
 
     
 

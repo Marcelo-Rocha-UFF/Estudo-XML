@@ -11,7 +11,7 @@
 		<light state="on" color="white" />
 		<useMacro name="ABERTURA" />
 		<random id="INICIO" min="1" max="9" />
-		<switch>
+		<switch var="$">
 			<case value="1">
 				<light state="on" color="green" />
 				<talk>O número sorteado foi o um</talk>

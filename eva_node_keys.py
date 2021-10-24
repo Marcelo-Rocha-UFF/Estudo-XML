@@ -1,3 +1,5 @@
+import hashlib
+
 import sys
 import xml.etree.ElementTree as ET
 
@@ -21,6 +23,11 @@ def key_gen(script):
 # geracao das chaves identificadoras dos nodes
 # estas chaves sao referenciadas nos links (elos) que conectam cada elemento (comando) do script
 # os elementos switch, stop e goto nao possuem chaves
+
+# Assume o default UTF-8 (Gera o id fazendo o hashing do nome do script para usar no db Json do Eva)
+hash_object = hashlib.md5(root.attrib["name"].encode())
+root.attrib["id"] = hash_object.hexdigest()
+
 print("Step 02 - Generating Elements keys...")
 key_gen(script_node)
 tree.write("_node_keys.xml", "UTF-8")

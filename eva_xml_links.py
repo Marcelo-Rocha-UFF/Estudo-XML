@@ -38,6 +38,7 @@ def cria_link(node_from, node_to):
     # trata os nodes com filhos
     elif (node_to.tag == "switch"): # trata o node "switch"
         for switch_elem in node_to:
+            switch_elem.attrib["var"] = node_to.attrib["var"]
             lista_links.append(node_from.attrib["key"] + "," + switch_elem.attrib["key"])
             link_process(switch_elem, switch_elem)
     elif (node_to.tag == "case"): # trata o node "case"
@@ -70,7 +71,7 @@ def link_process(node_from, node_list):
         ########################################
         cria_link(node_from, node_to)
 
-    if (len(pilha) != 0): # esse cara cria os links nos finais dos fluxos dos cases, ou do fluxo principals
+    if (len(pilha) != 0): # esse cara cria os links nos finais dos fluxos dos cases, ou do fluxo principal
         cria_link(node_to, pilha.pop())
         
 

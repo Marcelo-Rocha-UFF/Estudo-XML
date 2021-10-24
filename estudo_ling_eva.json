@@ -1,3 +1,38 @@
+# condicao opt 4 igual a comptype = "exata" e 5 Matematica
+{
+  "key": 1634764476891,
+  "name": "Condition_3",
+  "type": "if",
+  "color": "lightblue",
+  "isGroup": false,
+  "group": "",
+  "text": "#x",
+  "opt": 4,
+  "__gohashid": 9671
+},
+{
+  "opt": 5,
+  "group": 1598748244927,
+  "name": "Condición_6",
+  "color": "lightblue",
+  "text": "#i == 1",
+  "isGroup": false,
+  "key": 1598748342128,
+  "__gohashid": 1690,
+  "type": "if"
+},
+{
+  "opt": 5,
+  "group": 1598748244927,
+  "name": "Condición_7",
+  "color": "lightblue",
+  "text": "#i > 1",
+  "isGroup": false,
+  "key": 1598748373032,
+  "__gohashid": 2529,
+  "type": "if"
+}
+
 #interacao vazia
 ----------------------------------------------------------
     {
