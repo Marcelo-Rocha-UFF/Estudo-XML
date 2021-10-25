@@ -1,0 +1,129 @@
+{
+  "_id": "8c1c113bcaf7a3cf0f6812e2233d4c90",
+  "nombre": "Script05",
+  "data": {
+    "node": [
+      {
+        "key": 1000,
+        "name": "Voice",
+        "type": "voice",
+        "color": "lightblue",
+        "isGroup": false,
+        "voice": "pt-BR_IsabelaV3Voice",
+        "__gohashid": 0
+      },
+      {
+        "key": 1001,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#ffffff",
+        "state": "on",
+        "__gohashid": 1
+      },
+      {
+        "key": 1002,
+        "name": "Counter",
+        "type": "counter",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "count": "x",
+        "ops": "assign",
+        "value": 10,
+        "__gohashid": 2
+      },
+      {
+        "key": 1003,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "O valor de x é #x",
+        "__gohashid": 3
+      },
+      {
+        "key": 1004,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#ff0000",
+        "state": "on",
+        "__gohashid": 4
+      },
+      {
+        "key": 1005,
+        "name": "Counter",
+        "type": "counter",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "count": "z",
+        "ops": "assign",
+        "value": 20,
+        "__gohashid": 5
+      },
+      {
+        "key": 1006,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "O valor de z é #z",
+        "__gohashid": 6
+      },
+      {
+        "key": 1007,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#0000ff",
+        "state": "on",
+        "__gohashid": 7
+      }
+    ],
+    "link": [
+      { 
+        "from": 1000,
+        "to": 1001,
+        "__gohashid": 0
+      },
+      { 
+        "from": 1001,
+        "to": 1002,
+        "__gohashid": 1
+      },
+      { 
+        "from": 1002,
+        "to": 1003,
+        "__gohashid": 2
+      },
+      { 
+        "from": 1003,
+        "to": 1004,
+        "__gohashid": 3
+      },
+      { 
+        "from": 1004,
+        "to": 1005,
+        "__gohashid": 4
+      },
+      { 
+        "from": 1005,
+        "to": 1006,
+        "__gohashid": 5
+      },
+      { 
+        "from": 1006,
+        "to": 1007,
+        "__gohashid": 6
+      }
+    ]
+  }
+}

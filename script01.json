@@ -184,8 +184,8 @@
         "type": "if",
         "color": "lightblue",
         "isGroup": false,
-        "text": "$ > 3",
-        "opt": 5,
+        "text": "",
+        "opt": 4,
         "__gohashid": 18
       },
       {
@@ -203,11 +203,20 @@
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
-        "text": "Já vou embora / Está ficando tarde / Pra mim já deu",
+        "text": "Vou reiniciar a contagem",
         "__gohashid": 20
       },
       {
         "key": 1021,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Já vou embora / Está ficando tarde / Pra mim já deu",
+        "__gohashid": 21
+      },
+      {
+        "key": 1022,
         "name": "Light",
         "type": "light",
         "color": "lightblue",
@@ -215,7 +224,7 @@
         "group": "",
         "lcolor": "000000",
         "state": "off",
-        "__gohashid": 21
+        "__gohashid": 22
       }
     ],
     "link": [
@@ -316,7 +325,7 @@
       },
       { 
         "from": 1017,
-        "to": 1020,
+        "to": 1021,
         "__gohashid": 19
       },
       { 
@@ -336,8 +345,13 @@
       },
       { 
         "from": 1020,
-        "to": 1021,
+        "to": 1005,
         "__gohashid": 23
+      },
+      { 
+        "from": 1021,
+        "to": 1022,
+        "__gohashid": 24
       }
     ]
   }

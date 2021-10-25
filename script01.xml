@@ -29,9 +29,11 @@
 				<talk>O número sorteado foi o três</talk>
 				<wait duration="1500" />
 			</case>
-			<case op="gt" value="3">
+			<default>
 				<talk>Não foi nem o 1 nem o 2 nem o 3</talk>
-			</case>
+				<talk>Vou reiniciar a contagem</talk>
+				<goto target="INICIO" />
+			</default>
 		</switch>
 		<useMacro name="FINAL" />
 		<light state="off" color="000000" />

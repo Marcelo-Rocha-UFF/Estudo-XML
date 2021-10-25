@@ -1,79 +1,16 @@
-<evaml name="script08">
+<evaml id="a1001-b3001" name="Script05">
 	<settings>
 		<voice tone="pt-BR_IsabelaV3Voice" />
 		<light-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
-	<script>
-		<talk>Olá, eu sou o robô EVA</talk>
-		<audio source="mario-game-intro" block="true" />
-		<talk>Qual o seu nome?</talk>
-		<listen />
-		<talk>Vou sortear um número de um a três</talk>
-			<talk>quero ver se você consegue advinhar $</talk>
-		<counter var="p" op="=" value="0" /> 
-		<counter var="i" op="=" value="1" /> 
-		<talk id="INICIO">Vamos lá então</talk>
-		<wait duration="1000" />
+  <script>
 		<light state="on" color="white" />
-		<random min="1" max="3" />
-		<switch var="$">
-			<case op="eq" value="1">
-				<light state="on" color="blue" />
-				<talk>Qual foi o número?</talk>
-				<listen />
-				<switch var="$">
-					<case op="contain" value="1">
-						<talk>Parabéns, eu pensei no número 1. Você acertou!</talk>
-						<counter var="p" op="+" value="1" />
-					</case>
-					<default>
-						<talk>Você errou, eu pensei no número um</talk>
-					</default>
-				</switch>
-			</case>
-			<case op="eq" value="2">
-				<light state="on" color="pink" />
-				<talk>E ai? Qual foi  o número?</talk>
-				<listen />
-				<switch var="$">
-					<case op="contain" value="2">
-						<talk>Parabéns, eu pensei no número 2. Você acertou!</talk>
-						<counter var="p" op="+" value="1" />
-					</case>
-					<default>
-						<talk>Você errou, eu pensei no número dois</talk>
-					</default>
-				</switch>
-			</case>
-			<case op="eq" value="3">
-				<light state="on" color="green" />
-				<talk>E ai? Qual foi  o número?</talk>
-				<listen />
-				<switch var="$">
-					<case op="contain" value="3">
-						<talk>Parabéns, eu pensei no número 3. Você acertou!</talk>
-						<counter var="p" op="+" value="1" />
-					</case>
-					<default>
-						<talk>Você errou, eu pensei no número três</talk>
-					</default>
-				</switch>
-			</case>
-		</switch>
-		<light state="on" color="white" />
-		<switch var="i">
-			<case op="eq" value="3">
-				<talk>O seu número de pontos foi #p</talk>
-				<talk>Já vou embora / Está ficando tarde / Pra mim já deu</talk>
-		<audio source="mario-end" block="true" />
-				<light state="off" color="black" />
-				<stop />
-			</case>
-			<default>
-				<counter var="i" op="+" value="1" />
-				<goto target="INICIO" />
-			</default>
-		</switch>
+		<counter var="x" op="=" value="10" />
+		<talk>O valor de x é #x</talk>
+		<light state="on" color="red" />
+		<counter var="z" op="=" value="20" />
+		<talk>O valor de z é #z</talk>
+		<light state="on" color="blue" />
 	</script>
-	</evaml>
+  </evaml>

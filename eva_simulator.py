@@ -257,14 +257,29 @@ def exec_comando(node):
 
     elif node.tag == "talk":
         texto = node.text
+        
+        # substitui as variaveis pelo texto. as variaveis devem existir na memoria
+        texto_aux = texto
+        for i in range(len(texto)):
+            if texto[i] == "#":
+                inicio = i
+                while texto[i] != " ":
+                    i += 1
+                    if i == len(texto):
+                        break
+                if i - inicio > 0:
+                    for v in eva_memory.vars:
+                        if v == texto[inicio + 1: i]:
+                            texto_aux = texto_aux.replace(texto[inicio: i], str(eva_memory.vars[v]))
+        texto = texto_aux
+
         # esta parte substitui o $ no texto
-        if len(eva_memory.var_dolar) != 0:
+        if len(eva_memory.var_dolar) != 0: # verifica se tem conteudo em $
             texto = texto.replace("$", eva_memory.var_dolar[-1])
 
         # esta parte implementa o texto aleatorio gerado pelo uso do caractere /
         texto = texto.split(sep="/") # texto vira um lista com a qtd de frases divididas pelo caract. /
         ind_random = rnd.randint(0, len(texto)-1)
-        print("ind_random", ind_random, texto[ind_random])
         terminal.insert(INSERT, '\nstate: Speaking: "' + texto[ind_random] + '"')
         terminal.see(tkinter.END)
 
@@ -305,15 +320,19 @@ def exec_comando(node):
         terminal.see(tkinter.END)
         playsound(audio_file, block = block)
 
-    ##
-    ## falta implementar o default
-    ##
+
     elif node.tag == "case":
         eva_memory.reg_case = 0 # limpa o flag do case
         valor = node.attrib["value"]
         print("valor ", valor, type(valor))
         if valor == eva_memory.var_dolar[-1]: # compara valor com o topo da pilha da variavel var_dolar
             eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+
+    elif node.tag == "default": # default sempre será verdadeiro
+        print("Defalut funcionando")
+        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
 
     elif node.tag == "counter":
         var_name = node.attrib["var"]
