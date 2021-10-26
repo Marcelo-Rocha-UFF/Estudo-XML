@@ -45,8 +45,7 @@ canvas.pack()
 
 # Terminal text configuration
 terminal = Text ( window, fg = "cyan", bg = "black", height = "32", width = "60")
-Font_tuple = ("DejaVu Sans Mono", 9)
-terminal.configure(font = Font_tuple)
+terminal.configure(font = ("DejaVu Sans Mono", 9))
 
 
 # Defining the image files
@@ -84,8 +83,8 @@ def evaInit():
     evaEmotion("power_on")
     playsound("my_sounds/power_on.mp3", block = True)
     terminal.insert(INSERT, "\nstate: Initializing.")
-    time.sleep(1)
-    evaMatrix("blue")
+    # time.sleep(1)
+    # evaMatrix("blue")
     # terminal.insert(INSERT, "\nstate: Speaking a greeting text.")
     # playsound("my_sounds/greetings.mp3", block = True)
     # terminal.insert(INSERT, "\nstate: Turning on the blue light.")
@@ -117,9 +116,9 @@ def evaInit():
     # terminal.insert(INSERT, "\nstate: Turning off the light.")
     # light("#ffffff", "off")
     # time.sleep(2)
-    terminal.insert(INSERT, '\nstate: Speaking: "Load a script file and enjoy."')
-    playsound("my_sounds/load_a_script.mp3", block = True)
-    terminal.insert(INSERT, "\nstate: Entering in standby mode.")
+    # terminal.insert(INSERT, '\nstate: Speaking: "Load a script file and enjoy."')
+    # playsound("my_sounds/load_a_script.mp3", block = True)
+    # terminal.insert(INSERT, "\nstate: Entering in standby mode.")
     # while(True): # animacao da luz da matrix
     #     evaMatrix("white")
     #     time.sleep(0.5)
@@ -226,6 +225,7 @@ def exec_comando(node):
         terminal.insert(INSERT, "\nstate: Selected Voice: " + node.attrib["tone"])
         terminal.see(tkinter.END)
 
+
     elif node.tag == "light":
         state = node.attrib["state"]
         color = node.attrib["color"]
@@ -238,11 +238,13 @@ def exec_comando(node):
         light(color , state)
         time.sleep(1) # emula o tempo da lampada real
 
+
     elif node.tag == "wait":
         duration = node.attrib["duration"]
-        terminal.insert(INSERT, "\nstate: Pausing. Duration = " + duration + " ms")
+        terminal.insert(INSERT, "\nstate: Pausing. Duration=" + duration + " ms")
         terminal.see(tkinter.END)
         time.sleep(int(duration)/1000) # converte para segundos
+
 
     elif node.tag == "random":
         min = node.attrib["min"]
@@ -252,12 +254,27 @@ def exec_comando(node):
         terminal.see(tkinter.END)
         print("random command, min = " + min + ", max = " + max + ", valor = " + eva_memory.var_dolar[-1])
 
+
     elif node.tag == "listen":
         print("listen command")
+        global pop
+        pop = Toplevel(window)
+        pop.title("Listen Command")
+        pop.geometry("300x150")
+        #pop.config(bg="white")
+        pop.grab_set()
+        # Create a Label Text
+        label = Label(pop, text="Eva is listening... Please, enter your answer!", font = ('Aerial', 9))
+        label.pack(pady=20)
+        E1 = Entry(pop, font = ('Aerial', 9))
+        E1.pack()
+        # Add Button for making selection
+        button1 = Button(pop, text="OK", command=lambda: choice("yes"))
+        button1.pack(pady=20)
+
 
     elif node.tag == "talk":
         texto = node.text
-        
         # substitui as variaveis pelo texto. as variaveis devem existir na memoria
         texto_aux = texto
         for i in range(len(texto)):
@@ -276,7 +293,6 @@ def exec_comando(node):
         # esta parte substitui o $ no texto
         if len(eva_memory.var_dolar) != 0: # verifica se tem conteudo em $
             texto = texto.replace("$", eva_memory.var_dolar[-1])
-
         # esta parte implementa o texto aleatorio gerado pelo uso do caractere /
         texto = texto.split(sep="/") # texto vira um lista com a qtd de frases divididas pelo caract. /
         ind_random = rnd.randint(0, len(texto)-1)
@@ -297,6 +313,7 @@ def exec_comando(node):
         playsound("audio_cache_files/" + file_name + ".mp3", block = True) # toca o audio da fala
         evaMatrix("white")
 
+
     elif node.tag == "evaEmotion":
         emotion = node.attrib["emotion"]
         terminal.insert(INSERT, "\nstate: Expressing an emotion: " + emotion)
@@ -310,6 +327,7 @@ def exec_comando(node):
         elif emotion == "neutral":
             evaMatrix("white")
         evaEmotion(emotion)
+
 
     elif node.tag == "audio":
         audio_file = "sonidos/" + node.attrib["source"] + ".wav"
@@ -338,6 +356,7 @@ def exec_comando(node):
         var_name = node.attrib["var"]
         var_value = int(node.attrib["value"])
         op = node.attrib["op"]
+
         if op == "=": # efetua a atribuicao
             eva_memory.vars[var_name] = var_value
 
@@ -356,6 +375,58 @@ def exec_comando(node):
         print("Eva ram => ", eva_memory.vars)
         terminal.insert(INSERT, "\nstate: Counter : var=" + var_name + ", value=" + str(var_value) + ", op(" + op + "), result=" + str(eva_memory.vars[var_name]))
         terminal.see(tkinter.END)
+
+
+    elif node.tag == "userEmotion":
+        global img_neutral, img_happy, img_anger, img_sad, img_surprised
+        global var
+
+        def fechar_pop():
+            print(var.get())
+            eva_memory.var_dolar.append(var.get())
+            terminal.insert(INSERT, "\nstate: userEmotion : var=$" + ", value=" + eva_memory.var_dolar[-1])
+            terminal.see(tkinter.END)
+            pop.destroy()
+
+        var = StringVar()
+        var.set("Neutral")
+        img_neutral = PhotoImage(file = "images/img_neutral.png")
+        img_happy = PhotoImage(file = "images/img_happy.png")
+        img_anger = PhotoImage(file = "images/img_anger.png")
+        img_sad = PhotoImage(file = "images/img_sad.png")
+        img_surprised = PhotoImage(file = "images/img_surprised.png")
+
+        print("userEmotion")
+        pop = Toplevel(window)
+        pop.title("userEmotion Command")
+        pop.geometry("697x250")
+        #pop.config(bg="white")
+        pop.grab_set()
+       
+        # Create a Label Text
+        Label(pop, text="Eva is analysing your face expression. Please, choose one emotion!", font = ('Aerial', 12)).place(x = 95, y = 10)
+
+        # imagens são exibidas usando os lables
+        Label(pop, image=img_neutral).place(x = 10, y = 50)
+        Label(pop, image=img_happy).place(x = 147, y = 50)
+        Label(pop, image=img_anger).place(x = 284, y = 50)
+        Label(pop, image=img_sad).place(x = 421, y = 50)
+        Label(pop, image=img_surprised).place(x = 558, y = 50)
+
+        Radiobutton(pop, text = "Neutral", variable = var, command = None, value = "Neutral").place(x = 35, y = 185)
+        Radiobutton(pop, text = "Happy", variable = var, command = None, value = "Happy").place(x = 172, y = 185)
+        Radiobutton(pop, text = "Anger", variable = var, command = None, value = "Anger").place(x = 312, y = 185)
+        Radiobutton(pop, text = "Sad", variable = var, command = None, value = "Sad").place(x = 452, y = 185)
+        Radiobutton(pop, text = "Surprised", variable = var, command = None, value = "Surprised").place(x = 575, y = 185)
+
+        # # Add Button for making selection
+        Button(pop, text = "     OK     ", command = fechar_pop).place(x = 310, y = 215)
+
+
+        
+
+        
+
 
 def busca_commando(key): # keys são strings
 	# busca em settings. Isto porque "voice" fica em settings
@@ -392,7 +463,7 @@ def link_process(anterior = -1):
         comando_from = busca_commando(from_key).tag # Tag do comando a ser executado
         comando_to = busca_commando(to_key).tag # DEBUG
 
-        # evita que um mesmo nó seja executado consecutivamente
+        # evita que um mesmo nó seja executado consecutivamente. Isso acontece com o nó que antecede os cases
         if anterior != from_key:
             exec_comando(busca_commando(from_key))
             anterior = from_key

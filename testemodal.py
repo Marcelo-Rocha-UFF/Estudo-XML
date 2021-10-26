@@ -7,8 +7,8 @@ win = Tk()
 
 # Set the window size
 win.geometry("700x350")
-style = ttk.Style()
-style.theme_use('clam')
+# style = ttk.Style()
+# style.theme_use('clam')
 
 # Define a function to implement choice function
 def choice(option):

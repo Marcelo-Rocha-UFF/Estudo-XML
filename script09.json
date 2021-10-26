@@ -1,0 +1,87 @@
+{
+  "_id": "1d76dae45c82b9226c8604838c99cc7b",
+  "nombre": "script09",
+  "data": {
+    "node": [
+      {
+        "key": 1000,
+        "name": "Voice",
+        "type": "voice",
+        "color": "lightblue",
+        "isGroup": false,
+        "voice": "pt-BR_IsabelaV3Voice",
+        "__gohashid": 0
+      },
+      {
+        "key": 1001,
+        "name": "Random",
+        "type": "random",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "min": 1,
+        "max": 3,
+        "__gohashid": 1
+      },
+      {
+        "key": 1002,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#ff0000",
+        "state": "on",
+        "__gohashid": 2
+      },
+      {
+        "key": 1003,
+        "name": "Counter",
+        "type": "counter",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "count": "x",
+        "ops": "assign",
+        "value": 15,
+        "__gohashid": 3
+      },
+      {
+        "key": 1004,
+        "name": "Wait",
+        "type": "wait",
+        "color": "lightblue",
+        "isGroup": false,
+        "time": 1250,
+        "__gohashid": 4
+      }
+    ],
+    "link": [
+      { 
+        "from": 1000,
+        "to": 1001,
+        "__gohashid": 0
+      },
+      { 
+        "from": 1001,
+        "to": 1002,
+        "__gohashid": 1
+      },
+      { 
+        "from": 1002,
+        "to": 1003,
+        "__gohashid": 2
+      },
+      { 
+        "from": 1003,
+        "to": 1004,
+        "__gohashid": 3
+      },
+      { 
+        "from": 1004,
+        "to": 1005,
+        "__gohashid": 4
+      }
+    ]
+  }
+}
