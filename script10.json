@@ -29,7 +29,7 @@
         "type": "speak",
         "color": "lightblue",
         "isGroup": false,
-        "text": "Hello, what is your name $",
+        "text": "Hello, what is your name",
         "__gohashid": 2
       },
       {
@@ -112,7 +112,7 @@
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "lcolor": "#e6007e",
+        "lcolor": "#ffffff",
         "state": "on",
         "__gohashid": 10
       },
@@ -127,6 +127,15 @@
       },
       {
         "key": 1013,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Bye bye",
+        "__gohashid": 12
+      },
+      {
+        "key": 1014,
         "name": "Light",
         "type": "light",
         "color": "lightblue",
@@ -134,7 +143,7 @@
         "group": "",
         "lcolor": "#000000",
         "state": "off",
-        "__gohashid": 12
+        "__gohashid": 13
       }
     ],
     "link": [
@@ -202,6 +211,11 @@
         "from": 1012,
         "to": 1013,
         "__gohashid": 12
+      },
+      { 
+        "from": 1013,
+        "to": 1014,
+        "__gohashid": 13
       }
     ]
   }

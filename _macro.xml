@@ -6,7 +6,7 @@
 	</settings>
 	<script>
 		<light state="on" color="blue" />
-		<talk>Hello, what is your name $</talk>
+		<talk>Hello, what is your name</talk>
 		<listen />
 		<light state="on" color="yellow" />
 		<evaEmotion emotion="happy" />
@@ -15,8 +15,9 @@
 		<evaEmotion emotion="neutral" />
 		<talk>How are you feeling?</talk>
 		<userEmotion />
-		<light state="on" color="pink" />
+		<light state="on" color="white" />
 		<talk>Hey $-1, I see that you are $</talk>
+		<talk>Bye bye</talk>
 		<light state="off" />
 	</script>
 	</evaml>

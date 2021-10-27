@@ -53,7 +53,7 @@ tts.set_service_url(url)
 # Create the Tkinter window
 window = Tk()
 window.title("Eva Simulator for EvaML - Version 1.0 - UFF/MidiaCom Lab")
-w = 950
+w = 945
 h = 525
 window.geometry(str(w) + "x" + str(h))
 canvas = Canvas(window, bg = "#d9d9d9", width = w, height = h) # o canvas e' necessario para usar imagens com transparencia
@@ -88,7 +88,6 @@ canvas.create_image(340, 285, image = bulb_image)
 # Eva initialization function
 def evaInit():
     bt_power['state'] = DISABLED
-    bt_import['state'] = NORMAL
     evaEmotion("power_on")
     terminal.insert(INSERT, "\nstate: Initializing.")
     playsound("my_sounds/power_on.mp3", block = True)
@@ -97,6 +96,7 @@ def evaInit():
     terminal.insert(INSERT, '\nstate: Speaking "Load a script file and enjoy."')
     playsound("my_sounds/load_a_script.mp3", block = True)
     terminal.insert(INSERT, "\nstate: Entering in standby mode.")
+    bt_import['state'] = NORMAL
     while(bt_run['state'] == DISABLED): # animacao da luz da matrix em stand by
         evaMatrix("white")
         time.sleep(0.5)
