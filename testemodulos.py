@@ -1,9 +1,3 @@
-with open("ibm_cred.txt", "r") as ibm_cred:
-	print("i")
-	linhas = ibm_cred.read().splitlines()
+s = "eu sou $ e vc $-1"
 
-
-print(type(linhas))
-
-for linha in linhas:
-	print(linha)
+print("$-1" in s)

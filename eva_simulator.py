@@ -6,7 +6,7 @@ import os
 import random as rnd
 import sys
 import xml.etree.ElementTree as ET
-import eva_memory # modulo de memoria do Eva
+import eva_memory # modulo de memoria do EvaSIM
 
 from tkinter import *
 from tkinter import filedialog as fd
@@ -28,20 +28,14 @@ links_node = {}
 fila_links =  [] # fila de links (comandos)
 thread_pause = False
 
-# funcao de controle da vairavel que controla as threads
+# funcao de controle da vairavel que bloqueia as janelas pop ups
 def lock_thread():
     global thread_pause
     thread_pause = True
-    print("lock", id(thread_pause), thread_pause)
 
 def unlock_thread():
     global thread_pause
     thread_pause = False
-    print("unlock", id(thread_pause), thread_pause)
-
-# # watson config (essa chave parou de funcionar)
-#apikey = "0UyIQDYcNO7SytoTLOE-hMRME8o7jeAxcD21Bcd7ZZ9E"
-#url = "https://api.au-syd.text-to-speech.watson.cloud.ibm.com/instances/5bd04cd8-cf86-4fbc-b76d-66ee10427604"
 
 
 # watson config api key
@@ -59,26 +53,23 @@ tts.set_service_url(url)
 # Create the Tkinter window
 window = Tk()
 window.title("Eva Simulator for EvaML - Version 1.0 - UFF/MidiaCom Lab")
-window.geometry("835x525")
-canvas = Canvas(window, bg = "#d9d9d9", width = 835, height = 525) # o canvas e' necessario para usar imagens com transparencia
+w = 950
+h = 525
+window.geometry(str(w) + "x" + str(h))
+canvas = Canvas(window, bg = "#d9d9d9", width = w, height = h) # o canvas e' necessario para usar imagens com transparencia
 canvas.pack()
-
 # Terminal text configuration
-terminal = Text ( window, fg = "cyan", bg = "black", height = "32", width = "60")
+terminal = Text ( window, fg = "cyan", bg = "black", height = "32", width = "75")
 terminal.configure(font = ("DejaVu Sans Mono", 9))
-
-
 # Defining the image files
 eva_image = PhotoImage(file = "images/eva.png") 
 bulb_image = PhotoImage(file = "images/bulb.png")
-
 # eva expressions images
 im_eyes_neutral = PhotoImage(file = "images/eyes_neutral.png")
 im_eyes_angry = PhotoImage(file = "images/eyes_angry.png")
 im_eyes_sad = PhotoImage(file = "images/eyes_sad.png")
 im_eyes_happy = PhotoImage(file = "images/eyes_happy.png")
 im_eyes_on = PhotoImage(file = "images/eyes_on.png")
-
 # matrix voice images
 im_matrix_blue = PhotoImage(file = "images/matrix_blue.png")
 im_matrix_green = PhotoImage(file = "images/matrix_green.png")
@@ -86,10 +77,8 @@ im_matrix_yellow = PhotoImage(file = "images/matrix_yellow.png")
 im_matrix_white = PhotoImage(file = "images/matrix_white.png")
 im_matrix_red = PhotoImage(file = "images/matrix_red.png")
 im_matrix_grey = PhotoImage(file = "images/matrix_grey.png")
-
 im_bt_play = PhotoImage(file = "images/bt_play.png")
 im_bt_stop = PhotoImage(file = "images/bt_stop.png")
-
 # desenha o eva e a lampada desligada
 canvas.create_image(160, 262, image = eva_image)
 canvas.create_oval(300, 205, 377, 285, fill = "#000000", outline = "#000000" ) # cor preta indica light off
@@ -101,45 +90,14 @@ def evaInit():
     bt_power['state'] = DISABLED
     bt_import['state'] = NORMAL
     evaEmotion("power_on")
-    playsound("my_sounds/power_on.mp3", block = True)
     terminal.insert(INSERT, "\nstate: Initializing.")
-    # time.sleep(1)
-    # evaMatrix("blue")
-    # terminal.insert(INSERT, "\nstate: Speaking a greeting text.")
-    # playsound("my_sounds/greetings.mp3", block = True)
-    # terminal.insert(INSERT, "\nstate: Turning on the blue light.")
-    # light("blue", "on")
-    # time.sleep(2)
-    # terminal.insert(INSERT, "\nstate: Turning on the red light.")
-    # light("red", "on")
-    # time.sleep(2)
-    # terminal.insert(INSERT, "\nstate: Turning on the green light.")
-    # light("green", "on")
-    # time.sleep(2)
-    # terminal.insert(INSERT, "\nstate: Turning on the white light.")
-    # light("white", "on")
-    # time.sleep(2)
-    # evaEmotion("angry")
-    # light("white", "on")
-    # evaMatrix("red")
-    # terminal.insert(INSERT, "\nstate: Expressing anger.")
-    # time.sleep(2)
-    # evaEmotion("happy")
-    # evaMatrix("yellow")
-    # terminal.insert(INSERT, "\nstate: Expressing joy.")
-    # time.sleep(2)
-    # evaEmotion("sad")
-    # evaMatrix("blue")
-    # terminal.insert(INSERT, "\nstate: Expressing sadness.")
-    # time.sleep(2)
-    # evaEmotion("neutral")
-    # terminal.insert(INSERT, "\nstate: Turning off the light.")
-    # light("#ffffff", "off")
-    # time.sleep(2)
-    # terminal.insert(INSERT, '\nstate: Speaking: "Load a script file and enjoy."')
-    # playsound("my_sounds/load_a_script.mp3", block = True)
+    playsound("my_sounds/power_on.mp3", block = True)
+    terminal.insert(INSERT, "\nstate: Speaking a greeting text.")
+    playsound("my_sounds/greetings.mp3", block = True)
+    terminal.insert(INSERT, '\nstate: Speaking "Load a script file and enjoy."')
+    playsound("my_sounds/load_a_script.mp3", block = True)
     terminal.insert(INSERT, "\nstate: Entering in standby mode.")
-    while(bt_run['state'] == DISABLED): # animacao da luz da matrix
+    while(bt_run['state'] == DISABLED): # animacao da luz da matrix em stand by
         evaMatrix("white")
         time.sleep(0.5)
         evaMatrix("grey")
@@ -150,10 +108,52 @@ def evaInit():
 def powerOn():
     threading.Thread(target=evaInit, args=()).start()
 
+
+# Ativa a thread que roda o script
 def runScript():
     busca_links("1000")
     threading.Thread(target=link_process, args=()).start()
     
+
+# Eva Import Script function
+def importFile():
+    global root, script_node, links_node
+    print("Importing a file...")
+    filetypes = (('evaML files', '*.xml'), )
+    script_file = fd.askopenfile(mode = "r", title = 'Open an EvaML Script File', initialdir = './', filetypes = filetypes)
+    # variaveis da vm
+    tree = ET.parse(script_file)  # arquivo de codigo xml
+    root = tree.getroot() # evaml root node
+    script_node = root.find("script")
+    links_node = root.find("links")
+    bt_run['state'] = NORMAL
+    bt_stop['state'] = DISABLED
+    evaEmotion("neutral")
+    terminal.insert(INSERT, '\nstate: Script loaded.')
+    terminal.see(tkinter.END)
+
+def clear_terminal():
+    terminal.delete('1.0', END)
+    # criando terminal text
+    terminal.insert(INSERT, "===========================================================================\n")
+    terminal.insert(INSERT, "                         Eva Simulator for EvaML\n                      Version 1.0 - UFF/MidiaCom Lab\n")
+    terminal.insert(INSERT, "===========================================================================")
+
+# criacao dos botoes da interface com usuário
+bt_power = Button ( window, text = "Power On", command = powerOn)
+bt_import = Button ( window, text = "Import Script File...", state = DISABLED, command = importFile)
+bt_run = Button ( window, text = "Run", image = im_bt_play, state = DISABLED, compound = LEFT, command = runScript)
+bt_stop = Button ( window, text = "Stop", image = im_bt_stop, state = DISABLED, compound = LEFT)
+bt_clear = Button ( window, text = "Clear Term.", state = NORMAL, compound = LEFT, command = clear_terminal)
+# limpa e desenha o texto padrao do terminal
+clear_terminal()
+terminal.place(x = 400, y = 60)
+bt_power.place(x = 400, y = 20)
+bt_import.place(x = 496, y = 20)
+bt_run.place(x = 652, y = 20)
+bt_stop.place(x = 742, y = 20)
+bt_clear.place(x = 835, y = 20)
+
 
 # set the Eva emotion
 def evaEmotion(expression):
@@ -172,7 +172,7 @@ def evaEmotion(expression):
     time.sleep(1)
 
 
-# set the Eva emotion
+# set the Eva matrix
 def evaMatrix(color):
     if color == "blue":
         canvas.create_image(155, 349, image = im_matrix_blue)
@@ -190,7 +190,7 @@ def evaMatrix(color):
         print("wrong color to matrix...")
 
 
-# light color and state
+# set the iamge of light (color and state)
 def light(color, state):
     color_map = {"white":"#ffffff", "black":"#000000", "red":"#ff0000", "pink":"#e6007e", "green":"#00ff00", "yellow":"#ffff00", "blue":"#0000ff"}
     if color_map.get(color) != None:
@@ -202,44 +202,8 @@ def light(color, state):
         canvas.create_oval(300, 205, 377, 285, fill = "#000000", outline = "#000000" ) # cor preta indica light off
         canvas.create_image(340, 285, image = bulb_image) # redesenha a lampada
 
-    
-# Eva Import Script function
-def importFile():
-    global root, script_node, links_node
-    print("Importing a file...")
-    filetypes = (('evaML files', '*.xml'), )
-    script_file = fd.askopenfile(mode = "r", title = 'Open an EvaML Script File', initialdir = './', filetypes = filetypes)
-    # variaveis da vm
-    tree = ET.parse(script_file)  # arquivo de codigo xml
-    root = tree.getroot() # evaml root node
-    script_node = root.find("script")
-    links_node = root.find("links")
-    bt_run['state'] = NORMAL
-    bt_stop['state'] = DISABLED
-    evaEmotion("neutral")
-    terminal.insert(INSERT, '\nstate: Script loaded.')
-    terminal.see(tkinter.END)
 
-
-# criacao dos componentes da interface com usuário
-bt_power = Button ( window, text = "Power On", command = powerOn)
-bt_import = Button ( window, text = "Import Script File...", state = DISABLED, command = importFile)
-bt_run = Button ( window, text = "Run", image = im_bt_play, state = DISABLED, compound = LEFT, command = runScript)
-bt_stop = Button ( window, text = "Stop", image = im_bt_stop, state = DISABLED, compound = LEFT)
-
-# terminal text
-terminal.insert(INSERT, "============================================================\n")
-terminal.insert(INSERT, "                  Eva Simulator for EvaML\n               Version 1.0 - UFF/MidiaCom Lab\n")
-terminal.insert(INSERT, "============================================================")
-
-terminal.place(x = 400, y = 60)
-
-bt_power.place(x = 400, y = 20)
-bt_import.place(x = 496, y = 20)
-bt_run.place(x = 652, y = 20)
-bt_stop.place(x = 742, y = 20)
-
-# funcoes da vm
+# funcoes da maquina virtual
 # executa os comandos
 def exec_comando(node):
     if node.tag == "voice":
@@ -249,13 +213,16 @@ def exec_comando(node):
 
     elif node.tag == "light":
         state = node.attrib["state"]
-        color = node.attrib["color"]
-        if state == "on":
-            terminal.insert(INSERT, "\nstate: Turnning on the light. Color=" + color + ".")
-            terminal.see(tkinter.END) # autoscrolling
-        else:
+        # caso a seguir, se o sate é off, e pode não ter atributo color definido
+        if state == "off":
+            color = "black"
             terminal.insert(INSERT, "\nstate: Turnning off the light.")
             terminal.see(tkinter.END)
+        else:
+            color = node.attrib["color"]
+            terminal.insert(INSERT, "\nstate: Turnning on the light. Color=" + color + ".")
+            terminal.see(tkinter.END) # autoscrolling
+
         light(color , state)
         time.sleep(1) # emula o tempo da lampada real
 
@@ -278,15 +245,15 @@ def exec_comando(node):
 
     elif node.tag == "listen":
         lock_thread()
-
-        def fechar_pop(): # função de fechamento da janela pop up
+        # função de fechamento da janela pop up
+        def fechar_pop(): 
             print(var.get())
             eva_memory.var_dolar.append(var.get())
             terminal.insert(INSERT, "\nstate: Listening : var=$" + ", value=" + eva_memory.var_dolar[-1])
             terminal.see(tkinter.END)
             pop.destroy()
             unlock_thread() # reativa a thread de processamento do script
-
+        # criacao da janela
         var = StringVar()
         pop = Toplevel(window)
         pop.title("Listen Command")
@@ -303,10 +270,11 @@ def exec_comando(node):
         Entry(pop, textvariable = var, font = ('Aerial', 9)).pack()
         # E1.bind("<Return>", fechar_pop)
         # E1.pack()
-        Button(pop, text="OK", command=fechar_pop).pack(pady=20)
-
-        while thread_pause: # espera pela liberacao, aguardando a resposta do usuario
+        Button(pop, text="    OK    ", command=fechar_pop).pack(pady=20)
+        # espera pela liberacao, aguardando a resposta do usuario
+        while thread_pause: 
             time.sleep(0.5)
+
 
     elif node.tag == "talk":
         texto = node.text
@@ -325,9 +293,19 @@ def exec_comando(node):
                             texto_aux = texto_aux.replace(texto[inicio: i], str(eva_memory.vars[v]))
         texto = texto_aux
 
-        # esta parte substitui o $ no texto
-        if len(eva_memory.var_dolar) != 0: # verifica se tem conteudo em $
-            texto = texto.replace("$", eva_memory.var_dolar[-1])
+        # esta parte substitui o $, ou o $-1 ou o $1 no texto
+        if "$" in texto: # verifica se tem $ no texto
+            if len(eva_memory.var_dolar) != 0: # verifica se tem conteudo em $
+                # Obs, a ordem importa na comparacao a seguir
+                if "$-1" in texto:
+                    texto = texto.replace("$-1", eva_memory.var_dolar[-2])
+                if "$1" in texto:
+                    texto = texto.replace("$1", eva_memory.var_dolar[0])
+                if "$" in texto:
+                    texto = texto.replace("$", eva_memory.var_dolar[-1])
+            else:
+                print("Erro: A variável $ não possui qualquer valor e não pode ser utilizada.")
+                exit(1)
         # esta parte implementa o texto aleatorio gerado pelo uso do caractere /
         texto = texto.split(sep="/") # texto vira um lista com a qtd de frases divididas pelo caract. /
         ind_random = rnd.randint(0, len(texto)-1)
@@ -346,7 +324,7 @@ def exec_comando(node):
                 audio_file.write(res.content)
         evaMatrix("blue")
         playsound("audio_cache_files/" + file_name + ".mp3", block = True) # toca o audio da fala
-        evaMatrix("white")
+        evaMatrix("grey")
 
 
     elif node.tag == "evaEmotion":
@@ -413,7 +391,7 @@ def exec_comando(node):
 
 
     elif node.tag == "userEmotion":
-        global img_neutral, img_happy, img_anger, img_sad, img_surprised
+        global img_neutral, img_happy, img_angry, img_sad, img_surprised
         lock_thread()
 
         def fechar_pop(): # função de fechamento da janela pop up
@@ -428,11 +406,9 @@ def exec_comando(node):
         var.set("Neutral")
         img_neutral = PhotoImage(file = "images/img_neutral.png")
         img_happy = PhotoImage(file = "images/img_happy.png")
-        img_anger = PhotoImage(file = "images/img_anger.png")
+        img_angry = PhotoImage(file = "images/img_angry.png")
         img_sad = PhotoImage(file = "images/img_sad.png")
         img_surprised = PhotoImage(file = "images/img_surprised.png")
-
-        print("userEmotion")
         pop = Toplevel(window)
         pop.title("userEmotion Command")
         w = 697
@@ -442,29 +418,22 @@ def exec_comando(node):
         x = (ws/2) - (w/2)
         y = (hs/2) - (h/2)  
         pop.geometry('%dx%d+%d+%d' % (w, h, x, y))
-        #pop.config(bg="white")
-        pop.grab_set()
-       
-        # Create a Label Text
+        pop.grab_set() # faz com que a janela receba todos os eventos
         Label(pop, text="Eva is analysing your face expression. Please, choose one emotion!", font = ('Aerial', 12)).place(x = 95, y = 10)
-
         # imagens são exibidas usando os lables
         Label(pop, image=img_neutral).place(x = 10, y = 50)
         Label(pop, image=img_happy).place(x = 147, y = 50)
-        Label(pop, image=img_anger).place(x = 284, y = 50)
+        Label(pop, image=img_angry).place(x = 284, y = 50)
         Label(pop, image=img_sad).place(x = 421, y = 50)
         Label(pop, image=img_surprised).place(x = 558, y = 50)
-
-        Radiobutton(pop, text = "Neutral", variable = var, command = None, value = "Neutral").place(x = 35, y = 185)
-        Radiobutton(pop, text = "Happy", variable = var, command = None, value = "Happy").place(x = 172, y = 185)
-        Radiobutton(pop, text = "Anger", variable = var, command = None, value = "Anger").place(x = 312, y = 185)
-        Radiobutton(pop, text = "Sad", variable = var, command = None, value = "Sad").place(x = 452, y = 185)
-        Radiobutton(pop, text = "Surprised", variable = var, command = None, value = "Surprised").place(x = 575, y = 185)
-
-        # # Add Button for making selection
+        Radiobutton(pop, text = "Neutral", variable = var, command = None, value = "neutral").place(x = 35, y = 185)
+        Radiobutton(pop, text = "Happy", variable = var, command = None, value = "happy").place(x = 172, y = 185)
+        Radiobutton(pop, text = "Angry", variable = var, command = None, value = "angry").place(x = 312, y = 185)
+        Radiobutton(pop, text = "Sad", variable = var, command = None, value = "sad").place(x = 452, y = 185)
+        Radiobutton(pop, text = "Surprised", variable = var, command = None, value = "surprised").place(x = 575, y = 185)
         Button(pop, text = "     OK     ", command = fechar_pop).place(x = 310, y = 215)
-
-        while thread_pause: # espera pela liberacao, aguardando a resposta do usuario
+        # espera pela liberacao, aguardando a resposta do usuario
+        while thread_pause: 
             time.sleep(0.5)
 
 
