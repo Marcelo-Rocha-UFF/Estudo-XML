@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import hashlib
 import os
 
@@ -24,10 +26,26 @@ root = {}
 script_node = {}
 links_node = {}
 fila_links =  [] # fila de links (comandos)
+thread_pause = False
+
+# funcao de controle da vairavel que controla as threads
+def lock_thread():
+    global thread_pause
+    thread_pause = True
+    print("lock", id(thread_pause), thread_pause)
+
+def unlock_thread():
+    global thread_pause
+    thread_pause = False
+    print("unlock", id(thread_pause), thread_pause)
+
+# # watson config
+#apikey = "0UyIQDYcNO7SytoTLOE-hMRME8o7jeAxcD21Bcd7ZZ9E"
+#url = "https://api.au-syd.text-to-speech.watson.cloud.ibm.com/instances/5bd04cd8-cf86-4fbc-b76d-66ee10427604"
 
 # watson config
-apikey = "0UyIQDYcNO7SytoTLOE-hMRME8o7jeAxcD21Bcd7ZZ9E"
-url = "https://api.au-syd.text-to-speech.watson.cloud.ibm.com/instances/5bd04cd8-cf86-4fbc-b76d-66ee10427604"
+apikey = "D6Zfz2iu-w6mnhjlRvfuwut9qkUmt1-JoJo5lPChN32B"
+url = "https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/f7080a76-f05a-4d6a-a8e7-191fdb43b594"
 
 # setup watson service
 authenticator = IAMAuthenticator(apikey)
@@ -81,7 +99,7 @@ def evaInit():
     bt_power['state'] = DISABLED
     bt_import['state'] = NORMAL
     evaEmotion("power_on")
-    playsound("my_sounds/power_on.mp3", block = True)
+    #playsound("my_sounds/power_on.mp3", block = True)
     terminal.insert(INSERT, "\nstate: Initializing.")
     # time.sleep(1)
     # evaMatrix("blue")
@@ -230,7 +248,7 @@ def exec_comando(node):
         state = node.attrib["state"]
         color = node.attrib["color"]
         if state == "on":
-            terminal.insert(INSERT, "\nstate: Turnning on the light. Color = " + color + ".")
+            terminal.insert(INSERT, "\nstate: Turnning on the light. Color=" + color + ".")
             terminal.see(tkinter.END) # autoscrolling
         else:
             terminal.insert(INSERT, "\nstate: Turnning off the light.")
@@ -257,7 +275,17 @@ def exec_comando(node):
 
     elif node.tag == "listen":
         print("listen command")
-        global pop
+        lock_thread()
+
+        def fechar_pop(): # função de fechamento da janela pop up
+            print(var.get())
+            eva_memory.var_dolar.append(var.get())
+            terminal.insert(INSERT, "\nstate: Listening : var=$" + ", value=" + eva_memory.var_dolar[-1])
+            terminal.see(tkinter.END)
+            pop.destroy()
+            unlock_thread() # reativa a thread de processamento do script
+
+        var = StringVar()
         pop = Toplevel(window)
         pop.title("Listen Command")
         pop.geometry("300x150")
@@ -266,12 +294,14 @@ def exec_comando(node):
         # Create a Label Text
         label = Label(pop, text="Eva is listening... Please, enter your answer!", font = ('Aerial', 9))
         label.pack(pady=20)
-        E1 = Entry(pop, font = ('Aerial', 9))
+        E1 = Entry(pop, textvariable = var, font = ('Aerial', 9))
         E1.pack()
         # Add Button for making selection
-        button1 = Button(pop, text="OK", command=lambda: choice("yes"))
+        button1 = Button(pop, text="OK", command=fechar_pop)
         button1.pack(pady=20)
 
+        while thread_pause: # espera pela liberacao, aguardando a resposta do usuario
+            time.sleep(0.5)
 
     elif node.tag == "talk":
         texto = node.text
@@ -379,14 +409,15 @@ def exec_comando(node):
 
     elif node.tag == "userEmotion":
         global img_neutral, img_happy, img_anger, img_sad, img_surprised
-        global var
+        lock_thread()
 
-        def fechar_pop():
+        def fechar_pop(): # função de fechamento da janela pop up
             print(var.get())
             eva_memory.var_dolar.append(var.get())
             terminal.insert(INSERT, "\nstate: userEmotion : var=$" + ", value=" + eva_memory.var_dolar[-1])
             terminal.see(tkinter.END)
             pop.destroy()
+            unlock_thread() # reativa a thread de processamento do script
 
         var = StringVar()
         var.set("Neutral")
@@ -422,10 +453,8 @@ def exec_comando(node):
         # # Add Button for making selection
         Button(pop, text = "     OK     ", command = fechar_pop).place(x = 310, y = 215)
 
-
-        
-
-        
+        while thread_pause: # espera pela liberacao, aguardando a resposta do usuario
+            time.sleep(0.5)
 
 
 def busca_commando(key): # keys são strings
@@ -458,6 +487,10 @@ def link_process(anterior = -1):
     terminal.see(tkinter.END)
     global fila_links
     while len(fila_links) != 0:
+        # print("while ", id(thread_pause), thread_pause)
+        # while thread_pause: # pára a execucao da thread
+        #     time.sleep(0.5)
+        
         from_key = fila_links[0].attrib["from"] # chave do comando a executar
         to_key = fila_links[0].attrib["to"] # chave do próximo comando
         comando_from = busca_commando(from_key).tag # Tag do comando a ser executado

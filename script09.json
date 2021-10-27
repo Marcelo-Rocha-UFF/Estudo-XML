@@ -9,7 +9,7 @@
         "type": "voice",
         "color": "lightblue",
         "isGroup": false,
-        "voice": "pt-BR_IsabelaV3Voice",
+        "voice": "en-US_AllisonV3Voice",
         "__gohashid": 0
       },
       {
@@ -36,24 +36,57 @@
       },
       {
         "key": 1003,
-        "name": "Counter",
-        "type": "counter",
+        "name": "Talk",
+        "type": "speak",
         "color": "lightblue",
         "isGroup": false,
-        "group": "",
-        "count": "x",
-        "ops": "assign",
-        "value": 15,
+        "text": "Hello, what is your name",
         "__gohashid": 3
       },
       {
         "key": 1004,
+        "name": "Listen",
+        "type": "listen",
+        "color": "lightblue",
+        "isGroup": false,
+        "opt": "",
+        "__gohashid": 4
+      },
+      {
+        "key": 1005,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Hi $, nice to meet you",
+        "__gohashid": 5
+      },
+      {
+        "key": 1006,
         "name": "Wait",
         "type": "wait",
         "color": "lightblue",
         "isGroup": false,
         "time": 1250,
-        "__gohashid": 4
+        "__gohashid": 6
+      },
+      {
+        "key": 1007,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "How are you feeling?",
+        "__gohashid": 7
+      },
+      {
+        "key": 1009,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "I see that you are $",
+        "__gohashid": 8
       }
     ],
     "link": [
@@ -81,6 +114,26 @@
         "from": 1004,
         "to": 1005,
         "__gohashid": 4
+      },
+      { 
+        "from": 1005,
+        "to": 1006,
+        "__gohashid": 5
+      },
+      { 
+        "from": 1006,
+        "to": 1007,
+        "__gohashid": 6
+      },
+      { 
+        "from": 1007,
+        "to": 1008,
+        "__gohashid": 7
+      },
+      { 
+        "from": 1008,
+        "to": 1009,
+        "__gohashid": 8
       }
     ]
   }

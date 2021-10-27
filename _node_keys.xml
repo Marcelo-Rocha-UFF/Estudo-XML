@@ -1,15 +1,18 @@
 <evaml name="script09" id="1d76dae45c82b9226c8604838c99cc7b">
 	<settings>
-		<voice tone="pt-BR_IsabelaV3Voice" key="1000" />
+		<voice tone="en-US_AllisonV3Voice" key="1000" />
 		<light-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
 	<script>
 		<random min="1" max="3" key="1001" />
 		<light state="on" color="red" key="1002" />
-		<counter var="x" value="15" op="=" key="1003" />
-		<wait duration="1250" key="1004" />
-		
-		<userEmotion key="1005" />
+		<talk key="1003">Hello, what is your name</talk>
+		<listen key="1004" />
+		<talk key="1005">Hi $, nice to meet you</talk>
+		<wait duration="1250" key="1006" />
+		<talk key="1007">How are you feeling?</talk>
+		<userEmotion key="1008" />
+		<talk key="1009">I see that you are $</talk>
 	</script>
 	</evaml>
