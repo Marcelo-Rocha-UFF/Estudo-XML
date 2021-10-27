@@ -5,14 +5,17 @@
 		<audio-effects mode="on" vol="100%" />
 	</settings>
 	<script>
-		<random min="1" max="3" key="1001" />
-		<light state="on" color="red" key="1002" />
-		<talk key="1003">Hello, what is your name</talk>
-		<listen key="1004" />
+		<light state="on" color="blue" key="1001" />
+		<talk key="1002">Hello, what is your name</talk>
+		<listen key="1003" />
+		<light state="on" color="yellow" key="1004" />
 		<talk key="1005">Hi $, nice to meet you</talk>
-		<wait duration="1250" key="1006" />
+		<light state="on" color="green" key="1006" />
 		<talk key="1007">How are you feeling?</talk>
 		<userEmotion key="1008" />
-		<talk key="1009">I see that you are $</talk>
+		<light state="on" color="pink" key="1009" />
+		<talk key="1010">I see that you are $</talk>
+		<talk key="1011">Bye bye</talk>
+		<light state="off" color="black" key="1012" />
 	</script>
-	<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1007" /><link from="1007" to="1008" /><link from="1008" to="1009" /></links></evaml>
+	<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1007" /><link from="1007" to="1008" /><link from="1008" to="1009" /><link from="1009" to="1010" /><link from="1010" to="1011" /><link from="1011" to="1012" /></links></evaml>

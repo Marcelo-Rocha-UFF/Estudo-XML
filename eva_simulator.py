@@ -6,7 +6,7 @@ import os
 import random as rnd
 import sys
 import xml.etree.ElementTree as ET
-import eva_memory
+import eva_memory # modulo de memoria do Eva
 
 from tkinter import *
 from tkinter import filedialog as fd
@@ -39,14 +39,16 @@ def unlock_thread():
     thread_pause = False
     print("unlock", id(thread_pause), thread_pause)
 
-# # watson config
+# # watson config (essa chave parou de funcionar)
 #apikey = "0UyIQDYcNO7SytoTLOE-hMRME8o7jeAxcD21Bcd7ZZ9E"
 #url = "https://api.au-syd.text-to-speech.watson.cloud.ibm.com/instances/5bd04cd8-cf86-4fbc-b76d-66ee10427604"
 
-# watson config
-apikey = "D6Zfz2iu-w6mnhjlRvfuwut9qkUmt1-JoJo5lPChN32B"
-url = "https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/f7080a76-f05a-4d6a-a8e7-191fdb43b594"
 
+# watson config api key
+with open("ibm_cred.txt", "r") as ibm_cred:
+    ibm_config = ibm_cred.read().splitlines()
+apikey = ibm_config[0]
+url = ibm_config[1]
 # setup watson service
 authenticator = IAMAuthenticator(apikey)
 # tts service
@@ -99,7 +101,7 @@ def evaInit():
     bt_power['state'] = DISABLED
     bt_import['state'] = NORMAL
     evaEmotion("power_on")
-    #playsound("my_sounds/power_on.mp3", block = True)
+    playsound("my_sounds/power_on.mp3", block = True)
     terminal.insert(INSERT, "\nstate: Initializing.")
     # time.sleep(1)
     # evaMatrix("blue")
@@ -136,12 +138,12 @@ def evaInit():
     # time.sleep(2)
     # terminal.insert(INSERT, '\nstate: Speaking: "Load a script file and enjoy."')
     # playsound("my_sounds/load_a_script.mp3", block = True)
-    # terminal.insert(INSERT, "\nstate: Entering in standby mode.")
-    # while(True): # animacao da luz da matrix
-    #     evaMatrix("white")
-    #     time.sleep(0.5)
-    #     evaMatrix("grey")
-    #     time.sleep(0.5)
+    terminal.insert(INSERT, "\nstate: Entering in standby mode.")
+    while(bt_run['state'] == DISABLED): # animacao da luz da matrix
+        evaMatrix("white")
+        time.sleep(0.5)
+        evaMatrix("grey")
+        time.sleep(0.5)
 
 
 # Eva powerOn function
@@ -169,6 +171,7 @@ def evaEmotion(expression):
         print("Wrong expression")
     time.sleep(1)
 
+
 # set the Eva emotion
 def evaMatrix(color):
     if color == "blue":
@@ -185,6 +188,7 @@ def evaMatrix(color):
         canvas.create_image(155, 349, image = im_matrix_grey)
     else : 
         print("wrong color to matrix...")
+
 
 # light color and state
 def light(color, state):
@@ -212,23 +216,22 @@ def importFile():
     links_node = root.find("links")
     bt_run['state'] = NORMAL
     bt_stop['state'] = DISABLED
-    #evaTalk("Hi Philip, let's go to play guitar")
-    #terminal.insert(INSERT, "The file " + script_file.name. + " was imported...")
+    evaEmotion("neutral")
+    terminal.insert(INSERT, '\nstate: Script loaded.')
+    terminal.see(tkinter.END)
 
+
+# criacao dos componentes da interface com usuário
 bt_power = Button ( window, text = "Power On", command = powerOn)
 bt_import = Button ( window, text = "Import Script File...", state = DISABLED, command = importFile)
 bt_run = Button ( window, text = "Run", image = im_bt_play, state = DISABLED, compound = LEFT, command = runScript)
 bt_stop = Button ( window, text = "Stop", image = im_bt_stop, state = DISABLED, compound = LEFT)
 
-# intro terminal text
+# terminal text
 terminal.insert(INSERT, "============================================================\n")
 terminal.insert(INSERT, "                  Eva Simulator for EvaML\n               Version 1.0 - UFF/MidiaCom Lab\n")
 terminal.insert(INSERT, "============================================================")
 
-#label.pack()
-#l_eva.place(x = 0, y = 50)
-
-#l_angry_eyes.place(x = 70, y = 130)
 terminal.place(x = 400, y = 60)
 
 bt_power.place(x = 400, y = 20)
@@ -274,7 +277,6 @@ def exec_comando(node):
 
 
     elif node.tag == "listen":
-        print("listen command")
         lock_thread()
 
         def fechar_pop(): # função de fechamento da janela pop up
@@ -288,17 +290,20 @@ def exec_comando(node):
         var = StringVar()
         pop = Toplevel(window)
         pop.title("Listen Command")
-        pop.geometry("300x150")
-        #pop.config(bg="white")
+        w = 300
+        h = 150
+        ws = window.winfo_screenwidth()
+        hs = window.winfo_screenheight()
+        x = (ws/2) - (w/2)
+        y = (hs/2) - (h/2)  
+        pop.geometry('%dx%d+%d+%d' % (w, h, x, y))
         pop.grab_set()
-        # Create a Label Text
         label = Label(pop, text="Eva is listening... Please, enter your answer!", font = ('Aerial', 9))
         label.pack(pady=20)
-        E1 = Entry(pop, textvariable = var, font = ('Aerial', 9))
-        E1.pack()
-        # Add Button for making selection
-        button1 = Button(pop, text="OK", command=fechar_pop)
-        button1.pack(pady=20)
+        Entry(pop, textvariable = var, font = ('Aerial', 9)).pack()
+        # E1.bind("<Return>", fechar_pop)
+        # E1.pack()
+        Button(pop, text="OK", command=fechar_pop).pack(pady=20)
 
         while thread_pause: # espera pela liberacao, aguardando a resposta do usuario
             time.sleep(0.5)
@@ -430,7 +435,13 @@ def exec_comando(node):
         print("userEmotion")
         pop = Toplevel(window)
         pop.title("userEmotion Command")
-        pop.geometry("697x250")
+        w = 697
+        h = 250
+        ws = window.winfo_screenwidth()
+        hs = window.winfo_screenheight()
+        x = (ws/2) - (w/2)
+        y = (hs/2) - (h/2)  
+        pop.geometry('%dx%d+%d+%d' % (w, h, x, y))
         #pop.config(bg="white")
         pop.grab_set()
        

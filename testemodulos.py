@@ -1,19 +1,9 @@
-t = False
+with open("ibm_cred.txt", "r") as ibm_cred:
+	print("i")
+	linhas = ibm_cred.read().splitlines()
 
-def lock():
-	global t
-	t = True
 
-def unlock():
-	global t
-	t = False
+print(type(linhas))
 
-print("t", id(t), t)
-
-lock()
-
-print("t", id(t), t)
-
-unlock()
-
-print("t", id(t), t)
+for linha in linhas:
+	print(linha)
