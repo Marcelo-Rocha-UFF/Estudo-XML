@@ -1,0 +1,112 @@
+{
+  "_id": "4f6c99797b34561046598e9813c9b1e6",
+  "nombre": "Script04",
+  "data": {
+    "node": [
+      {
+        "key": 1000,
+        "name": "Voice",
+        "type": "voice",
+        "color": "lightblue",
+        "isGroup": false,
+        "voice": "pt-BR_IsabelaV3Voice",
+        "__gohashid": 0
+      },
+      {
+        "key": 1001,
+        "name": "Audio",
+        "type": "sound",
+        "color": "lightblue",
+        "isGroup": false,
+        "src": "mario-end",
+        "wait": true,
+        "__gohashid": 1
+      },
+      {
+        "key": 1002,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#ff0000",
+        "state": "on",
+        "__gohashid": 2
+      },
+      {
+        "key": 1003,
+        "name": "Audio",
+        "type": "sound",
+        "color": "lightblue",
+        "isGroup": false,
+        "src": "mario-fundo",
+        "wait": true,
+        "__gohashid": 3
+      },
+      {
+        "key": 1004,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#00ff00",
+        "state": "on",
+        "__gohashid": 4
+      },
+      {
+        "key": 1005,
+        "name": "Audio",
+        "type": "sound",
+        "color": "lightblue",
+        "isGroup": false,
+        "src": "mario-game-fim",
+        "wait": true,
+        "__gohashid": 5
+      },
+      {
+        "key": 1006,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#0000ff",
+        "state": "on",
+        "__gohashid": 6
+      }
+    ],
+    "link": [
+      { 
+        "from": 1000,
+        "to": 1001,
+        "__gohashid": 0
+      },
+      { 
+        "from": 1001,
+        "to": 1002,
+        "__gohashid": 1
+      },
+      { 
+        "from": 1002,
+        "to": 1003,
+        "__gohashid": 2
+      },
+      { 
+        "from": 1003,
+        "to": 1004,
+        "__gohashid": 3
+      },
+      { 
+        "from": 1004,
+        "to": 1005,
+        "__gohashid": 4
+      },
+      { 
+        "from": 1005,
+        "to": 1006,
+        "__gohashid": 5
+      }
+    ]
+  }
+}

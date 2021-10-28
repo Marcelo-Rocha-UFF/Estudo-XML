@@ -9,28 +9,28 @@
 	</settings>
   <script>
 		<random id="PONTO1" min="1" max="2" />
-		<switch>
-			<case value="1">
+		<switch var="$">
+			<case op="exact" value="1">
 				<light state="on" color="red" />
 				<random min="3" max="4" />
-				<switch>
-					<case value="3">
+				<switch var="$">
+					<case op="exact" value="3">
 						<light state="on" color="blue" />
 					</case>
-					<case value="4">
+					<case op="exact" value="4">
 						<light state="on" color="pink" />
 					</case>
 				</switch>
 			</case>
-			<case value="2">
+			<case op="exact" value="2">
 				<light id="PONTO2" state="on" color="green" />
 				<random min="5" max="6" />
-				<switch>
-					<case value="5">
+				<switch var="$">
+					<case op="exact" value="5">
 						<light state="on" color="blue" />
 						<goto target="PONTO1" />
 					</case>
-					<case value="6">
+					<case op="exact" value="6">
 						<light state="on" color="pink" />
 						<goto target="PONTO2" />
 					</case>

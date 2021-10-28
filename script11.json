@@ -1,0 +1,110 @@
+{
+  "_id": "366eded09c80eac224e5b14407369513",
+  "nombre": "script11",
+  "data": {
+    "node": [
+      {
+        "key": 1000,
+        "name": "Voice",
+        "type": "voice",
+        "color": "lightblue",
+        "isGroup": false,
+        "voice": "en-US_AllisonV3Voice",
+        "__gohashid": 0
+      },
+      {
+        "key": 1001,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#0000ff",
+        "state": "on",
+        "__gohashid": 1
+      },
+      {
+        "key": 1002,
+        "name": "Counter",
+        "type": "counter",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "count": "x",
+        "ops": "assign",
+        "value": 1,
+        "__gohashid": 2
+      },
+      {
+        "key": 1003,
+        "name": "Condition",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "#x <= 0",
+        "opt": 5,
+        "__gohashid": 3
+        },
+      {
+        "key": 1004,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Ok",
+        "__gohashid": 4
+      },
+      {
+        "key": 1005,
+        "name": "Condition",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "",
+        "opt": 4,
+        "__gohashid": 5
+      },
+      {
+        "key": 1006,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Wrong",
+        "__gohashid": 6
+      }
+    ],
+    "link": [
+      { 
+        "from": 1000,
+        "to": 1001,
+        "__gohashid": 0
+      },
+      { 
+        "from": 1001,
+        "to": 1002,
+        "__gohashid": 1
+      },
+      { 
+        "from": 1002,
+        "to": 1003,
+        "__gohashid": 2
+      },
+      { 
+        "from": 1003,
+        "to": 1004,
+        "__gohashid": 3
+      },
+      { 
+        "from": 1002,
+        "to": 1005,
+        "__gohashid": 4
+      },
+      { 
+        "from": 1005,
+        "to": 1006,
+        "__gohashid": 5
+      }
+    ]
+  }
+}

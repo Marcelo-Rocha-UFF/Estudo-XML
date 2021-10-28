@@ -90,12 +90,12 @@ def evaInit():
     bt_power['state'] = DISABLED
     evaEmotion("power_on")
     terminal.insert(INSERT, "\nstate: Initializing.")
-    playsound("my_sounds/power_on.mp3", block = True)
-    terminal.insert(INSERT, "\nstate: Speaking a greeting text.")
-    playsound("my_sounds/greetings.mp3", block = True)
-    terminal.insert(INSERT, '\nstate: Speaking "Load a script file and enjoy."')
-    playsound("my_sounds/load_a_script.mp3", block = True)
-    terminal.insert(INSERT, "\nstate: Entering in standby mode.")
+    # playsound("my_sounds/power_on.mp3", block = True)
+    # terminal.insert(INSERT, "\nstate: Speaking a greeting text.")
+    # playsound("my_sounds/greetings.mp3", block = True)
+    # terminal.insert(INSERT, '\nstate: Speaking "Load a script file and enjoy."')
+    # playsound("my_sounds/load_a_script.mp3", block = True)
+    # terminal.insert(INSERT, "\nstate: Entering in standby mode.")
     bt_import['state'] = NORMAL
     while(bt_run['state'] == DISABLED): # animacao da luz da matrix em stand by
         evaMatrix("white")
@@ -136,7 +136,7 @@ def clear_terminal():
     terminal.delete('1.0', END)
     # criando terminal text
     terminal.insert(INSERT, "===========================================================================\n")
-    terminal.insert(INSERT, "                         Eva Simulator for EvaML\n                      Version 1.0 - UFF/MidiaCom Lab\n")
+    terminal.insert(INSERT, "                         Eva Simulator for EvaML\n                    Version 1.0 - UFF/MidiaCom [2021]\n")
     terminal.insert(INSERT, "===========================================================================")
 
 # criacao dos botoes da interface com usuário
@@ -352,12 +352,91 @@ def exec_comando(node):
         playsound(audio_file, block = block)
 
 
-    elif node.tag == "case":
+    elif node.tag == "case": 
+        global valor
         eva_memory.reg_case = 0 # limpa o flag do case
         valor = node.attrib["value"]
-        print("valor ", valor, type(valor))
-        if valor == eva_memory.var_dolar[-1]: # compara valor com o topo da pilha da variavel var_dolar
-            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+        valor = valor.lower() # as comparacoes não são case sensitive
+        # trata os tipos de comparacao e operadores
+        # caso 1. Var=$.
+        if node.attrib['var'] == "$":
+            # case 1.1 (tipo de op="exact")
+            if node.attrib['op'] == "exact":
+                if "#" in valor: # verifica se valor é uma variável
+                    print("valor ", valor, type(valor))
+                    if eva_memory.var_dolar[-1] == str(eva_memory.vars[valor[1:]]).lower(): # compara valor $ com a variavel #..
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+                else:    
+                    print("valor ", valor, type(valor))
+                    if valor == eva_memory.var_dolar[-1].lower(): # compara valor com o topo da pilha da variavel var_dolar
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+            # case 1.2 (tipo de op="contain")
+            elif node.attrib['op'] == "contain":
+                if "#" in valor: # verifica se valor é uma variável
+                    print("valor ", valor, type(valor))
+                    if str(eva_memory.vars[valor[1:]]).lower() in eva_memory.var_dolar[-1]: # verifica se var #.. está contida em $
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+                else:    
+                    print("valor ", valor, type(valor))
+                    if valor in eva_memory.var_dolar[-1].lower(): # verifica se valor está contido em $
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+        
+        else: # caso var seja uma variável, tipo #x. É UMA COMPARAÇÃO MATEMÁTICA, USA NÚMEROS
+            # case 2.1 - comparando var com outra var
+            if "#" in valor: # valor é uma variável
+                if node.attrib['op'] == "eq": # testa a igualdade do valor contido em var com o valor da var contida "valor".
+                    if int(eva_memory.vars[node.attrib['var']]) == int(eva_memory.vars[valor[1:]]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                if node.attrib['op'] == "lt": # igualdade
+                    if int(eva_memory.vars[node.attrib['var']]) < int(eva_memory.vars[valor[1:]]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                if node.attrib['op'] == "gt": # igualdade
+                    if int(eva_memory.vars[node.attrib['var']]) > int(eva_memory.vars[valor[1:]]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+                
+                if node.attrib['op'] == "lte": # igualdade
+                    if int(eva_memory.vars[node.attrib['var']]) <= int(eva_memory.vars[valor[1:]]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                if node.attrib['op'] == "gte": # igualdade
+                    if int(eva_memory.vars[node.attrib['var']]) >= int(eva_memory.vars[valor[1:]]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                if node.attrib['op'] == "ne": # igualdade
+                    if int(eva_memory.vars[node.attrib['var']]) != int(eva_memory.vars[valor[1:]]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+            # case 2.2 - comparando var com um valor constante
+            else: # valor é uma variável
+                if node.attrib['op'] == "eq": # testa a igualdade do valor contido em var com o valor da var contida "valor".
+                    if int(eva_memory.vars[node.attrib['var']]) == int(node.attrib['value']):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                if node.attrib['op'] == "lt": # igualdade
+                    if int(eva_memory.vars[node.attrib['var']]) < int(node.attrib['value']):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                if node.attrib['op'] == "gt": # igualdade
+                    if int(eva_memory.vars[node.attrib['var']]) > int(node.attrib['value']):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+                
+                if node.attrib['op'] == "lte": # igualdade
+                    if int(eva_memory.vars[node.attrib['var']]) <= int(node.attrib['value']):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                if node.attrib['op'] == "gte": # igualdade
+                    if int(eva_memory.vars[node.attrib['var']]) >= int(node.attrib['value']):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                if node.attrib['op'] == "ne": # igualdade
+                    if int(eva_memory.vars[node.attrib['var']]) != int(node.attrib['value']):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+                
+
+
 
 
     elif node.tag == "default": # default sempre será verdadeiro

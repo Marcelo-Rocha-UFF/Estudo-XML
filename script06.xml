@@ -12,22 +12,22 @@
 		<counter var="x" op="=" value="0"  />
 		<counter id="SOMA1" var="x" op="+" value="1" />
 		<switch var="x">
-			<case op="==" value="1">
+			<case op="eq" value="1">
 				<light state="on" color="blue" />
 				<wait duration="3000" />
 				<goto target="SOMA1" />
 			</case>
-			<case op="==" value="2">
+			<case op="eq" value="2">
 				<light state="on" color="green" />
 				<wait duration="3000" />
 				<goto target="SOMA1" />
 			</case>
-			<case op="==" value="3">
+			<case op="eq" value="3">
 				<light state="on" color="red" />
 				<wait duration="3000" />
 				<goto target="SOMA1" />
 			</case>
-			<case op=">" value="3">
+			<case op="gt" value="3">
 				<light state="on" color="pink" />
 				<wait duration="3000" />
 			</case>
