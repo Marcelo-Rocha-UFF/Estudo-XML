@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- voz portugues: pt-BR_IsabelaV3Voice -->
 <!-- voz portugues: en-US_AllisonV3Voice" -->
-<evaml name="Script06">
+<evaml name="script06">
 	<settings>
 		<voice tone="pt-BR_IsabelaV3Voice" />
 		<light-effects mode="on" />

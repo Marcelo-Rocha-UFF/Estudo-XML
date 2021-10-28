@@ -1,6 +1,5 @@
 import sys
 import xml.etree.ElementTree as ET
-import send_to_dbjson
 
 tree = ET.parse(sys.argv[1])  # arquivo de codigo xml
 root = tree.getroot() # evaml root node
@@ -372,8 +371,9 @@ output += saida_links()
 
 print("step 04 - Mapping XML nodes and links to a JSON file...")
 
-# criação de um arquivo físico da interação em Json
-send_to_dbjson.create_json_file(root.attrib['name'], output)
+# criação de um arquivo físico da interação em json
+file_out = open(root.attrib['name'] + '.json', "w")
+file_out.write(output)
+# file_out.write(output.encode('utf-8')) para rodar no raspberry
+file_out.close()
 
-# insere a interação no banco de interações do robo
-#send_to_dbjson.send_to_dbjson(output)

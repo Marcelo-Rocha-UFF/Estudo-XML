@@ -437,8 +437,6 @@ def exec_comando(node):
                 
 
 
-
-
     elif node.tag == "default": # default sempre será verdadeiro
         print("Defalut funcionando")
         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
