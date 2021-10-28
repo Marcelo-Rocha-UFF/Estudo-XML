@@ -10,7 +10,7 @@
   <script>
 		<light state="on" color="white" />
 		<useMacro name="ABERTURA" />
-		<random id="INICIO" min="1" max="9" />
+		<random id="INICIO" min="1" max="4" />
 		<switch var="$">
 			<case op="exact" value="1">
 				<light state="on" color="green" />
@@ -30,7 +30,9 @@
 				<wait duration="1500" />
 			</case>
 			<default>
+				<light state="on" color="pink" />
 				<talk>Não foi nem o 1 nem o 2 nem o 3</talk>
+				<talk>O número foi o $</talk>
 				<talk>Vou reiniciar a contagem</talk>
 				<goto target="INICIO" />
 			</default>
@@ -40,12 +42,12 @@
 	</script>
   <macros>
 		<macro name="ABERTURA">
-			<talk>Olá, eu sou o robô Eva. Vou sortear um número de um a nove</talk>
+			<talk>Olá, eu sou o robô Eva. Vou sortear um número de um a quatro</talk>
 			<talk>Para cada um, vou acender a luz numa cor diferente</talk>
 			<talk>Só vou parar quando o número sorteado for o três</talk>
 		</macro>
 		<macro name="FINAL">
-			<talk>Já vou embora / Está ficando tarde / Pra mim já deu</talk>
+			<talk>Já vou embora / Está ficando tarde, fui / Pra mim já deu</talk>
 		</macro>
   </macros>
 </evaml>

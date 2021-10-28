@@ -47,6 +47,10 @@ def mapping_xml_to_json():
                 output += ",\n"
                 output += eva_emotion_process(elem)
 
+            if (elem.tag == 'userEmotion'):
+                output += ",\n"
+                output += user_emotion_process(elem)
+
             if (elem.tag == 'case'):
                 output += ",\n"
                 output += case_process(elem)
@@ -134,7 +138,7 @@ def light_process(light_command):
         "key": """ + light_command.attrib["key"] + """,
         "name": "Light",
         "type": "light",
-        "color": "lightblue",
+        "color": "#FFA500",
         "isGroup": false,
         "group": "",
         "lcolor": """ + '"' + color + '",' + """
@@ -153,7 +157,7 @@ def listen_process(listen_command):
         "key": """ + listen_command.attrib["key"] + """,
         "name": "Listen",
         "type": "listen",
-        "color": "lightblue",
+        "color": "#ffff00",
         "isGroup": false,
         "opt": "",
         "__gohashid": """ + str(gohashid) + """
@@ -169,7 +173,7 @@ def talk_process(talk_command):
         "key": """ + talk_command.attrib["key"] + """,
         "name": "Talk",
         "type": "speak",
-        "color": "lightblue",
+        "color": "#00ff00",
         "isGroup": false,
         "text": """ + '"' + talk_command.text + '",' + """
         "__gohashid": """ + str(gohashid) + """
@@ -185,13 +189,29 @@ def voice_process(voice_command):
         "key": """ + voice_command.attrib["key"] + """,
         "name": "Voice",
         "type": "voice",
-        "color": "lightblue",
+        "color": "#0020ff",
         "isGroup": false,
         "voice": """ + '"' + voice_command.attrib['tone'] + '",' + """
         "__gohashid": """ + str(gohashid) + """
       }"""
   gohashid += 1
   return voice_node
+
+# userEmotion node processing
+def user_emotion_process(user_emotion_command):
+  global gohashid
+  user_emotion_node = """      {
+        "key": """ + user_emotion_command.attrib["key"] + """,
+        "name": "User_Emotion",
+        "type": "user_emotion",
+        "color": "lightgreen",
+        "isGroup": false,
+        "group": "",
+        "vision": "capture",
+        "__gohashid": """ + str(gohashid) + """
+      }"""
+  gohashid += 1
+  return user_emotion_node
 
 
 # eva_emotion node processing 
@@ -212,7 +232,7 @@ def eva_emotion_process(eva_emotion_command):
         "key": """ + eva_emotion_command.attrib["key"] + """,
         "name": "Eva_Emotion",
         "type": "emotion",
-        "color": "lightyellow",
+        "color": "lightcoral",
         "isGroup": false,
         "group": "",
         "emotion": """ + '"' + eva_emotion_command.attrib['emotion'] + '",' + """
@@ -231,7 +251,7 @@ def random_process(random_command):
         "key": """ + random_command.attrib["key"] + """,
         "name": "Random",
         "type": "random",
-        "color": "lightblue",
+        "color": "pink",
         "isGroup": false,
         "group": "",
         "min": """ + random_command.attrib['min'] + ',' + """
@@ -254,13 +274,12 @@ def case_process(case_command):
   if case_command.attrib['op'] == "ne":  op = "!==" # preciso verificar este.parece que os mexicanos nao implementaram o not.
     
   # verifica qual o tipo de comparacao para $. Exact ou contain
-
   if case_command.attrib["op"] == "exact":
     case_node = """      {
         "key": """ + case_command.attrib["key"] + """,
         "name": "Condition",
         "type": "if",
-        "color": "lightblue",
+        "color": "white",
         "isGroup": false,
         "text": """ + '"' + case_command.attrib['value'] + '",' + """
         "opt": 4,
@@ -274,7 +293,7 @@ def case_process(case_command):
         "key": """ + case_command.attrib["key"] + """,
         "name": "Condition",
         "type": "if",
-        "color": "lightblue",
+        "color": "white",
         "isGroup": false,
         "text": """ + '"' + case_command.attrib['value'] + '",' + """
         "opt": 2,
@@ -291,7 +310,7 @@ def case_process(case_command):
         "key": """ + case_command.attrib["key"] + """,
         "name": "Condition",
         "type": "if",
-        "color": "lightblue",
+        "color": "white",
         "isGroup": false,
         "text": """ + '"' + case_command.attrib['var'] + ' ' + op + ' ' + case_command.attrib['value'] + '",' + """
         "opt": 5,
@@ -304,7 +323,7 @@ def case_process(case_command):
         "key": """ + case_command.attrib["key"] + """,
         "name": "Condition",
         "type": "if",
-        "color": "lightblue",
+        "color": "white",
         "isGroup": false,
         "text": """ + '"#' + case_command.attrib['var'] + ' ' + op + ' ' + case_command.attrib['value'] + '",' + """
         "opt": 5,

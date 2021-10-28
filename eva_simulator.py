@@ -90,12 +90,12 @@ def evaInit():
     bt_power['state'] = DISABLED
     evaEmotion("power_on")
     terminal.insert(INSERT, "\nstate: Initializing.")
-    # playsound("my_sounds/power_on.mp3", block = True)
-    # terminal.insert(INSERT, "\nstate: Speaking a greeting text.")
-    # playsound("my_sounds/greetings.mp3", block = True)
-    # terminal.insert(INSERT, '\nstate: Speaking "Load a script file and enjoy."')
-    # playsound("my_sounds/load_a_script.mp3", block = True)
-    # terminal.insert(INSERT, "\nstate: Entering in standby mode.")
+    playsound("my_sounds/power_on.mp3", block = True)
+    terminal.insert(INSERT, "\nstate: Speaking a greeting text.")
+    playsound("my_sounds/greetings.mp3", block = True)
+    terminal.insert(INSERT, '\nstate: Speaking "Load a script file and enjoy."')
+    playsound("my_sounds/load_a_script.mp3", block = True)
+    terminal.insert(INSERT, "\nstate: Entering in standby mode.")
     bt_import['state'] = NORMAL
     while(bt_run['state'] == DISABLED): # animacao da luz da matrix em stand by
         evaMatrix("white")
@@ -349,7 +349,9 @@ def exec_comando(node):
             block = True
         terminal.insert(INSERT, '\nstate: Playing a sound: "' + node.attrib["source"] + ".wav" + '", block=' + str(block))
         terminal.see(tkinter.END)
+        evaMatrix("blue")
         playsound(audio_file, block = block)
+        evaMatrix("grey")
 
 
     elif node.tag == "case": 

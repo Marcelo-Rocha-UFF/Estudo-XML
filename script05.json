@@ -1,0 +1,210 @@
+{
+  "_id": "4638122948a4e12518a0e0843bff9209",
+  "nombre": "script05",
+  "data": {
+    "node": [
+      {
+        "key": 1000,
+        "name": "Voice",
+        "type": "voice",
+        "color": "lightblue",
+        "isGroup": false,
+        "voice": "pt-BR_IsabelaV3Voice",
+        "__gohashid": 0
+      },
+      {
+        "key": 1001,
+        "name": "Eva_Emotion",
+        "type": "emotion",
+        "color": "lightyellow",
+        "isGroup": false,
+        "group": "",
+        "emotion": "joy",
+        "level": 0,
+        "speed": 0,
+        "__gohashid": 1
+      },
+      {
+        "key": 1002,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#ffffff",
+        "state": "on",
+        "__gohashid": 2
+      },
+      {
+        "key": 1003,
+        "name": "Counter",
+        "type": "counter",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "count": "x",
+        "ops": "assign",
+        "value": 10,
+        "__gohashid": 3
+      },
+      {
+        "key": 1004,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "O valor de x é #x",
+        "__gohashid": 4
+      },
+      {
+        "key": 1005,
+        "name": "Eva_Emotion",
+        "type": "emotion",
+        "color": "lightyellow",
+        "isGroup": false,
+        "group": "",
+        "emotion": "anger",
+        "level": 0,
+        "speed": 0,
+        "__gohashid": 5
+      },
+      {
+        "key": 1006,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#ff0000",
+        "state": "on",
+        "__gohashid": 6
+      },
+      {
+        "key": 1007,
+        "name": "Counter",
+        "type": "counter",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "count": "z",
+        "ops": "assign",
+        "value": 20,
+        "__gohashid": 7
+      },
+      {
+        "key": 1008,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "O valor de z é #z",
+        "__gohashid": 8
+      },
+      {
+        "key": 1009,
+        "name": "Eva_Emotion",
+        "type": "emotion",
+        "color": "lightyellow",
+        "isGroup": false,
+        "group": "",
+        "emotion": "sad",
+        "level": 0,
+        "speed": 0,
+        "__gohashid": 9
+      },
+      {
+        "key": 1010,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#0000ff",
+        "state": "on",
+        "__gohashid": 10
+      },
+      {
+        "key": 1011,
+        "name": "Talk",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Até mais",
+        "__gohashid": 11
+      },
+      {
+        "key": 1012,
+        "name": "Light",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#000000",
+        "state": "off",
+        "__gohashid": 12
+      }
+    ],
+    "link": [
+      { 
+        "from": 1000,
+        "to": 1001,
+        "__gohashid": 0
+      },
+      { 
+        "from": 1001,
+        "to": 1002,
+        "__gohashid": 1
+      },
+      { 
+        "from": 1002,
+        "to": 1003,
+        "__gohashid": 2
+      },
+      { 
+        "from": 1003,
+        "to": 1004,
+        "__gohashid": 3
+      },
+      { 
+        "from": 1004,
+        "to": 1005,
+        "__gohashid": 4
+      },
+      { 
+        "from": 1005,
+        "to": 1006,
+        "__gohashid": 5
+      },
+      { 
+        "from": 1006,
+        "to": 1007,
+        "__gohashid": 6
+      },
+      { 
+        "from": 1007,
+        "to": 1008,
+        "__gohashid": 7
+      },
+      { 
+        "from": 1008,
+        "to": 1009,
+        "__gohashid": 8
+      },
+      { 
+        "from": 1009,
+        "to": 1010,
+        "__gohashid": 9
+      },
+      { 
+        "from": 1010,
+        "to": 1011,
+        "__gohashid": 10
+      },
+      { 
+        "from": 1011,
+        "to": 1012,
+        "__gohashid": 11
+      }
+    ]
+  }
+}

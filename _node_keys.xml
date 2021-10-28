@@ -10,14 +10,33 @@
 		<listen key="1003" />
 		<light state="on" color="yellow" key="1004" />
 		<evaEmotion emotion="happy" key="1005" />
-		<talk key="1006">Hi $, nice to meet you / Hi $, whats up? / It's good to have you $</talk>
+		<talk key="1006">Hi $, nice to meet you / Hi $, what's up? / It's good to have you $</talk>
 		<light state="on" color="green" key="1007" />
 		<evaEmotion emotion="neutral" key="1008" />
 		<talk key="1009">How are you feeling?</talk>
 		<userEmotion key="1010" />
 		<light state="on" color="white" key="1011" />
-		<talk key="1012">Hey $-1, I see that you are $</talk>
-		<talk key="1013">Bye bye</talk>
-		<light state="off" key="1014" />
+		<switch var="$">
+			<case op="exact" value="angry" key="1012">
+				<evaEmotion emotion="angry" key="1013" />
+				<talk key="1014">Hey $-1, I see that you are $. Stay calm</talk>
+			</case>
+			<case op="exact" value="sad" key="1015">
+				<evaEmotion emotion="sad" key="1016" />
+				<talk key="1017">Ow no, $-1, I see that you are $. Cheer up</talk>
+			</case>
+			<case op="exact" value="happy" key="1018">
+				<evaEmotion emotion="happy" key="1019" />
+				<talk key="1020">Very good $-1. I will play a song</talk>n
+				<audio source="song-mj-preview-small" block="true" key="1021" />
+			</case>
+			<default key="1022">
+				<evaEmotion emotion="sad" key="1023" />
+				<talk key="1024">I couldn't identify how you feel</talk>
+			</default>
+		</switch>
+		<evaEmotion emotion="neutral" key="1025" />
+		<talk key="1026">Bye bye</talk>
+		<light state="off" key="1027" />
 	</script>
 	</evaml>

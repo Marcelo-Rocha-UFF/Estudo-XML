@@ -20,7 +20,7 @@
 		<light state="on" color="white" />
 		<random min="1" max="3" />
 		<switch var="$">
-			<case op="eq" value="1">
+			<case op="exact" value="1">
 				<light state="on" color="blue" />
 				<talk>Qual foi o número?</talk>
 				<listen />
@@ -34,7 +34,7 @@
 					</default>
 				</switch>
 			</case>
-			<case op="eq" value="2">
+			<case op="exact" value="2">
 				<light state="on" color="pink" />
 				<talk>E ai? Qual foi  o número?</talk>
 				<listen />
@@ -48,7 +48,7 @@
 					</default>
 				</switch>
 			</case>
-			<case op="eq" value="3">
+			<case op="exact" value="3">
 				<light state="on" color="green" />
 				<talk>E ai? Qual foi  o número?</talk>
 				<listen />

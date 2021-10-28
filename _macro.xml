@@ -10,13 +10,32 @@
 		<listen />
 		<light state="on" color="yellow" />
 		<evaEmotion emotion="happy" />
-		<talk>Hi $, nice to meet you / Hi $, whats up? / It's good to have you $</talk>
+		<talk>Hi $, nice to meet you / Hi $, what's up? / It's good to have you $</talk>
 		<light state="on" color="green" />
 		<evaEmotion emotion="neutral" />
 		<talk>How are you feeling?</talk>
 		<userEmotion />
 		<light state="on" color="white" />
-		<talk>Hey $-1, I see that you are $</talk>
+		<switch var="$">
+			<case op="exact" value="angry">
+				<evaEmotion emotion="angry" />
+				<talk>Hey $-1, I see that you are $. Stay calm</talk>
+			</case>
+			<case op="exact" value="sad">
+				<evaEmotion emotion="sad" />
+				<talk>Ow no, $-1, I see that you are $. Cheer up</talk>
+			</case>
+			<case op="exact" value="happy">
+				<evaEmotion emotion="happy" />
+				<talk>Very good $-1. I will play a song</talk>n
+				<audio source="song-mj-preview-small" block="true" />
+			</case>
+			<default>
+				<evaEmotion emotion="sad" />
+				<talk>I couldn't identify how you feel</talk>
+			</default>
+		</switch>
+		<evaEmotion emotion="neutral" />
 		<talk>Bye bye</talk>
 		<light state="off" />
 	</script>

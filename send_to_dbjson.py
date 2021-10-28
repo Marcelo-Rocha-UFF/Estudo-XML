@@ -20,7 +20,7 @@ def send_to_dbjson(script_id, script_name, output):
     eva_db_dict["interaccion"].append(json.loads(output))
 
     # gera o arquivo
-    with open('db.json', 'w') as fp:
+    with open('../db.json', 'w') as fp:
         json.dump(eva_db_dict, fp)
 
     #print("\nTotal scripts found:", len(eva_db_dict["interaccion"]))

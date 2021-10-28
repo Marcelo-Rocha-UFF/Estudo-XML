@@ -8,13 +8,18 @@
 		<audio-effects mode="on" vol="100%" />
 	</settings>
   <script>
+		<evaEmotion emotion="happy" />
 		<light state="on" color="white" />
 		<counter var="x" op="=" value="10"  />
 		<talk>O valor de x é #x</talk>
+		<evaEmotion emotion="angry" />
 		<light state="on" color="red" />
 		<counter var="z" op="=" value="20"  />
 		<talk>O valor de z é #z</talk>
+		<evaEmotion emotion="sad" />
 		<light state="on" color="blue" />
+		<talk>Até mais</talk>
+		<light state="off" />
 	</script>
   <macros>
   </macros>
