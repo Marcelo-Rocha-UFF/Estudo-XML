@@ -23,6 +23,10 @@ def mapping_xml_to_json():
                 output += ",\n"
                 output += light_process(elem)
 
+            if (elem.tag == 'led'):
+                output += ",\n"
+                output += led_process(elem)
+
             if (elem.tag == 'wait'):
                 output += ",\n"
                 output += wait_process(elem)
@@ -138,7 +142,7 @@ def light_process(light_command):
         "key": """ + light_command.attrib["key"] + """,
         "name": "Light",
         "type": "light",
-        "color": "#FFA500",
+        "color": "#ffa500",
         "isGroup": false,
         "group": "",
         "lcolor": """ + '"' + color + '",' + """
@@ -164,6 +168,39 @@ def listen_process(listen_command):
       }"""
     gohashid += 1
     return listen_node
+
+
+# led animation processing
+def led_process(led_command):
+    global gohashid
+    # mapping 
+    if led_command.attrib['animation'] == "stop": # just to show what is happening here
+      animation = "stop"
+    elif led_command.attrib['animation'] == "listen":
+      animation = "escuchaT"
+    elif led_command.attrib['animation'] == "speak":
+      animation = "hablaT_v2"
+    elif led_command.attrib['animation'] == "angry":
+      animation = "anger"
+    elif led_command.attrib['animation'] == "happy":
+      animation = "joy"
+    elif led_command.attrib['animation'] == "sad":
+      animation = "sad"
+    elif led_command.attrib['animation'] == "surprise":
+      animation = "surprise"
+    
+    led_node = """      {
+        "key": """ + led_command.attrib["key"] + """,
+        "name": "Leds",
+        "type": "led",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "anim": """ + '"' + animation + '",' + """
+        "__gohashid": """ + str(gohashid) + """
+      }"""
+    gohashid += 1
+    return led_node
 
 
 # talk node processing

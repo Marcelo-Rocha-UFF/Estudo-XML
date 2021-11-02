@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-
 import hashlib
+from logging import _levelToName
 import os
 
 import random as rnd
@@ -26,16 +26,17 @@ root = {}
 script_node = {}
 links_node = {}
 fila_links =  [] # fila de links (comandos)
-thread_pause = False
+thread_pop_pause = False
 
-# funcao de controle da vairavel que bloqueia as janelas pop ups
-def lock_thread():
-    global thread_pause
-    thread_pause = True
 
-def unlock_thread():
-    global thread_pause
-    thread_pause = False
+# funcao de controle da variavel que bloqueia as janelas popups
+def lock_thread_pop():
+    global thread_pop_pause
+    thread_pop_pause = True
+
+def unlock_thread_pop():
+    global thread_pop_pause
+    thread_pop_pause = False
 
 
 # watson config api key
@@ -97,11 +98,11 @@ def evaInit():
     playsound("my_sounds/load_a_script.mp3", block = True)
     terminal.insert(INSERT, "\nstate: Entering in standby mode.")
     bt_import['state'] = NORMAL
-    while(bt_run['state'] == DISABLED): # animacao da luz da matrix em stand by
-        evaMatrix("white")
-        time.sleep(0.5)
-        evaMatrix("grey")
-        time.sleep(0.5)
+    while bt_run['state'] == DISABLED: # animacao da luz da matrix em stand by
+            evaMatrix("white")
+            time.sleep(0.5)
+            evaMatrix("grey")
+            time.sleep(0.5)
 
 
 # Eva powerOn function
@@ -113,7 +114,7 @@ def powerOn():
 def runScript():
     busca_links("1000")
     threading.Thread(target=link_process, args=()).start()
-    
+
 
 # Eva Import Script function
 def importFile():
@@ -153,6 +154,18 @@ bt_import.place(x = 496, y = 20)
 bt_run.place(x = 652, y = 20)
 bt_stop.place(x = 742, y = 20)
 bt_clear.place(x = 835, y = 20)
+
+
+# led "animations"
+def ledAnimation(animation):
+    if animation == "stop": evaMatrix("grey")
+    elif animation == "listen": evaMatrix("green")
+    elif animation == "speak": evaMatrix("blue")
+    elif animation == "angry": evaMatrix("red")
+    elif animation == "happy": evaMatrix("green")
+    elif animation == "sad": evaMatrix("blue")
+    elif animation == "surprise": evaMatrix("yellow")
+    else: print("wrong led animation option")
 
 
 # set the Eva emotion
@@ -233,6 +246,12 @@ def exec_comando(node):
         terminal.see(tkinter.END)
         time.sleep(int(duration)/1000) # converte para segundos
 
+    
+    elif node.tag == "led":
+        ledAnimation(node.attrib["animation"])
+        terminal.insert(INSERT, "\nstate: Matrix Leds. Animation=" + node.attrib["animation"])
+        terminal.see(tkinter.END)
+
 
     elif node.tag == "random":
         min = node.attrib["min"]
@@ -244,7 +263,8 @@ def exec_comando(node):
 
 
     elif node.tag == "listen":
-        lock_thread()
+        lock_thread_pop()
+        ledAnimation("listen")
         # função de fechamento da janela pop up
         def fechar_pop(): 
             print(var.get())
@@ -252,7 +272,7 @@ def exec_comando(node):
             terminal.insert(INSERT, "\nstate: Listening : var=$" + ", value=" + eva_memory.var_dolar[-1])
             terminal.see(tkinter.END)
             pop.destroy()
-            unlock_thread() # reativa a thread de processamento do script
+            unlock_thread_pop() # reativa a thread de processamento do script
         # criacao da janela
         var = StringVar()
         pop = Toplevel(window)
@@ -272,8 +292,9 @@ def exec_comando(node):
         # E1.pack()
         Button(pop, text="    OK    ", command=fechar_pop).pack(pady=20)
         # espera pela liberacao, aguardando a resposta do usuario
-        while thread_pause: 
+        while thread_pop_pause: 
             time.sleep(0.5)
+        ledAnimation("stop")
 
 
     elif node.tag == "talk":
@@ -322,23 +343,23 @@ def exec_comando(node):
             with open("audio_cache_files/" + file_name + ".mp3", 'wb') as audio_file:
                 res = tts.synthesize(texto[ind_random], accept = "audio/mp3", voice = root.find("settings")[0].attrib["tone"]).get_result()
                 audio_file.write(res.content)
-        evaMatrix("blue")
+        ledAnimation("speak")
         playsound("audio_cache_files/" + file_name + ".mp3", block = True) # toca o audio da fala
-        evaMatrix("grey")
+        ledAnimation("stop")
 
 
     elif node.tag == "evaEmotion":
         emotion = node.attrib["emotion"]
         terminal.insert(INSERT, "\nstate: Expressing an emotion: " + emotion)
         terminal.see(tkinter.END)
-        if emotion == "angry":
-            evaMatrix("red")
-        elif emotion == "happy":
-            evaMatrix("yellow")
-        elif emotion == "sad":
-            evaMatrix("blue")
-        elif emotion == "neutral":
-            evaMatrix("white")
+        # if emotion == "angry":
+        #     evaMatrix("red")
+        # elif emotion == "happy":
+        #     evaMatrix("yellow")
+        # elif emotion == "sad":
+        #     evaMatrix("blue")
+        # elif emotion == "neutral":
+        #     evaMatrix("white")
         evaEmotion(emotion)
 
 
@@ -349,9 +370,9 @@ def exec_comando(node):
             block = True
         terminal.insert(INSERT, '\nstate: Playing a sound: "' + node.attrib["source"] + ".wav" + '", block=' + str(block))
         terminal.see(tkinter.END)
-        evaMatrix("blue")
+        ledAnimation("speak")
         playsound(audio_file, block = block)
-        evaMatrix("grey")
+        ledAnimation("stop")
 
 
     elif node.tag == "case": 
@@ -471,7 +492,7 @@ def exec_comando(node):
 
     elif node.tag == "userEmotion":
         global img_neutral, img_happy, img_angry, img_sad, img_surprised
-        lock_thread()
+        lock_thread_pop()
 
         def fechar_pop(): # função de fechamento da janela pop up
             print(var.get())
@@ -479,7 +500,7 @@ def exec_comando(node):
             terminal.insert(INSERT, "\nstate: userEmotion : var=$" + ", value=" + eva_memory.var_dolar[-1])
             terminal.see(tkinter.END)
             pop.destroy()
-            unlock_thread() # reativa a thread de processamento do script
+            unlock_thread_pop() # reativa a thread de processamento do script
 
         var = StringVar()
         var.set("Neutral")
@@ -512,7 +533,7 @@ def exec_comando(node):
         Radiobutton(pop, text = "Surprised", variable = var, command = None, value = "surprised").place(x = 575, y = 185)
         Button(pop, text = "     OK     ", command = fechar_pop).place(x = 310, y = 215)
         # espera pela liberacao, aguardando a resposta do usuario
-        while thread_pause: 
+        while thread_pop_pause: 
             time.sleep(0.5)
 
 

@@ -1,3 +1,15 @@
+{
+  "key": 1635459156480,
+  "name": "User_Emotion_7",
+  "type": "user_emotion",
+  "color": "lightblue",
+  "isGroup": false,
+  "group": "",
+  "vision": "capture",
+  "__gohashid": 29441
+}
+
+
 # condicao opt 4 igual a comptype = "exata" e 5 Matematica
 {
   "key": 1634764476891,
