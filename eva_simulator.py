@@ -235,7 +235,6 @@ def exec_comando(node):
             color = node.attrib["color"]
             terminal.insert(INSERT, "\nstate: Turnning on the light. Color=" + color + ".")
             terminal.see(tkinter.END) # autoscrolling
-
         light(color , state)
         time.sleep(1) # emula o tempo da lampada real
 
@@ -246,7 +245,7 @@ def exec_comando(node):
         terminal.see(tkinter.END)
         time.sleep(int(duration)/1000) # converte para segundos
 
-    
+
     elif node.tag == "led":
         ledAnimation(node.attrib["animation"])
         terminal.insert(INSERT, "\nstate: Matrix Leds. Animation=" + node.attrib["animation"])
@@ -328,7 +327,7 @@ def exec_comando(node):
                 print("Erro: A variável $ não possui qualquer valor e não pode ser utilizada.")
                 exit(1)
         # esta parte implementa o texto aleatorio gerado pelo uso do caractere /
-        texto = texto.split(sep="/") # texto vira um lista com a qtd de frases divididas pelo caract. /
+        texto = texto.split(sep="/") # texto vira uma lista com a qtd de frases divididas pelo caract. /
         ind_random = rnd.randint(0, len(texto)-1)
         terminal.insert(INSERT, '\nstate: Speaking: "' + texto[ind_random] + '"')
         terminal.see(tkinter.END)
@@ -352,14 +351,6 @@ def exec_comando(node):
         emotion = node.attrib["emotion"]
         terminal.insert(INSERT, "\nstate: Expressing an emotion: " + emotion)
         terminal.see(tkinter.END)
-        # if emotion == "angry":
-        #     evaMatrix("red")
-        # elif emotion == "happy":
-        #     evaMatrix("yellow")
-        # elif emotion == "sad":
-        #     evaMatrix("blue")
-        # elif emotion == "neutral":
-        #     evaMatrix("white")
         evaEmotion(emotion)
 
 
@@ -404,7 +395,62 @@ def exec_comando(node):
                     print("valor ", valor, type(valor))
                     if valor in eva_memory.var_dolar[-1].lower(): # verifica se valor está contido em $
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-        
+
+
+### PRECISA DE TESTE         
+            # case 1.3 (tipo de op="MATEMATICA") Comparando $ com uma var (em valor) de maneira matemática
+            if "#" in valor: # verifica se valor é uma variável
+                if node.attrib['op'] == "eq": # 
+                    if int(eva_memory.var_dolar[-1]) == int(eva_memory.vars[valor[1:]]): # é preciso retirar o # da variável
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                elif node.attrib['op'] == "lt": # igualdade
+                    if int(eva_memory.var_dolar[-1]) < int(eva_memory.vars[valor[1:]]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                elif node.attrib['op'] == "gt": # igualdade
+                    if int(eva_memory.var_dolar[-1]) > int(eva_memory.vars[valor[1:]]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+                
+                elif node.attrib['op'] == "lte": # igualdade
+                    if int(eva_memory.var_dolar[-1]) <= int(eva_memory.vars[valor[1:]]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                elif node.attrib['op'] == "gte": # igualdade
+                    if int(eva_memory.var_dolar[-1]) >= int(eva_memory.vars[valor[1:]]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                elif node.attrib['op'] == "ne": # igualdade
+                    if int(eva_memory.var_dolar[-1]) != int(eva_memory.vars[valor[1:]]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+            
+
+            else: # case 1.4 comparação MATEMÁTICA entre $ e uma constante
+                if node.attrib['op'] == "eq": # 
+                    if int(eva_memory.var_dolar[-1]) == int(valor): # converte valor para int (comparação matemática)
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                elif node.attrib['op'] == "lt": # igualdade
+                    if int(eva_memory.var_dolar[-1]) < int(valor):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                elif node.attrib['op'] == "gt": # igualdade
+                    if int(eva_memory.var_dolar[-1]) > int(valor):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+                
+                elif node.attrib['op'] == "lte": # igualdade
+                    if int(eva_memory.var_dolar[-1]) <= int(valor):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                elif node.attrib['op'] == "gte": # igualdade
+                    if int(eva_memory.var_dolar[-1]) >= int(valor):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                elif node.attrib['op'] == "ne": # igualdade
+                    if int(eva_memory.var_dolar[-1]) != int(valor):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+########
+   
         else: # caso var seja uma variável, tipo #x. É UMA COMPARAÇÃO MATEMÁTICA, USA NÚMEROS
             # case 2.1 - comparando var com outra var
             if "#" in valor: # valor é uma variável
@@ -412,56 +458,84 @@ def exec_comando(node):
                     if int(eva_memory.vars[node.attrib['var']]) == int(eva_memory.vars[valor[1:]]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-                if node.attrib['op'] == "lt": # igualdade
+                if node.attrib['op'] == "lt": # menor que
                     if int(eva_memory.vars[node.attrib['var']]) < int(eva_memory.vars[valor[1:]]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-                if node.attrib['op'] == "gt": # igualdade
+                if node.attrib['op'] == "gt": # maior que
                     if int(eva_memory.vars[node.attrib['var']]) > int(eva_memory.vars[valor[1:]]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
                 
-                if node.attrib['op'] == "lte": # igualdade
+                if node.attrib['op'] == "lte": # menor ou igual
                     if int(eva_memory.vars[node.attrib['var']]) <= int(eva_memory.vars[valor[1:]]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-                if node.attrib['op'] == "gte": # igualdade
+                if node.attrib['op'] == "gte": # maior ou igual
                     if int(eva_memory.vars[node.attrib['var']]) >= int(eva_memory.vars[valor[1:]]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-                if node.attrib['op'] == "ne": # igualdade
+                if node.attrib['op'] == "ne": # diferente
                     if int(eva_memory.vars[node.attrib['var']]) != int(eva_memory.vars[valor[1:]]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-            # case 2.2 - comparando var com um valor constante
+
+            # case 2.2 - comparando var com $
+            elif "$" in valor: # valor é $
+                if node.attrib['op'] == "eq": # testa a igualdade do valor contido em var com o $".
+                    if int(eva_memory.vars[node.attrib['var']]) == int(eva_memory.var_dolar[-1]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                if node.attrib['op'] == "lt": # menor que
+                    if int(eva_memory.vars[node.attrib['var']]) < int(eva_memory.var_dolar[-1]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                if node.attrib['op'] == "gt": # maior que
+                    if int(eva_memory.vars[node.attrib['var']]) > int(eva_memory.var_dolar[-1]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+                
+                if node.attrib['op'] == "lte": # menor ou igual
+                    if int(eva_memory.vars[node.attrib['var']]) <= int(eva_memory.var_dolar[-1]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                if node.attrib['op'] == "gte": # maior ou igual
+                    if int(eva_memory.vars[node.attrib['var']]) >= int(eva_memory.var_dolar[-1]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+                if node.attrib['op'] == "ne": # diferente
+                    if int(eva_memory.vars[node.attrib['var']]) != int(eva_memory.var_dolar[-1]):
+                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+
+
+            # case 2.3 - comparando var com um valor constante
             else: # valor é uma variável
-                if node.attrib['op'] == "eq": # testa a igualdade do valor contido em var com o valor da var contida "valor".
+                if node.attrib['op'] == "eq": # testa a igualdade do valor contido em var com uma constante dentro de valor.
                     if int(eva_memory.vars[node.attrib['var']]) == int(node.attrib['value']):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-                if node.attrib['op'] == "lt": # igualdade
+                if node.attrib['op'] == "lt": # menor que
                     if int(eva_memory.vars[node.attrib['var']]) < int(node.attrib['value']):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-                if node.attrib['op'] == "gt": # igualdade
+                if node.attrib['op'] == "gt": # maior que
                     if int(eva_memory.vars[node.attrib['var']]) > int(node.attrib['value']):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
                 
-                if node.attrib['op'] == "lte": # igualdade
+                if node.attrib['op'] == "lte": # menor ou igual
                     if int(eva_memory.vars[node.attrib['var']]) <= int(node.attrib['value']):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-                if node.attrib['op'] == "gte": # igualdade
+                if node.attrib['op'] == "gte": # maior ou igual
                     if int(eva_memory.vars[node.attrib['var']]) >= int(node.attrib['value']):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-                if node.attrib['op'] == "ne": # igualdade
+                if node.attrib['op'] == "ne": # diferente
                     if int(eva_memory.vars[node.attrib['var']]) != int(node.attrib['value']):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
                 
 
 
     elif node.tag == "default": # default sempre será verdadeiro
-        print("Defalut funcionando")
+        print("Default funcionando")
         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
 
@@ -538,7 +612,7 @@ def exec_comando(node):
 
 
 def busca_commando(key): # keys são strings
-	# busca em settings. Isto porque "voice" fica em settings
+	# busca em settings. Isto porque "voice" fica em settings e voice é sempre o primeiro elemento
 	for elem in root.find("settings").iter():
 		if elem.get("key") != None: # verifica se node tem atributo id
 			if elem.attrib["key"] == key:
@@ -567,10 +641,6 @@ def link_process(anterior = -1):
     terminal.see(tkinter.END)
     global fila_links
     while len(fila_links) != 0:
-        # print("while ", id(thread_pause), thread_pause)
-        # while thread_pause: # pára a execucao da thread
-        #     time.sleep(0.5)
-        
         from_key = fila_links[0].attrib["from"] # chave do comando a executar
         to_key = fila_links[0].attrib["to"] # chave do próximo comando
         comando_from = busca_commando(from_key).tag # Tag do comando a ser executado
