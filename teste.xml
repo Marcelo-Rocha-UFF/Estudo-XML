@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<evaml  name="script01" >
+<evaml  name="script02" >
 	<settings>
 		<voice tone="en-US_AllisonV3Voice"  />
 		<light-effects mode="on" />
