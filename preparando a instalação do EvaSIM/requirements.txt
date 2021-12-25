@@ -1,0 +1,10 @@
+keras>=2.2.0
+tensorflow>=1.9.0
+pandas>=0.23.4
+tqdm>=4.30.0
+opencv-python>=3.4.4
+gdown>=3.10.1
+Image>=1.5.33
+paho-mqtt==1.5.1
+
+#pip3 install -r requirements.txt

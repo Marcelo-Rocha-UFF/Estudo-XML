@@ -1,9 +1,20 @@
 import os
 import sys
+import ctypes
 import xml.etree.ElementTree as ET
 import send_to_dbjson
 import requests
 import time
+
+# This function gets the python command name used in command line
+def get_python_interpreter_arguments():
+  argc = ctypes.c_int()
+  argv = ctypes.POINTER(ctypes.c_wchar_p if sys.version_info >= (3, ) else ctypes.c_char_p)()
+  ctypes.pythonapi.Py_GetArgcArgv(ctypes.byref(argc), ctypes.byref(argv))
+  arguments = list()
+  for i in range(argc.value - len(sys.argv) + 1):
+    arguments.append(argv[i])
+  return arguments
 
 # save to json flag
 save = False
@@ -25,22 +36,22 @@ for p in sys.argv:
 	
 if compile:
 	# step 01 - expanding macros
-	cmd = "python3 eva_macro_exp.py " + sys.argv[1]
+	cmd = get_python_interpreter_arguments()[0] + " eva_macro_exp.py " + sys.argv[1]
 	os.system(cmd)
 
 	# step 02 - generating keys
-	cmd = "python3 eva_node_keys.py _macro.xml"
+	cmd = get_python_interpreter_arguments()[0] + " eva_node_keys.py _macro.xml"
 	os.system(cmd)
 
 	tree = ET.parse("_node_keys.xml")  #
 	root = tree.getroot() # evaml root node
 
 	# step 03 - to generate xml_exe file
-	cmd = "python3 eva_xml_links.py _node_keys.xml"
+	cmd = get_python_interpreter_arguments()[0] + " eva_xml_links.py _node_keys.xml"
 	os.system(cmd)
 
 	# step 04 - generate the json file
-	cmd = "python3 eva_json_gen.py _xml_links.xml"
+	cmd = get_python_interpreter_arguments()[0] + " eva_json_gen.py _xml_links.xml"
 	os.system(cmd)
 
 # steps 5 and 6 (optional)

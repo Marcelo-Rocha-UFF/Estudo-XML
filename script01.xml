@@ -1,53 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- voz portugues: pt-BR_IsabelaV3Voice -->
-<!-- voz inglês		: en-US_AllisonV3Voice" -->
-<evaml name="script01">
+<evaml  name="script01" >
 	<settings>
-		<voice tone="pt-BR_IsabelaV3Voice" />
+		<voice tone="en-US_AllisonV3Voice"  />
 		<light-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
-  <script>
-		<light state="on" color="white" />
-		<useMacro name="ABERTURA" />
-		<random id="INICIO" min="1" max="4" />
-		<switch var="$">
-			<case op="exact" value="1">
-				<light state="on" color="green" />
-				<talk>O número sorteado foi o um</talk>
-				<wait duration="1500" />
-				<goto target="INICIO" />
-			</case>
-			<case op="exact" value="2">
-				<light state="on" color="blue" />
-				<talk>O número sorteado foi o dois</talk>
-				<wait duration="1500" />
-				<goto target="INICIO" />
-			</case>
-			<case op="exact" value="3">
-				<light state="on" color="red" />
-				<talk>O número sorteado foi o três</talk>
-				<wait duration="1500" />
-			</case>
-			<default>
-				<light state="on" color="pink" />
-				<talk>Não foi nem o 1 nem o 2 nem o 3</talk>
-				<talk>O número foi o $</talk>
-				<talk>Vou reiniciar a contagem</talk>
-				<goto target="INICIO" />
-			</default>
-		</switch>
-		<useMacro name="FINAL" />
-		<light state="off" color="000000" />
-	</script>
-  <macros>
-		<macro name="ABERTURA">
-			<talk>Olá, eu sou o robô Eva. Vou sortear um número de um a quatro</talk>
-			<talk>Para cada um, vou acender a luz numa cor diferente</talk>
-			<talk>Só vou parar quando o número sorteado for o três</talk>
-		</macro>
-		<macro name="FINAL">
-			<talk>Já vou embora / Está ficando tarde, fui / Pra mim já deu</talk>
-		</macro>
-  </macros>
+<script>
+  <light state="on" color="white" />
+  <talk>Hi, I'm the robot Eva and I'm a socially assistive robot</talk>
+  <talk>What is your name?</talk>
+  <listen />
+  <talk>Hi $, how are you? Let's start the script</talk>
+  <counter var="x" op="=" value="0" />
+	<counter var="y" op="=" value="3" />
+	<counter id="INCREMENT_X" var="x" op="+" value="1" />
+  <switch var="x">
+    <case op="lte" value="3">
+      <talk>The value of x is #x</talk>
+      <goto target="INCREMENT_X" />
+    </case>
+    <case op="gt" value="#y">
+      <talk>The value of x is #x and its greater than the value of y, that is #y</talk>
+    </case>
+  </switch>
+  <talk>Hey $, I will terminate. Bye</talk>
+  <light state="off" />
+</script>
+<macros>
+</macros>
 </evaml>

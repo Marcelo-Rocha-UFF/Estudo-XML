@@ -1,19 +1,22 @@
-<evaml name="script13">
+<evaml name="script01">
 	<settings>
 		<voice tone="en-US_AllisonV3Voice" />
 		<light-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
-	<script>
-		<random min="1" max="1" />
-		<counter var="x" op="=" value="1" />
-		<switch var="x">
-			<case op="eq" value="$">
-				<light state="on" color="green" />
-			</case>
-			<default>
-				<light state="on" color="red" />
-			</default>
-		</switch>
-	</script>
-	</evaml>
+<script>
+  <random min="1" max="5" />
+  <switch var="$">
+    <case op="eq" value="1">
+      <talk>The number drawn was 1</talk>
+    </case>
+    <case op="eq" value="2">
+      <talk>The number drawn was 2</talk>
+    </case>
+    <default>
+      <talk>The number drawn was neither 1 nor 2</talk>
+      <light state="on" color="green" />
+    </default>
+  </switch>
+</script>
+</evaml>

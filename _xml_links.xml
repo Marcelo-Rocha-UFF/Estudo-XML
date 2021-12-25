@@ -1,19 +1,22 @@
-<evaml name="script13" id="9f3af29818209acaeb71b59c2fc15f00">
+<evaml name="script01" id="4bc9160a149eddcf36a458f53d9cf58a">
 	<settings>
 		<voice tone="en-US_AllisonV3Voice" key="1000" />
 		<light-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
-	<script>
-		<random min="1" max="1" key="1001" />
-		<counter var="x" op="=" value="1" key="1002" />
-		<switch var="x">
-			<case op="eq" value="$" key="1003" var="x">
-				<light state="on" color="green" key="1004" />
-			</case>
-			<default key="1005" var="x" value="" op="exact">
-				<light state="on" color="red" key="1006" />
-			</default>
-		</switch>
-	</script>
-	<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1002" to="1005" /><link from="1005" to="1006" /></links></evaml>
+<script>
+  <random min="1" max="5" key="1001" />
+  <switch var="$">
+    <case op="eq" value="1" key="1002" var="$">
+      <talk key="1003">The number drawn was 1</talk>
+    </case>
+    <case op="eq" value="2" key="1004" var="$">
+      <talk key="1005">The number drawn was 2</talk>
+    </case>
+    <default key="1006" var="$" value="" op="exact">
+      <talk key="1007">The number drawn was neither 1 nor 2</talk>
+      <light state="on" color="green" key="1008" />
+    </default>
+  </switch>
+</script>
+<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1001" to="1004" /><link from="1004" to="1005" /><link from="1001" to="1006" /><link from="1006" to="1007" /><link from="1007" to="1008" /></links></evaml>

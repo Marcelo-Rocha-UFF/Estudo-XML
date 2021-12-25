@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- voz portugues: pt-BR_IsabelaV3Voice -->
-<!-- voz inglês		: en-US_AllisonV3Voice" -->
 <evaml name="script13">
 	<settings>
 		<voice tone="en-US_AllisonV3Voice" />
-		<light-effects mode="on" />
-		<audio-effects mode="on" vol="100%" />
+		<lightEffects mode="on" />
+		<audioEffects mode="on" volume="100%" />
 	</settings>
 	<script>
-		<random min="1" max="1" />
-		<counter var="x" op="=" value="1" />
+		<useMacro name="GREETINGS"/>
+		<random min="1" max="3" />
+		<counter var="x" op="=" value="2" />
 		<switch var="x">
 			<case op="eq" value="$">
 				<light state="on" color="green" />
@@ -18,7 +17,14 @@
 				<light state="on" color="red" />
 			</default>
 		</switch>
+		<evaEmotion emotion="happy" />
+		<goto target="FALA"/>
 	</script>
 	<macros>
+		<macro name="GREETINGS">
+			<light color="green" state="on"/>
+			<talk id="FALA" >Helo I am the robot Eva</talk>
+		</macro>
 	</macros>
 </evaml>
+

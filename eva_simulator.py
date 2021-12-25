@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 import hashlib
 from logging import _levelToName
 import os
@@ -53,7 +53,7 @@ tts.set_service_url(url)
 
 # Create the Tkinter window
 window = Tk()
-window.title("Eva Simulator for EvaML - Version 1.0 - UFF/MidiaCom Lab")
+window.title("Eva Simulator for EvaML - Version 1.0 - UFF/MidiaCom/CICESE")
 w = 945
 h = 525
 window.geometry(str(w) + "x" + str(h))
@@ -137,7 +137,7 @@ def clear_terminal():
     terminal.delete('1.0', END)
     # criando terminal text
     terminal.insert(INSERT, "===========================================================================\n")
-    terminal.insert(INSERT, "                         Eva Simulator for EvaML\n                    Version 1.0 - UFF/MidiaCom [2021]\n")
+    terminal.insert(INSERT, "                         Eva Simulator for EvaML\n                Version 1.0 - UFF/MidiaCom/CICESE [2021]\n")
     terminal.insert(INSERT, "===========================================================================")
 
 # criacao dos botoes da interface com usuário

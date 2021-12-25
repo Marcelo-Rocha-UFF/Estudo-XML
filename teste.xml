@@ -1,26 +1,25 @@
-<evaml id="a1001-b3001" name="Therapy04" key="0">
+<?xml version="1.0" encoding="UTF-8"?>
+<evaml  name="script01" >
 	<settings>
-		<voice tone="en-US_AllisonV3Voice" key="1000" />
+		<voice tone="en-US_AllisonV3Voice"  />
 		<light-effects mode="on" />
 		<audio-effects mode="on" vol="100%" />
 	</settings>
-  <script>
-    <random id="INICIO" min="1" max="3" />
-		<wait duration="1000" />
-			<listen />
-			<listen />
-			<listen />
-			<listen />
-		<light state="on" color="#00ff00" />
-			<light state="on" color="#00ff00" />
-			<light state="on" color="#00ff00" />
-			<light state="on" color="#00ff00" />
-		<wait duration="1000" />
-			<listen />
-			<listen />
-			<listen />
-			<listen />
-		<wait duration="2345" />
-		<stop />
-	</script>
-  </evaml>
+<script>
+  <random min="1" max="5" />
+  <switch var="$">
+    <case op="eq" value="1">
+      <talk>The number drawn was 1</talk>
+    </case>
+    <case op="eq" value="2">
+      <talk>The number drawn was 2</talk>
+    </case>
+    <default>
+      <talk>The number drawn was neither 1 nor 2</talk>
+      <light state="on" color="green" />
+    </default>
+  </switch>
+</script>
+<macros>
+</macros>
+</evaml>
