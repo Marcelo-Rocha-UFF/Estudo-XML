@@ -100,4 +100,4 @@ print("step 03 - Creating the Elements <link>...")
 # arquivo de saida
 tree.write(root.attrib['name'] + "_EvaML.xml", "UTF-8") # versao para o EvaSIM
 
-tree.write("_xml_links.xml", "UTF-8") # versao para a etapa 4 do parser
+#tree.write("_xml_links.xml", "UTF-8") # versao para a etapa 4 do parser

@@ -6,6 +6,8 @@ import os
 import random as rnd
 import sys
 import xml.etree.ElementTree as ET
+
+from ibm_watson.text_to_speech_v1 import Voice
 import eva_memory # modulo de memoria do EvaSIM
 
 from tkinter import *
@@ -334,7 +336,7 @@ def exec_comando(node):
 
         # Assume the default UTF-8 (Gera o hashing do arquivo de audio)
         hash_object = hashlib.md5(texto[ind_random].encode())
-        file_name = "_audio_" + hash_object.hexdigest()
+        file_name = "_audio_"  + root.find("settings")[0].attrib["tone"] + hash_object.hexdigest()
 
         # verifica se o audio da fala já existe na pasta
         if not (os.path.isfile("audio_cache_files/" + file_name + ".mp3")): # se nao existe chama o watson

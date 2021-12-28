@@ -1,12 +1,26 @@
 import sys
-import xml.etree.ElementTree as ET
-import send_to_dbjson
+import json
 
-tree = ET.parse(sys.argv[1])  # arquivo de codigo xml
-root = tree.getroot() # evaml root node
+def send_to_dbjson(script_id, script_name, output):
+    print("==> Saving [" + script_name + "], id[" + script_id + "] into db.json")
+    
+    # read db.json
+    dbfile = open('db.json', 'r')
 
+    # transforma o arquivo de texto em um dict
+    eva_db_dict = json.load(dbfile)
 
-dbfile = open('db.json', 'r')
+    # se o script já existe no bd, então apaga
+    for item in range(len(eva_db_dict["interaccion"])):
+        if eva_db_dict["interaccion"][item]['_id'] == script_id:
+            #print("o script de id", eva_db_dict["interaccion"][item]['_id'], "será deletado")
+            del(eva_db_dict["interaccion"][item])
 
-# insere o script no banco de scripts do robo
-send_to_dbjson.send_to_dbjson(root.attrib['id'], root.attrib['name'], output)
+    # output é uma string. a função json.loads transforma a string em um dict
+    eva_db_dict["interaccion"].append(json.loads(output))
+
+    # gera o arquivo
+    with open('../db.json', 'w') as fp:
+        json.dump(eva_db_dict, fp)
+
+    #print("\nTotal scripts found:", len(eva_db_dict["interaccion"]))

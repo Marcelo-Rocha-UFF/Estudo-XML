@@ -14,23 +14,22 @@
       },
       {
         "key": 1001,
-        "name": "Random",
-        "type": "random",
-        "color": "pink",
+        "name": "Light",
+        "type": "light",
+        "color": "#ffa500",
         "isGroup": false,
         "group": "",
-        "min": 1,
-        "max": 5,
+        "lcolor": "#ffffff",
+        "state": "on",
         "__gohashid": 1
       },
       {
         "key": 1002,
-        "name": "Condition",
-        "type": "if",
-        "color": "white",
+        "name": "Talk",
+        "type": "speak",
+        "color": "#00ff00",
         "isGroup": false,
-        "text": "$ == 1",
-        "opt": 5,
+        "text": "Hi, I'm the robot Eva and I'm a socially assistive robot",
         "__gohashid": 2
       },
       {
@@ -39,49 +38,20 @@
         "type": "speak",
         "color": "#00ff00",
         "isGroup": false,
-        "text": "The number drawn was 1",
+        "text": "What is your name?",
         "__gohashid": 3
       },
       {
         "key": 1004,
-        "name": "Condition",
-        "type": "if",
-        "color": "white",
+        "name": "Listen",
+        "type": "listen",
+        "color": "#ffff00",
         "isGroup": false,
-        "text": "$ == 2",
-        "opt": 5,
+        "opt": "",
         "__gohashid": 4
       },
       {
         "key": 1005,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
-        "isGroup": false,
-        "text": "The number drawn was 2",
-        "__gohashid": 5
-      },
-      {
-        "key": 1006,
-        "name": "Condition",
-        "type": "if",
-        "color": "white",
-        "isGroup": false,
-        "text": "",
-        "opt": 4,
-        "__gohashid": 6
-      },
-      {
-        "key": 1007,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
-        "isGroup": false,
-        "text": "The number drawn was neither 1 nor 2",
-        "__gohashid": 7
-      },
-      {
-        "key": 1008,
         "name": "Light",
         "type": "light",
         "color": "#ffa500",
@@ -89,7 +59,69 @@
         "group": "",
         "lcolor": "#00ff00",
         "state": "on",
+        "__gohashid": 5
+      },
+      {
+        "key": 1006,
+        "name": "Talk",
+        "type": "speak",
+        "color": "#00ff00",
+        "isGroup": false,
+        "text": "Hi $, how are you? Let's start the script",
+        "__gohashid": 6
+      },
+      {
+        "key": 1007,
+        "name": "Counter",
+        "type": "counter",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "count": "x",
+        "ops": "assign",
+        "value": 0,
+        "__gohashid": 7
+      },
+      {
+        "key": 1008,
+        "name": "Counter",
+        "type": "counter",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "count": "x",
+        "ops": "sum",
+        "value": 1,
         "__gohashid": 8
+      },
+      {
+        "key": 1009,
+        "name": "Talk",
+        "type": "speak",
+        "color": "#00ff00",
+        "isGroup": false,
+        "text": "The value of x is #x",
+        "__gohashid": 9
+      },
+      {
+        "key": 1010,
+        "name": "Talk",
+        "type": "speak",
+        "color": "#00ff00",
+        "isGroup": false,
+        "text": "Hey $, I will terminate. Bye",
+        "__gohashid": 10
+      },
+      {
+        "key": 1011,
+        "name": "Light",
+        "type": "light",
+        "color": "#ffa500",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#000000",
+        "state": "off",
+        "__gohashid": 11
       }
     ],
     "link": [
@@ -109,7 +141,7 @@
         "__gohashid": 2
       },
       { 
-        "from": 1001,
+        "from": 1003,
         "to": 1004,
         "__gohashid": 3
       },
@@ -119,7 +151,7 @@
         "__gohashid": 4
       },
       { 
-        "from": 1001,
+        "from": 1005,
         "to": 1006,
         "__gohashid": 5
       },
@@ -132,6 +164,21 @@
         "from": 1007,
         "to": 1008,
         "__gohashid": 7
+      },
+      { 
+        "from": 1008,
+        "to": 1009,
+        "__gohashid": 8
+      },
+      { 
+        "from": 1009,
+        "to": 1010,
+        "__gohashid": 9
+      },
+      { 
+        "from": 1010,
+        "to": 1011,
+        "__gohashid": 10
       }
     ]
   }

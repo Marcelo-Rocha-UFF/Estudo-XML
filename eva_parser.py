@@ -2,7 +2,7 @@ import os
 import sys
 import ctypes
 import xml.etree.ElementTree as ET
-import send_to_dbjson
+import eva_send_to_dbjson
 import requests
 import time
 
@@ -40,26 +40,27 @@ if compile:
 	os.system(cmd)
 
 	# step 02 - generating keys
-	cmd = get_python_interpreter_arguments()[0] + " eva_node_keys.py _macro.xml"
+	cmd = get_python_interpreter_arguments()[0] + " eva_node_keys.py _macros.xml"
 	os.system(cmd)
-
-	tree = ET.parse("_node_keys.xml")  #
-	root = tree.getroot() # evaml root node
 
 	# step 03 - to generate xml_exe file
 	cmd = get_python_interpreter_arguments()[0] + " eva_xml_links.py _node_keys.xml"
 	os.system(cmd)
 
 	# step 04 - generate the json file
-	cmd = get_python_interpreter_arguments()[0] + " eva_json_gen.py _xml_links.xml"
+	tree = ET.parse("_node_keys.xml")  #
+	root = tree.getroot() # evaml root node
+	cmd = get_python_interpreter_arguments()[0] + " eva_json_gen.py " + root.attrib['name'] + "_EvaML.xml" #_xml_links.xml"
 	os.system(cmd)
 
 # steps 5 and 6 (optional)
 if save:
+	tree = ET.parse("_node_keys.xml")  #
+	root = tree.getroot() # evaml root node
 	# step 5 - send do json db
 	with open(root.attrib['name'] + ".json", "r") as arqjson:
 		output = arqjson.read()
-	send_to_dbjson.send_to_dbjson(root.attrib['id'], root.attrib['name'], output)
+	eva_send_to_dbjson.send_to_dbjson(root.attrib['id'], root.attrib['name'], output)
 	
 
 if run:
