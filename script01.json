@@ -14,22 +14,23 @@
       },
       {
         "key": 1001,
+        "name": "Audio",
+        "type": "sound",
+        "color": "lightblue",
+        "isGroup": false,
+        "src": "mario-start",
+        "wait": true,
+        "__gohashid": 1
+      },
+      {
+        "key": 1002,
         "name": "Light",
         "type": "light",
         "color": "#ffa500",
         "isGroup": false,
         "group": "",
         "lcolor": "#ffffff",
-        "state": "on",
-        "__gohashid": 1
-      },
-      {
-        "key": 1002,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
-        "isGroup": false,
-        "text": "Hi, I'm the robot Eva and I'm a socially assistive robot",
+        "state": "off",
         "__gohashid": 2
       },
       {
@@ -38,48 +39,45 @@
         "type": "speak",
         "color": "#00ff00",
         "isGroup": false,
-        "text": "What is your name?",
+        "text": "Hi, I'm the robot Eva and I'm a socially assistive robot",
         "__gohashid": 3
       },
       {
         "key": 1004,
+        "name": "Talk",
+        "type": "speak",
+        "color": "#00ff00",
+        "isGroup": false,
+        "text": "What is your name?",
+        "__gohashid": 4
+      },
+      {
+        "key": 1005,
         "name": "Listen",
         "type": "listen",
         "color": "#ffff00",
         "isGroup": false,
         "opt": "",
-        "__gohashid": 4
+        "__gohashid": 5
       },
       {
-        "key": 1005,
+        "key": 1006,
         "name": "Light",
         "type": "light",
         "color": "#ffa500",
         "isGroup": false,
         "group": "",
         "lcolor": "#00ff00",
-        "state": "on",
-        "__gohashid": 5
+        "state": "off",
+        "__gohashid": 6
       },
       {
-        "key": 1006,
+        "key": 1007,
         "name": "Talk",
         "type": "speak",
         "color": "#00ff00",
         "isGroup": false,
         "text": "Hi $, how are you? Let's start the script",
-        "__gohashid": 6
-      },
-      {
-        "key": 1007,
-        "name": "Counter",
-        "type": "counter",
-        "color": "lightblue",
-        "isGroup": false,
-        "group": "",
-        "count": "x",
-        "ops": "assign",
-        "value": 0,
         "__gohashid": 7
       },
       {
@@ -90,17 +88,20 @@
         "isGroup": false,
         "group": "",
         "count": "x",
-        "ops": "sum",
-        "value": 1,
+        "ops": "assign",
+        "value": 0,
         "__gohashid": 8
       },
       {
         "key": 1009,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
+        "name": "Counter",
+        "type": "counter",
+        "color": "lightblue",
         "isGroup": false,
-        "text": "The value of x is #x",
+        "group": "",
+        "count": "x",
+        "ops": "sum",
+        "value": 1,
         "__gohashid": 9
       },
       {
@@ -109,11 +110,20 @@
         "type": "speak",
         "color": "#00ff00",
         "isGroup": false,
-        "text": "Hey $, I will terminate. Bye",
+        "text": "The value of x is #x",
         "__gohashid": 10
       },
       {
         "key": 1011,
+        "name": "Talk",
+        "type": "speak",
+        "color": "#00ff00",
+        "isGroup": false,
+        "text": "Hey $, I will terminate. Bye",
+        "__gohashid": 11
+      },
+      {
+        "key": 1012,
         "name": "Light",
         "type": "light",
         "color": "#ffa500",
@@ -121,7 +131,7 @@
         "group": "",
         "lcolor": "#000000",
         "state": "off",
-        "__gohashid": 11
+        "__gohashid": 12
       }
     ],
     "link": [
@@ -179,6 +189,11 @@
         "from": 1010,
         "to": 1011,
         "__gohashid": 10
+      },
+      { 
+        "from": 1011,
+        "to": 1012,
+        "__gohashid": 11
       }
     ]
   }

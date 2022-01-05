@@ -80,19 +80,26 @@ def head_process(node):
 # always be the first node in the interaccion
 def settings_process(node):
     return voice_process(node.find("voice"))
-    # processar light-effects
-    # processar sound-effects
+    # processar lightEffects
+    # processar audioEffects
 
 # audio node processing
 def audio_process(audio_command):
     global gohashid
+    audio_source = audio_command.attrib['source']
+    # audioEffects settings processing
+    if root.find("settings").find("audioEffects") != None:
+      if root.find("settings").find("audioEffects").attrib["mode"] == "off":
+        # mode off implies the use of MUTED-SOUND file 
+        audio_source = "MUTED-SOUND"
+    
     audio_node = """      {
         "key": """ + audio_command.attrib["key"] + """,
         "name": "Audio",
         "type": "sound",
         "color": "lightblue",
         "isGroup": false,
-        "src": """ + '"' + audio_command.attrib['source'] + '",' + """
+        "src": """ + '"' + audio_source + '",' + """
         "wait": """ + audio_command.attrib['block'] + ',' + """
         "__gohashid": """ + str(gohashid) + """
       }"""
@@ -132,12 +139,20 @@ def counter_process(counter_command):
 # light node processing
 def light_process(light_command):
     global gohashid
-    if light_command.attrib['state'] == "off": # a ideia é admitir a ausencia do parametro color quando o estado da lampada for off
+    bulb_state = light_command.attrib['state']
+    if bulb_state == "off": # a ideia é admitir a ausencia do parametro color quando o estado da lampada for off
       light_command.attrib['color'] = "black" # mesmo se o atributo não tiver sido setado, ele será setado aqui
     color = light_command.attrib['color']
     color_map = {"white":"#ffffff", "black":"#000000", "red":"#ff0000", "pink":"#e6007e", "green":"#00ff00", "yellow":"#ffff00", "blue":"#0000ff"}
     if color_map.get(color) != None:
         color = color_map.get(color)
+
+    # lightEffects settings processing
+    if root.find("settings").find("lightEffects") != None:
+      if root.find("settings").find("lightEffects").attrib["mode"] == "off":
+        # mode off implies bulb_state off 
+        bulb_state = "off"
+
     light_node = """      {
         "key": """ + light_command.attrib["key"] + """,
         "name": "Light",
@@ -146,7 +161,7 @@ def light_process(light_command):
         "isGroup": false,
         "group": "",
         "lcolor": """ + '"' + color + '",' + """
-        "state": """ + '"' + light_command.attrib['state'] + '",' + """
+        "state": """ + '"' + bulb_state + '",' + """
         "__gohashid": """ + str(gohashid) + """
       }"""
     gohashid += 1

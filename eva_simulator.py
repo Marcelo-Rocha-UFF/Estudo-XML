@@ -227,15 +227,30 @@ def exec_comando(node):
 
 
     elif node.tag == "light":
+        lightEffect = "on"
         state = node.attrib["state"]
+        # process lightEffects settings
+        if root.find("settings").find("lightEffects") != None:
+            if root.find("settings").find("lightEffects").attrib["mode"] == "off":
+                lightEffect = "off"
+        
         # caso a seguir, se o sate é off, e pode não ter atributo color definido
         if state == "off":
             color = "black"
-            terminal.insert(INSERT, "\nstate: Turnning off the light.")
+            if lightEffect == "off":
+                message_state = "\nstate: Light Effects DISABLED."
+            else:
+                message_state = "\nstate: Turnning off the light."
+            terminal.insert(INSERT, message_state)
             terminal.see(tkinter.END)
         else:
             color = node.attrib["color"]
-            terminal.insert(INSERT, "\nstate: Turnning on the light. Color=" + color + ".")
+            if lightEffect == "off":
+                message_state = "\nstate: Light Effects DISABLED."
+                state = "off"
+            else:
+                message_state = "\nstate: Turnning on the light. Color=" + color + "."
+            terminal.insert(INSERT, message_state)
             terminal.see(tkinter.END) # autoscrolling
         light(color , state)
         time.sleep(1) # emula o tempo da lampada real
@@ -335,6 +350,7 @@ def exec_comando(node):
         terminal.see(tkinter.END)
 
         # Assume the default UTF-8 (Gera o hashing do arquivo de audio)
+        # Also, uses the tone attribute in file hashing
         hash_object = hashlib.md5(texto[ind_random].encode())
         file_name = "_audio_"  + root.find("settings")[0].attrib["tone"] + hash_object.hexdigest()
 
@@ -357,14 +373,23 @@ def exec_comando(node):
 
 
     elif node.tag == "audio":
-        audio_file = "sonidos/" + node.attrib["source"] + ".wav"
+        sound_file = "sonidos/" + node.attrib["source"] + ".wav"
         block = False # o play do audio não bloqueia a execucao do script
         if node.attrib["block"].lower() == "true":
             block = True
-        terminal.insert(INSERT, '\nstate: Playing a sound: "' + node.attrib["source"] + ".wav" + '", block=' + str(block))
+        message_audio = '\nstate: Playing a sound: "' + sound_file + '", block=' + str(block)
+
+        # process audioEffects settings
+        if root.find("settings").find("audioEffects") != None:
+            if root.find("settings").find("audioEffects").attrib["mode"] == "off":
+                # mode off implies the use of MUTED-SOUND file 
+                sound_file = "my_sounds/MUTED-SOUND.wav"
+                message_audio = "\nstate: Audio Effects DISABLED."
+
+        terminal.insert(INSERT, message_audio)
         terminal.see(tkinter.END)
         ledAnimation("speak")
-        playsound(audio_file, block = block)
+        playsound(sound_file, block = block)
         ledAnimation("stop")
 
 
