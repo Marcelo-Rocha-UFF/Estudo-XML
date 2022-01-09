@@ -315,7 +315,7 @@ def exec_comando(node):
 
     elif node.tag == "talk":
         texto = node.text
-        # substitui as variaveis pelo texto. as variaveis devem existir na memoria
+        # substitui as variaveis através do texto. as variaveis devem existir na memoria
         texto_aux = texto
         for i in range(len(texto)):
             if texto[i] == "#":
@@ -338,6 +338,8 @@ def exec_comando(node):
                     texto = texto.replace("$-1", eva_memory.var_dolar[-2])
                 if "$1" in texto:
                     texto = texto.replace("$1", eva_memory.var_dolar[0])
+                if "$2" in texto:
+                    texto = texto.replace("$2", eva_memory.var_dolar[1])
                 if "$" in texto:
                     texto = texto.replace("$", eva_memory.var_dolar[-1])
             else:
@@ -345,6 +347,7 @@ def exec_comando(node):
                 exit(1)
         # esta parte implementa o texto aleatorio gerado pelo uso do caractere /
         texto = texto.split(sep="/") # texto vira uma lista com a qtd de frases divididas pelo caract. /
+        print(texto)
         ind_random = rnd.randint(0, len(texto)-1)
         terminal.insert(INSERT, '\nstate: Speaking: "' + texto[ind_random] + '"')
         terminal.see(tkinter.END)

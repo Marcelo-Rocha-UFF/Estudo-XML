@@ -1,11 +1,12 @@
-<evaml name="task">
+<?xml version="1.0" encoding="UTF-8"?>
+<evaml name="task" >
   <settings>
-    <voice tone="en-US_AllisonV3Voice" />
+    <voice tone="en-US_AllisonV3Voice"  />
     <lightEffects mode="on" />
     <audioEffects mode="on" vol="100%" />
   </settings>
   <script>
-    
+    <!-- tarefa (parte 01) *********************************************************************** -->
     <evaEmotion emotion="neutral" />
     <light state="on" color="white" />
     <audio source="mario-start" block="true" />
@@ -15,26 +16,23 @@
     <light state="on" color="pink" />
     <evaEmotion emotion="neutral" />
     <wait duration="2000" />
-    
+    <!-- tarefa (parte 02) ************************************************************************* -->
     <random min="1" max="3" />
     <switch var="$">
-      <case op="eq" value="1"> 
+      <case op="eq" value="1"> <!-- primeiro cenário -->
         <light state="on" color="red" />
-        <talk>Hi, what is your name</talk>
-      <listen />
-    <talk>Hello $, it is good to have you</talk>
+        <useMacro name="GET_NAME" />
+        <talk>Hello $, it is good to have you</talk>
       </case>
-      <case op="eq" value="2"> 
+      <case op="eq" value="2"> <!-- segundo cenário -->
         <light state="on" color="blue" />
-        <talk>Hi, what is your name</talk>
-      <listen />
-    <talk>Hi $, how are you?</talk>
+        <useMacro name="GET_NAME" />
+        <talk>Hi $, how are you?</talk>
       </case>
-      <case op="eq" value="3"> 
+      <case op="eq" value="3"> <!-- terceiro cenário -->
         <light state="on" color="green" />
-        <talk>Hi, what is your name</talk>
-      <listen />
-    <talk>Hello $, how is it going?</talk>
+        <useMacro name="GET_NAME" />
+        <talk>Hello $, how is it going?</talk>
       </case>
     </switch>
     <talk>Let's play the emotions game?</talk>
@@ -51,61 +49,49 @@
         <stop />
       </case>
     </switch>
-    
+    <!-- tarefa (parte 03) ************************************************************************* -->
     <talk>I will show an emotion and you try to imitate me</talk>
     <counter var="score" op="=" value="0" />
     <counter var="chance" op="=" value="0" />
-    <random id="LOOP" min="1" max="3" />
+    <random id = "LOOP" min="1" max="3" />
     <switch var="$">
       <case op="eq" value="1">
         <evaEmotion emotion="sad" />
         <light state="on" color="blue" />
-        <talk>Can you imitate me?</talk>
-      <userEmotion />
-    <switch var="$">
+        <useMacro name="GET_EXPRESSION" />
+        <switch var="$">
           <case op="exact" value="sad">
-            <evaEmotion emotion="happy" />
-      <talk>Ok! You are correct</talk>
-      <counter var="score" op="+" value="1" />
-    </case>
+            <useMacro name="RIGHT_ANSWER" />
+          </case>
           <default>
-            <evaEmotion emotion="sad" />
-      <talk>You are wrong</talk>
-    </default>
+            <useMacro name="WRONG_ANSWER" />
+          </default>
         </switch>
       </case>
       <case op="eq" value="2">
         <evaEmotion emotion="happy" />
         <light state="on" color="yellow" />
-        <talk>Can you imitate me?</talk>
-      <userEmotion />
-    <switch var="$">
+        <useMacro name="GET_EXPRESSION" />
+        <switch var="$">
           <case op="exact" value="happy">
-            <evaEmotion emotion="happy" />
-      <talk>Ok! You are correct</talk>
-      <counter var="score" op="+" value="1" />
-    </case>
+            <useMacro name="RIGHT_ANSWER" />
+          </case>
           <default>
-            <evaEmotion emotion="sad" />
-      <talk>You are wrong</talk>
-    </default>
+            <useMacro name="WRONG_ANSWER" />
+          </default>
         </switch>
       </case>
       <case op="eq" value="3">
         <evaEmotion emotion="angry" />
         <light state="on" color="red" />
-        <talk>Can you imitate me?</talk>
-      <userEmotion />
-    <switch var="$">
+        <useMacro name="GET_EXPRESSION" />
+        <switch var="$">
           <case op="exact" value="angry">
-            <evaEmotion emotion="happy" />
-      <talk>Ok! You are correct</talk>
-      <counter var="score" op="+" value="1" />
-    </case>
+            <useMacro name="RIGHT_ANSWER" />
+          </case>
           <default>
-            <evaEmotion emotion="sad" />
-      <talk>You are wrong</talk>
-    </default>
+            <useMacro name="WRONG_ANSWER" />
+          </default>
         </switch>
       </case>
     </switch>
@@ -123,4 +109,25 @@
       </default>
     </switch>
   </script>
-  </evaml>
+  <macros>
+    <!-- definida na parte 02 da tarefa -->
+    <macro name="GET_NAME">
+      <talk>Hi, what is your name</talk>
+      <listen />
+    </macro>
+    <!-- definidas na parte 03 da tarefa -->
+    <macro name="GET_EXPRESSION">
+      <talk>Can you imitate me?</talk>
+      <userEmotion />
+    </macro>
+    <macro name="RIGHT_ANSWER">
+      <evaEmotion emotion="happy" />
+      <talk>Ok! You are correct</talk>
+      <counter var="score" op="+" value="1" />
+    </macro>
+    <macro name="WRONG_ANSWER">
+      <evaEmotion emotion="sad" />
+      <talk>You are wrong</talk>
+    </macro>
+  </macros>
+</evaml>
