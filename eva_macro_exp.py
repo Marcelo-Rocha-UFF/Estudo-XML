@@ -7,6 +7,7 @@ root = tree.getroot() # evaml root node
 script_node = root.find("script")
 macros_node = root.find("macros")
 
+
 ###############################################################################
 # Processamento (expansao) das macros                                         #
 ###############################################################################
@@ -37,8 +38,17 @@ def macro_expander(script_node, macros_node):
 
 # expande as macros
 print("Step 01 - Processing Macros...")
-macro_expander(script_node, macros_node)
-root.remove(macros_node) # remove a secao de macros
 
-# gera o arquivo com as macros expandidas para a proxima etap
+# testa se a seção macro existe
+if macros_node == None:
+    print("  Warning -> The section macros does not exist.")
+# testa se a seção está vazia
+elif len(macros_node) == 0:
+    print("  Warning -> There is no macro to be processed.")
+    # processa a seção de macros
+    macro_expander(script_node, macros_node)
+    root.remove(macros_node) # remove a secao de macros
+
+
+# gera o arquivo com as macros expandidas (caso existam) para a proxima etapa
 tree.write("_macros.xml", "UTF-8")
