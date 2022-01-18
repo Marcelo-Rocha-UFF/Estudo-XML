@@ -1,27 +1,115 @@
-<evaml name="teste" id="698dc19d489c4e4db73e28a713eab07b">
+<evaml name="task" id="478f3a4c51824ad23cb50c1c60670c0f">
   <settings>
     <voice tone="en-US_AllisonV3Voice" key="1000" />
     <lightEffects mode="on" />
     <audioEffects mode="on" vol="100%" />
   </settings>
   <script>
-  <random min="1" max="2" key="1001" />
-  <switch var="$">
-    <case op="eq" value="1" key="1002">
-      <wait duration="1000" key="1003" />
+    
+    <evaEmotion emotion="neutral" key="1001" />
+    <light state="on" color="white" key="1002" />
+    <audio source="mario-start" block="true" key="1003" />
+    <light state="on" color="yellow" key="1004" />
+    <evaEmotion emotion="happy" key="1005" />
+    <talk key="1006">Hi, I'm the robot Eva / Hello, my name is Eva / Hi, what is up. I am the robot Eva</talk>
+    <light state="on" color="pink" key="1007" />
+    <evaEmotion emotion="neutral" key="1008" />
+    <wait duration="2000" key="1009" />
+    
+    <talk key="1010">What is you name?</talk>
+    <listen key="1011" />
+    <talk key="1012">Hello $, I'm going to present my expressions</talk>
+    <evaEmotion emotion="happy" key="1013" />
+    <talk key="1014">I can express happiness</talk>
+    <evaEmotion emotion="sad" key="1015" />
+    <talk key="1016">I can express sadness</talk> 
+    <evaEmotion emotion="angry" key="1017" />
+    <talk key="1018">I can express anger</talk>
+    <evaEmotion emotion="neutral" key="1019" />
+    <talk key="1020">Hey $, let's play the emotions game?</talk>
+    <listen key="1021" />
+    <switch var="$">
+      <case op="contain" value="yes" key="1022">
+        <evaEmotion emotion="happy" key="1023" />
+        <talk key="1024">Excelent! Let's go now</talk>
+      </case>
+      <case op="contain" value="no" key="1025">
+        <evaEmotion emotion="sad" key="1026" />
+        <talk key="1027">Oh, I'm sorry you don't want to play. Bye!</talk>
+        <light state="off" key="1028" />
+        <stop />
+      </case>
+    </switch>
+    
+    <talk key="1029">I will show some emotions and you try to imitate me</talk>
+    <counter var="score" op="=" value="0" key="1030" />
+    <counter var="chance" op="=" value="0" key="1031" />
+    <random id="LOOP" min="1" max="3" key="1032" />
+    <switch var="$">
+      <case op="eq" value="1" key="1033">
+        <evaEmotion emotion="sad" key="1034" />
+        <light state="on" color="blue" key="1035" />
+        <talk key="1036">Can you imitate me?</talk>
+      <userEmotion key="1037" />
+    <switch var="$">
+          <case op="exact" value="sad" key="1038">
+            <evaEmotion emotion="happy" key="1039" />
+      <talk key="1040">Ok! You are correct</talk>
+      <counter var="score" op="+" value="1" key="1041" />
     </case>
-    <case op="eq" value="2" key="1004">
-      <wait duration="1000" key="1005" />
+          <default key="1042">
+            <evaEmotion emotion="sad" key="1043" />
+      <talk key="1044">You are wrong</talk>
+    </default>
+        </switch>
+      </case>
+      <case op="eq" value="2" key="1045">
+        <evaEmotion emotion="happy" key="1046" />
+        <light state="on" color="yellow" key="1047" />
+        <talk key="1048">Can you imitate me?</talk>
+      <userEmotion key="1049" />
+    <switch var="$">
+          <case op="exact" value="happy" key="1050">
+            <evaEmotion emotion="happy" key="1051" />
+      <talk key="1052">Ok! You are correct</talk>
+      <counter var="score" op="+" value="1" key="1053" />
     </case>
-    <case op="eq" value="3" key="1006">
-      <wait duration="1000" key="1007" />
+          <default key="1054">
+            <evaEmotion emotion="sad" key="1055" />
+      <talk key="1056">You are wrong</talk>
+    </default>
+        </switch>
+      </case>
+      <case op="eq" value="3" key="1057">
+        <evaEmotion emotion="angry" key="1058" />
+        <light state="on" color="red" key="1059" />
+        <talk key="1060">Can you imitate me?</talk>
+      <userEmotion key="1061" />
+    <switch var="$">
+          <case op="exact" value="angry" key="1062">
+            <evaEmotion emotion="happy" key="1063" />
+      <talk key="1064">Ok! You are correct</talk>
+      <counter var="score" op="+" value="1" key="1065" />
     </case>
-  </switch>
-  <wait duration="500" key="1008" />
+          <default key="1066">
+            <evaEmotion emotion="sad" key="1067" />
+      <talk key="1068">You are wrong</talk>
+    </default>
+        </switch>
+      </case>
+    </switch>
+    <counter var="chance" op="+" value="1" key="1069" />
+    <switch var="chance">
+      <case op="eq" value="3" key="1070">
+        <evaEmotion emotion="happy" key="1071" />
+        <talk key="1072">Your score was #score</talk>
+        <talk key="1073">It was good to play with you $1. Bye</talk>
+        <light state="off" key="1074" />
+        <stop />
+      </case>
+      <default key="1075">
+        <goto target="LOOP" />
+      </default>
+    </switch>
   </script>
-  <macros>
-    <macro>
-      <wait duration="1000" />
-    </macro>
-  </macros>
-</evaml>
+  </evaml>

@@ -44,7 +44,8 @@ if macros_node == None:
     print("  Warning -> The section macros does not exist.")
 # testa se a seção está vazia
 elif len(macros_node) == 0:
-    print("  Warning -> There is no macro to be processed.")
+    print("  Warning -> The macros section exists but is empty.")
+else: 
     # processa a seção de macros
     macro_expander(script_node, macros_node)
     root.remove(macros_node) # remove a secao de macros

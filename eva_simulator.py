@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import hashlib
-from logging import _levelToName
+#from logging import _levelToName
 import os
 
 import random as rnd
@@ -12,6 +12,7 @@ import eva_memory # modulo de memoria do EvaSIM
 
 from tkinter import *
 from tkinter import filedialog as fd
+from tkinter import messagebox
 import tkinter
 
 from playsound import playsound
@@ -52,6 +53,10 @@ authenticator = IAMAuthenticator(apikey)
 tts = TextToSpeechV1(authenticator = authenticator)
 tts.set_service_url(url)
 
+# closing application
+def on_closing():
+    if messagebox.askokcancel("Quit", "Do you want to quit?"):
+        window.destroy()
 
 # Create the Tkinter window
 window = Tk()
@@ -114,9 +119,20 @@ def powerOn():
 
 # Ativa a thread que roda o script
 def runScript():
+    # initialize the robot memory
+    print("Intializing the robot memory...")
+    eva_memory.var_dolar = []
+    eva_memory.vars = {}
+    
+    bt_run['state'] = DISABLED
+    bt_stop['state'] = NORMAL
     busca_links("1000")
     threading.Thread(target=link_process, args=()).start()
 
+# Encerra a thread que roda o script
+def stopScript():
+    bt_run['state'] = NORMAL
+    bt_stop['state'] = DISABLED
 
 # Eva Import Script function
 def importFile():
@@ -146,7 +162,7 @@ def clear_terminal():
 bt_power = Button ( window, text = "Power On", command = powerOn)
 bt_import = Button ( window, text = "Import Script File...", state = DISABLED, command = importFile)
 bt_run = Button ( window, text = "Run", image = im_bt_play, state = DISABLED, compound = LEFT, command = runScript)
-bt_stop = Button ( window, text = "Stop", image = im_bt_stop, state = DISABLED, compound = LEFT)
+bt_stop = Button ( window, text = "Stop", image = im_bt_stop, state = DISABLED, compound = LEFT, command = stopScript)
 bt_clear = Button ( window, text = "Clear Term.", state = NORMAL, compound = LEFT, command = clear_terminal)
 # limpa e desenha o texto padrao do terminal
 clear_terminal()
@@ -281,8 +297,17 @@ def exec_comando(node):
     elif node.tag == "listen":
         lock_thread_pop()
         ledAnimation("listen")
-        # função de fechamento da janela pop up
-        def fechar_pop(): 
+        # função de fechamento da janela pop up para a tecla <return)
+        def fechar_pop_ret(self): 
+            print(var.get())
+            eva_memory.var_dolar.append(var.get())
+            terminal.insert(INSERT, "\nstate: Listening : var=$" + ", value=" + eva_memory.var_dolar[-1])
+            terminal.see(tkinter.END)
+            pop.destroy()
+            unlock_thread_pop() # reativa a thread de processamento do script
+        
+        # função de fechamento da janela pop up par o botão ok
+        def fechar_pop_bt(): 
             print(var.get())
             eva_memory.var_dolar.append(var.get())
             terminal.insert(INSERT, "\nstate: Listening : var=$" + ", value=" + eva_memory.var_dolar[-1])
@@ -293,6 +318,9 @@ def exec_comando(node):
         var = StringVar()
         pop = Toplevel(window)
         pop.title("Listen Command")
+        # Disable the max and close buttons
+        pop.resizable(False, False)
+        pop.protocol("WM_DELETE_WINDOW", False)
         w = 300
         h = 150
         ws = window.winfo_screenwidth()
@@ -303,10 +331,10 @@ def exec_comando(node):
         pop.grab_set()
         label = Label(pop, text="Eva is listening... Please, enter your answer!", font = ('Aerial', 9))
         label.pack(pady=20)
-        Entry(pop, textvariable = var, font = ('Aerial', 9)).pack()
-        # E1.bind("<Return>", fechar_pop)
-        # E1.pack()
-        Button(pop, text="    OK    ", command=fechar_pop).pack(pady=20)
+        E1 = Entry(pop, textvariable = var, font = ('Aerial', 9))
+        E1.bind("<Return>", fechar_pop_ret)
+        E1.pack()
+        Button(pop, text="    OK    ", command=fechar_pop_bt).pack(pady=20)
         # espera pela liberacao, aguardando a resposta do usuario
         while thread_pop_pause: 
             time.sleep(0.5)
@@ -353,7 +381,7 @@ def exec_comando(node):
         terminal.see(tkinter.END)
 
         # Assume the default UTF-8 (Gera o hashing do arquivo de audio)
-        # Also, uses the tone attribute in file hashing
+        # Also, uses the voice tone attribute in file hashing
         hash_object = hashlib.md5(texto[ind_random].encode())
         file_name = "_audio_"  + root.find("settings")[0].attrib["tone"] + hash_object.hexdigest()
 
@@ -615,6 +643,9 @@ def exec_comando(node):
         img_surprised = PhotoImage(file = "images/img_surprised.png")
         pop = Toplevel(window)
         pop.title("userEmotion Command")
+        # Disable the max and close buttons
+        pop.resizable(False, False)
+        pop.protocol("WM_DELETE_WINDOW", False)
         w = 697
         h = 250
         ws = window.winfo_screenwidth()
@@ -689,6 +720,7 @@ def link_process(anterior = -1):
                 if not(busca_links(to_key)): # se nao tem mais link, o comando indicado por to_key é o ultimo do fluxo
                     exec_comando(busca_commando(to_key))
                     print("fim de bloco.............")
+                    
             else:
                 fila_links.pop(0) # se o case falhou, ele é retirado da fila e consequentemente seu fluxo é descartado
                 print("false")
@@ -699,5 +731,14 @@ def link_process(anterior = -1):
                 print("fim de bloco.............")
     terminal.insert(INSERT, "\nstate: End of script.")
     terminal.see(tkinter.END)
+    # restore the buttons states (run and stop)
+    bt_run['state'] = NORMAL
+    bt_stop['state'] = DISABLED
+
+# define the closing app function
+window.protocol("WM_DELETE_WINDOW", on_closing)
+
+# does not show the min button
+window.resizable(0,0)
 
 window.mainloop()
