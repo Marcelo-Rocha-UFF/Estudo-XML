@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from ast import And
 import hashlib
 #from logging import _levelToName
 import os
@@ -30,7 +31,7 @@ script_node = {}
 links_node = {}
 fila_links =  [] # fila de links (comandos)
 thread_pop_pause = False
-
+play = False # estado do play do script. esta variavel tem influencia na func. link_process
 
 # funcao de controle da variavel que bloqueia as janelas popups
 def lock_thread_pop():
@@ -119,20 +120,26 @@ def powerOn():
 
 # Ativa a thread que roda o script
 def runScript():
+    global play, fila_links
     # initialize the robot memory
     print("Intializing the robot memory...")
     eva_memory.var_dolar = []
     eva_memory.vars = {}
-    
+    # initializing the memory of simulator
+    fila_links =  []
+    # buttons states
     bt_run['state'] = DISABLED
     bt_stop['state'] = NORMAL
+    play = True # ativa a var do play do script
     busca_links("1000")
     threading.Thread(target=link_process, args=()).start()
 
 # Encerra a thread que roda o script
 def stopScript():
+    global play
     bt_run['state'] = NORMAL
     bt_stop['state'] = DISABLED
+    play = False # desativa a var de play do script. Faz com que o script seja interrompido
 
 # Eva Import Script function
 def importFile():
@@ -250,7 +257,7 @@ def exec_comando(node):
             if root.find("settings").find("lightEffects").attrib["mode"] == "off":
                 lightEffect = "off"
         
-        # caso a seguir, se o sate é off, e pode não ter atributo color definido
+        # caso a seguir, se o state é off, e pode não ter atributo color definido
         if state == "off":
             color = "black"
             if lightEffect == "off":
@@ -697,11 +704,13 @@ def busca_links(att_from):
 
 # executa os comandos que estão na pilha de links
 def link_process(anterior = -1):
+    global play
+    print("play state............", play)
     terminal.insert(INSERT, "\n---------------------------------------------------")
     terminal.insert(INSERT, "\nstate: Starting the script: " + root.attrib["name"])
     terminal.see(tkinter.END)
     global fila_links
-    while len(fila_links) != 0:
+    while (len(fila_links) != 0) and (play == True):
         from_key = fila_links[0].attrib["from"] # chave do comando a executar
         to_key = fila_links[0].attrib["to"] # chave do próximo comando
         comando_from = busca_commando(from_key).tag # Tag do comando a ser executado
