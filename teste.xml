@@ -6,6 +6,14 @@
     <audioEffects mode="on" vol="100%" />
   </settings>
   <script>
+    <wait duration="1000" />
+    <audio source="aaaa" block="true" />
+    <counter var="x" op="=" value="100" />
+    <light state="off" />
+    <led animation="listen" />
+    <talk>Alo</talk>
+    <evaEmotion emotion="happy" />
+    <random  min="1" max="3" />
     <useMacro name="ONEMACRO" />
     <switch var="$">
       <case op="eq" value="1">

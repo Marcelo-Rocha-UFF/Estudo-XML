@@ -17,7 +17,7 @@ tree = ET.parse(sys.argv[1])  # arquivo de codigo xml
 root = tree.getroot() # evaml root node
 script_node = root.find("script")
 macros_node = root.find("macros")
-_error = 0 # 0 indica que não houve falha na etapa 01. 
+_error = 0 # 0 indica que não houve falha na etapa. 
 
 ###############################################################################
 # Processamento (expansao) das macros                                         #

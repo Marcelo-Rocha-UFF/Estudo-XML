@@ -5,20 +5,28 @@
     <audioEffects mode="on" vol="100%" />
   </settings>
   <script>
-    <wait duration="1000" key="1001" />
+    <wait dation="1000" key="1001" />
+    <audio source="aaaa" block="true" key="1002" />
+    <counter var="x" op="=" value="100" key="1003" />
+    <light state="off" key="1004" />
+    <led animation="listen" key="1005" />
+    <talk key="1006">Alo</talk>
+    <evaEmotion emotion="happy" key="1007" />
+    <random min="1" max="3" key="1008" />
+    <wait duration="1000" key="1009" />
     <switch var="$">
-      <case op="eq" value="1" key="1002" var="$">
+      <case op="eq" value="1" key="1010" var="$">
       </case>
-      <case op="eq" value="2" key="1003" var="$">
-        <light state="off" key="1004" />
+      <case op="eq" value="2" key="1011" var="$">
+        <light state="off" key="1012" />
       </case>
-      <case op="eq" value="3" key="1005" var="$">
+      <case op="eq" value="3" key="1013" var="$">
         <stop />
       </case>
-      <case op="eq" value="4" key="1006" var="$">
+      <case op="eq" value="4" key="1014" var="$">
       </case>
-      <default key="1007" var="$" value="" op="exact"> 
+      <default key="1015" var="$" value="" op="exact"> 
       </default>
     </switch>
   </script>
-  <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1001" to="1003" /><link from="1003" to="1004" /><link from="1001" to="1005" /><link from="1001" to="1006" /><link from="1001" to="1007" /></links></evaml>
+  <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1007" /><link from="1007" to="1008" /><link from="1008" to="1009" /><link from="1009" to="1010" /><link from="1009" to="1011" /><link from="1011" to="1012" /><link from="1009" to="1013" /><link from="1009" to="1014" /><link from="1009" to="1015" /></links></evaml>
