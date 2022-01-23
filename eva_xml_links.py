@@ -31,15 +31,16 @@ def cria_link(node_from, node_to):
                     lista_links.append(node_from.attrib["key"] + "," + elem.attrib["key"])
         return
 
-    # no "to" e' uma folha, que nao contem filhos
+    # "node_to" e' uma folha, que nao contem filhos
     if len(node_to) == 0:
         lista_links.append(node_from.attrib["key"] + "," + node_to.attrib["key"])
         
     # trata os nodes com filhos
     elif (node_to.tag == "switch"): # trata o node "switch"
         for switch_elem in node_to:
-            switch_elem.attrib["var"] = node_to.attrib["var"]
-            if switch_elem.tag == "default": # preenche o defailt com os parametros default
+            # todas os cases passam a ter o atrib. "var" igual ao "var" do switch
+            switch_elem.attrib["var"] = node_to.attrib["var"] 
+            if switch_elem.tag == "default": # preenche o default com os parametros default
                 switch_elem.attrib["value"] = ""
                 switch_elem.attrib["op"] = "exact"
             lista_links.append(node_from.attrib["key"] + "," + switch_elem.attrib["key"])
@@ -47,13 +48,15 @@ def cria_link(node_from, node_to):
     elif (node_to.tag == "case"): # trata o node "case"
         lista_links.append(node_from.attrib["key"] + "," + node_to.attrib["key"])
         link_process(node_to, node_to)
-    elif (node_to.tag == "macro"): # trata de node "macro"
-        link_process(node_from, node_to)
+    ### foi retirado pois nesta etapa, não existem mais macros
+    #elif (node_to.tag == "macro"): # trata de node "macro" 
+    #    link_process(node_from, node_to)
 
 def link_process(node_from, node_list):
     qtd = len(node_list)
-    node_to = node_list[0]
-    cria_link(node_from, node_to)
+    if qtd != 0: # a ideia é tratar os casos dos blocos vazios, como o dos <cases>
+        node_to = node_list[0] # blocos vazios não tem o elemento[0]
+        cria_link(node_from, node_to) # se um bloco tem elemento, então tudo ok
     for i in range(0, qtd-1):
         node_from = node_list[i]
         node_to = node_list[i+1]
@@ -75,7 +78,10 @@ def link_process(node_from, node_list):
         cria_link(node_from, node_to)
 
     if (len(pilha) != 0): # esse cara cria os links nos finais dos fluxos dos cases, ou do fluxo principal
-        cria_link(node_to, pilha.pop())
+        if qtd == 0:
+            cria_link(node_from, pilha.pop())
+        else:
+            cria_link(node_to, pilha.pop())
         
 
 def saida_links():
@@ -89,7 +95,7 @@ def saida_links():
         root[len(root) - 1].insert(i, tag_link)
 
 
-# gera os links na lista de links auxiiar
+# gera os links na lista de links auxiliar
 link_process(root.find("settings").find("voice"), script_node)
 
 # gera os links no arquivo xml

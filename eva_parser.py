@@ -35,23 +35,21 @@ for p in sys.argv:
 		compile = True
 	
 if compile:
+	# Now, each step only run if the previous step was OK
 	# step 01 - expanding macros
 	cmd = get_python_interpreter_arguments()[0] + " eva_macro_exp.py " + sys.argv[1]
-	os.system(cmd)
-
-	# step 02 - generating keys
-	cmd = get_python_interpreter_arguments()[0] + " eva_node_keys.py _macros.xml"
-	os.system(cmd)
-
-	# step 03 - to generate xml_exe file
-	cmd = get_python_interpreter_arguments()[0] + " eva_xml_links.py _node_keys.xml"
-	os.system(cmd)
-
-	# step 04 - generate the json file
-	tree = ET.parse("_node_keys.xml")  #
-	root = tree.getroot() # evaml root node
-	cmd = get_python_interpreter_arguments()[0] + " eva_json_gen.py " + root.attrib['name'] + "_EvaML.xml" #_xml_links.xml"
-	os.system(cmd)
+	if (os.system(cmd)) == 0: # step 01 OK
+		# step 02 - generating keys
+		cmd = get_python_interpreter_arguments()[0] + " eva_node_keys.py _macros.xml"
+		if (os.system(cmd)) == 0: # step 02 OK
+			# step 03 - to generate xml_exe file
+			cmd = get_python_interpreter_arguments()[0] + " eva_xml_links.py _node_keys.xml"
+			if (os.system(cmd)) == 0: # step 03 OK
+				# step 04 - generate the json file
+				tree = ET.parse("_node_keys.xml")  #
+				root = tree.getroot() # evaml root node
+				cmd = get_python_interpreter_arguments()[0] + " eva_json_gen.py " + root.attrib['name'] + "_EvaML.xml" #_xml_links.xml"
+				os.system(cmd)
 
 # steps 5 and 6 (optional)
 if save:

@@ -14,13 +14,11 @@
       },
       {
         "key": 1001,
-        "name": "Random",
-        "type": "random",
-        "color": "pink",
+        "name": "Wait",
+        "type": "wait",
+        "color": "lightblue",
         "isGroup": false,
-        "group": "",
-        "min": 1,
-        "max": 2,
+        "time": 1000,
         "__gohashid": 1
       },
       {
@@ -35,30 +33,33 @@
       },
       {
         "key": 1003,
-        "name": "Wait",
-        "type": "wait",
-        "color": "lightblue",
-        "isGroup": false,
-        "time": 1000,
-        "__gohashid": 3
-      },
-      {
-        "key": 1004,
         "name": "Condition",
         "type": "if",
         "color": "white",
         "isGroup": false,
         "text": "$ == 2",
         "opt": 5,
+        "__gohashid": 3
+      },
+      {
+        "key": 1004,
+        "name": "Light",
+        "type": "light",
+        "color": "#ffa500",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#000000",
+        "state": "off",
         "__gohashid": 4
       },
       {
         "key": 1005,
-        "name": "Wait",
-        "type": "wait",
-        "color": "lightblue",
+        "name": "Condition",
+        "type": "if",
+        "color": "white",
         "isGroup": false,
-        "time": 1000,
+        "text": "$ == 3",
+        "opt": 5,
         "__gohashid": 5
       },
       {
@@ -67,27 +68,19 @@
         "type": "if",
         "color": "white",
         "isGroup": false,
-        "text": "$ == 3",
+        "text": "$ == 4",
         "opt": 5,
         "__gohashid": 6
       },
       {
         "key": 1007,
-        "name": "Wait",
-        "type": "wait",
-        "color": "lightblue",
+        "name": "Condition",
+        "type": "if",
+        "color": "white",
         "isGroup": false,
-        "time": 1000,
+        "text": "",
+        "opt": 4,
         "__gohashid": 7
-      },
-      {
-        "key": 1008,
-        "name": "Wait",
-        "type": "wait",
-        "color": "lightblue",
-        "isGroup": false,
-        "time": 500,
-        "__gohashid": 8
       }
     ],
     "link": [
@@ -102,44 +95,29 @@
         "__gohashid": 1
       },
       { 
-        "from": 1002,
+        "from": 1001,
         "to": 1003,
         "__gohashid": 2
       },
       { 
         "from": 1003,
-        "to": 1008,
+        "to": 1004,
         "__gohashid": 3
       },
       { 
         "from": 1001,
-        "to": 1004,
-        "__gohashid": 4
-      },
-      { 
-        "from": 1004,
         "to": 1005,
-        "__gohashid": 5
-      },
-      { 
-        "from": 1005,
-        "to": 1008,
-        "__gohashid": 6
+        "__gohashid": 4
       },
       { 
         "from": 1001,
         "to": 1006,
-        "__gohashid": 7
+        "__gohashid": 5
       },
       { 
-        "from": 1006,
+        "from": 1001,
         "to": 1007,
-        "__gohashid": 8
-      },
-      { 
-        "from": 1007,
-        "to": 1008,
-        "__gohashid": 9
+        "__gohashid": 6
       }
     ]
   }

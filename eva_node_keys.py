@@ -22,7 +22,7 @@ def key_gen(script):
 
 # geracao das chaves identificadoras dos nodes
 # estas chaves sao referenciadas nos links (elos) que conectam cada elemento (comando) do script
-# os elementos switch, stop e goto nao possuem chaves
+# os elementos script, switch, stop e goto nao possuem chaves
 
 # Assume o default UTF-8 (Gera o id fazendo o hashing do nome do script para usar no db Json do Eva)
 hash_object = hashlib.md5(root.attrib["name"].encode())
