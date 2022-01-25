@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<evaml name="script13">
+	<settings>
+		<voice tone="en-US_AllisonV3Voice" />
+		<lightEffects mode="on" />
+		<audioEffects mode="on" volume="100%" />
+	</settings>
+	<script>
+		<useMacro name="GREETINGS"/>
+		<random min="1" max="3" />
+		<counter var="x" op="=" value="2" />
+		<switch var="x">
+			<case op="eq" value="$">
+				<light state="on" color="green" />
+			</case>
+			<default>
+				<light state="on" color="red" />
+			</default>
+		</switch>
+		<evaEmotion emotion="happy" />
+		<goto target="FALA"/>
+	</script>
+	<macros>
+		<macro name="GREETINGS">
+			<light color="green" state="on"/>
+			<talk id="FALA" >Helo I am the robot Eva</talk>
+		</macro>
+	</macros>
+</evaml>
+

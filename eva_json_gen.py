@@ -170,7 +170,7 @@ def light_process(light_command):
     if (light_command.get("state")) == None:
       print("  Error -> There is a <light> command without 'state' attrinute.")
       _error = 1
-    if ((light_command.attrib["state"] == "on") and (light_command.get("color") == None)):
+    elif ((light_command.attrib["state"] == "on") and (light_command.get("color") == None)):
       print("  Error -> There is a <light> command without 'color' attrinute.")
       _error = 1
     if (_error == 1):
@@ -495,6 +495,10 @@ def wait_process(wait_command):
 
 def saida_links():
     node_links = root.find("links")
+    # verifica se há links a processar
+    if len(node_links) == 0:
+      print('  Error -> no execution flow found. Please, check your code.')
+      exit(1)
     output ="""
     ],
     "link": [""" + """

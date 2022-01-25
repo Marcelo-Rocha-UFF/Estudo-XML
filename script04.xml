@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- voz portugues: pt-BR_IsabelaV3Voice -->
+<!-- voz portugues: en-US_AllisonV3Voice" -->
+<evaml name="script04">
+	<settings>
+		<voice tone="pt-BR_IsabelaV3Voice" />
+		<light-effects mode="on" />
+		<audio-effects mode="on" vol="100%" />
+	</settings>
+  <script>
+		<talk>Boa tarde</talk>
+		<talk>Vou tocar alguns efeitos sonoros</talk>
+		<talk>Também vou controlar a lâmpada</talk>
+		<light state="on" color="white" />
+		<audio source="mario-end" block="true" />
+		<light state="on" color="red" />
+		<audio source="mario-fundo" block="true" />
+		<light state="on" color="green" />
+		<audio source="mario-game-fim" block="true" />
+		<light state="on" color="blue" />
+		<talk>Até mais</talk>
+		<light state="off" />
+	</script>
+  <macros>
+  </macros>
+</evaml>

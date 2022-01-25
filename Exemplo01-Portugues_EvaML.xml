@@ -1,0 +1,12 @@
+<evaml id="43da7feb46816ce4a13fdd4bc248afbf" name="Exemplo01-Portugues">
+	<settings>     
+		<voice tone="pt-BR_IsabelaV3Voice" key="1000" />
+		<light-effects mode="on" />
+		<audio-effects mode="on" vol="100%" />
+	</settings>
+  <script>
+		<light state="on" color="ffffff" key="1001" />
+		<evaEmotion emotion="neutral" key="1002" />
+		<talk key="1003">Olá, eu sou o robô Eva</talk>
+	</script>
+  <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /></links></evaml>

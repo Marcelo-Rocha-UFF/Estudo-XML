@@ -6,33 +6,9 @@
     <audioEffects mode="on" vol="100%" />
   </settings>
   <script>
-    <wait duration="1000" />
-    <audio source="aaaa" block="true" />
-    <counter var="x" op="=" value="100" />
-    <light state="off" />
-    <led animation="listen" />
-    <talk>Alo</talk>
-    <evaEmotion emotion="happy" />
-    <random  min="1" max="3" />
-    <useMacro name="ONEMACRO" />
-    <switch var="$">
-      <case op="eq" value="1">
-      </case>
-      <case op="eq" value="2">
-        <light state="off" />
-      </case>
-      <case op="eq" value="3">
-        <stop />
-      </case>
-      <case op="eq" value="4">
-      </case>
-      <default> 
-      </default>
-    </switch>
+    <talk>ola</talk>
+    <stop />
+    <stop />
+    <stop />
   </script>
-  <macros>
-    <macro name='ONEMACRO'>
-      <wait duration="1000" />
-    </macro>
-  </macros>
 </evaml>

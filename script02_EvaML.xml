@@ -1,0 +1,46 @@
+<evaml name="script02" id="8720e5178266b4dc1173d6ad62863b4d">
+	<settings>
+		<voice tone="pt-BR_IsabelaV3Voice" key="1000" />
+		<light-effects mode="on" />
+		<audio-effects mode="on" vol="100%" />
+	</settings>
+  <script>
+		<random id="PONTO1" min="1" max="2" key="1001" />
+		<switch var="$">
+			<case op="exact" value="1" key="1002" var="$">
+				<light state="on" color="red" key="1003" />
+				<wait duration="2000" key="1004" />
+				<random min="3" max="4" key="1005" />
+				<switch var="$">
+					<case op="exact" value="3" key="1006" var="$">
+						<wait duration="2000" key="1007" />
+						<light state="on" color="blue" key="1008" />
+					</case>
+					<case op="exact" value="4" key="1009" var="$">
+						<wait duration="2000" key="1010" />
+						<light state="on" color="pink" key="1011" />
+					</case>
+				</switch>
+			</case>
+			<case op="exact" value="2" key="1012" var="$">
+				<wait duration="2000" key="1013" />
+				<light id="PONTO2" state="on" color="green" key="1014" />
+				<random min="5" max="6" key="1015" />
+				<switch var="$">
+					<case op="exact" value="5" key="1016" var="$">
+						<wait duration="2000" key="1017" />
+						<light state="on" color="blue" key="1018" />
+						<goto target="PONTO1" />
+					</case>
+					<case op="exact" value="6" key="1019" var="$">
+						<wait duration="2000" key="1020" />
+						<light state="on" color="pink" key="1021" />
+						<wait duration="2000" key="1022" />
+						<goto target="PONTO2" />
+					</case>
+				</switch>
+			</case>
+		</switch>
+		<talk key="1023">Fim do script</talk>
+	</script>
+  <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1007" /><link from="1007" to="1008" /><link from="1005" to="1009" /><link from="1009" to="1010" /><link from="1010" to="1011" /><link from="1001" to="1012" /><link from="1012" to="1013" /><link from="1013" to="1014" /><link from="1014" to="1015" /><link from="1015" to="1016" /><link from="1016" to="1017" /><link from="1017" to="1018" /><link from="1018" to="1001" /><link from="1015" to="1019" /><link from="1019" to="1020" /><link from="1020" to="1021" /><link from="1021" to="1022" /><link from="1022" to="1014" /><link from="1008" to="1023" /><link from="1011" to="1023" /></links></evaml>

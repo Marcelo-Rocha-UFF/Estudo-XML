@@ -1,6 +1,6 @@
 {
-  "_id": "4bc9160a149eddcf36a458f53d9cf58a",
-  "nombre": "script01",
+  "_id": "4638122948a4e12518a0e0843bff9209",
+  "nombre": "script05",
   "data": {
     "node": [
       {
@@ -9,11 +9,23 @@
         "type": "voice",
         "color": "#0020ff",
         "isGroup": false,
-        "voice": "en-US_AllisonV3Voice",
+        "voice": "pt-BR_IsabelaV3Voice",
         "__gohashid": 0
       },
       {
         "key": 1001,
+        "name": "Eva_Emotion",
+        "type": "emotion",
+        "color": "lightcoral",
+        "isGroup": false,
+        "group": "",
+        "emotion": "joy",
+        "level": 0,
+        "speed": 0,
+        "__gohashid": 1
+      },
+      {
+        "key": 1002,
         "name": "Light",
         "type": "light",
         "color": "#ffa500",
@@ -21,46 +33,10 @@
         "group": "",
         "lcolor": "#ffffff",
         "state": "on",
-        "__gohashid": 1
-      },
-      {
-        "key": 1002,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
-        "isGroup": false,
-        "text": "Hi, I'm the robot Eva and I'm a socially assistive robot",
         "__gohashid": 2
       },
       {
         "key": 1003,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
-        "isGroup": false,
-        "text": "What is your name?",
-        "__gohashid": 3
-      },
-      {
-        "key": 1004,
-        "name": "Listen",
-        "type": "listen",
-        "color": "#ffff00",
-        "isGroup": false,
-        "opt": "",
-        "__gohashid": 4
-      },
-      {
-        "key": 1005,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
-        "isGroup": false,
-        "text": "Hi $, how are you? Let's start the script",
-        "__gohashid": 5
-      },
-      {
-        "key": 1006,
         "name": "Counter",
         "type": "counter",
         "color": "lightblue",
@@ -68,7 +44,39 @@
         "group": "",
         "count": "x",
         "ops": "assign",
-        "value": 0,
+        "value": 10,
+        "__gohashid": 3
+      },
+      {
+        "key": 1004,
+        "name": "Talk",
+        "type": "speak",
+        "color": "#00ff00",
+        "isGroup": false,
+        "text": "O valor de x é #x",
+        "__gohashid": 4
+      },
+      {
+        "key": 1005,
+        "name": "Eva_Emotion",
+        "type": "emotion",
+        "color": "lightcoral",
+        "isGroup": false,
+        "group": "",
+        "emotion": "anger",
+        "level": 0,
+        "speed": 0,
+        "__gohashid": 5
+      },
+      {
+        "key": 1006,
+        "name": "Light",
+        "type": "light",
+        "color": "#ffa500",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#ff0000",
+        "state": "on",
         "__gohashid": 6
       },
       {
@@ -78,72 +86,54 @@
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "count": "y",
+        "count": "z",
         "ops": "assign",
-        "value": 3,
+        "value": 20,
         "__gohashid": 7
       },
       {
         "key": 1008,
-        "name": "Counter",
-        "type": "counter",
-        "color": "lightblue",
+        "name": "Talk",
+        "type": "speak",
+        "color": "#00ff00",
         "isGroup": false,
-        "group": "",
-        "count": "x",
-        "ops": "sum",
-        "value": 1,
+        "text": "O valor de z é #z",
         "__gohashid": 8
       },
       {
         "key": 1009,
-        "name": "Condition",
-        "type": "if",
-        "color": "white",
+        "name": "Eva_Emotion",
+        "type": "emotion",
+        "color": "lightcoral",
         "isGroup": false,
-        "text": "#x <= 3",
-        "opt": 5,
+        "group": "",
+        "emotion": "sad",
+        "level": 0,
+        "speed": 0,
         "__gohashid": 9
-        },
+      },
       {
         "key": 1010,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
+        "name": "Light",
+        "type": "light",
+        "color": "#ffa500",
         "isGroup": false,
-        "text": "The value of x is #x",
+        "group": "",
+        "lcolor": "#0000ff",
+        "state": "on",
         "__gohashid": 10
       },
       {
         "key": 1011,
-        "name": "Condition",
-        "type": "if",
-        "color": "white",
+        "name": "Talk",
+        "type": "speak",
+        "color": "#00ff00",
         "isGroup": false,
-        "text": "#x > #y",
-        "opt": 5,
+        "text": "Até mais",
         "__gohashid": 11
-        },
+      },
       {
         "key": 1012,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
-        "isGroup": false,
-        "text": "The value of x is #x and its greater than the value of y, that is #y",
-        "__gohashid": 12
-      },
-      {
-        "key": 1013,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
-        "isGroup": false,
-        "text": "Hey $, I will terminate. Bye",
-        "__gohashid": 13
-      },
-      {
-        "key": 1014,
         "name": "Light",
         "type": "light",
         "color": "#ffa500",
@@ -151,7 +141,7 @@
         "group": "",
         "lcolor": "#000000",
         "state": "off",
-        "__gohashid": 14
+        "__gohashid": 12
       }
     ],
     "link": [
@@ -207,28 +197,13 @@
       },
       { 
         "from": 1010,
-        "to": 1008,
-        "__gohashid": 10
-      },
-      { 
-        "from": 1008,
         "to": 1011,
-        "__gohashid": 11
+        "__gohashid": 10
       },
       { 
         "from": 1011,
         "to": 1012,
-        "__gohashid": 12
-      },
-      { 
-        "from": 1012,
-        "to": 1013,
-        "__gohashid": 13
-      },
-      { 
-        "from": 1013,
-        "to": 1014,
-        "__gohashid": 14
+        "__gohashid": 11
       }
     ]
   }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<evaml name="teste" >
+  <settings>
+    <voice tone="en-US_AllisonV3Voice"  />
+    <lightEffects mode="on" />
+    <audioEffects mode="on" vol="100%" />
+  </settings>
+  <script>
+    <light id="BEGIN" state="off" />
+    <switch var="$">
+      <case op="eq" value="1">
+       <wait duration="1000" />
+      </case>
+      <case op="eq" value="2">
+        <wait duration="1000" />
+      </case>
+      <case op="eq" value="3">
+        <wait duration="1000" />
+      </case>
+    </switch>
+    <talk>Alo</talk>
+    <switch var="$">
+      <case op="eq" value="1">
+       <wait duration="1000" />
+        <switch var="$">
+          <case op="eq" value="1">
+          <wait duration="1000" />
+          </case>
+          <case op="eq" value="2">
+            <wait duration="1000" />
+          </case>
+          <case op="eq" value="3">
+            <wait duration="1000" />
+          </case>
+      </switch>
+      </case>
+      <case op="eq" value="2">
+        <wait duration="1000" />
+      </case>
+      <case op="eq" value="3">
+        <wait duration="1000" />
+      </case>
+    </switch>
+    <wait duration="120" />
+    <goto target="BEGIN" />
+  </script>
+</evaml>

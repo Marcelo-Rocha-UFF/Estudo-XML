@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<evaml id="a1001-b3001" name="Therapy01">
+	<settings>
+		<voice tone="en-US_AllisonV3Voice" />
+		<light-effects mode="on" />
+		<audio-effects mode="on" vol="100%" />
+	</settings>
+	<script>
+    <evaEmotion emotion="neutral" />
+    <light state="on" color="white" />
+    <talk>Hi, I am the Eva simulator software</talk>
+    <talk>Turning on the red light</talk>
+    <light color="red" state="on" />
+    <wait duration="1000" />
+    <talk>Turning on the pink light</talk>
+    <light color="pink" state="on" />
+    <wait duration="1000" />
+    <talk>Turning on the blue light</talk>
+    <light color="blue" state="on" />
+    <wait duration="1000" />
+    <talk>Turnning off the light</talk>
+    <light color="#000000" state="off" />
+    <talk>I will express anger</talk>
+    <evaEmotion emotion="angry" />
+    <wait duration="1000" />
+    <evaEmotion emotion="sad" />
+    <talk>I'm so sad</talk>
+    <wait duration="1000" />
+    <evaEmotion emotion="happy" />
+    <talk>I am happy now</talk>
+    <wait duration="1000" />
+    <talk>Bye bye</talk>
+    <evaEmotion emotion="neutral" />
+	</script>
+  <macros>
+  </macros>
+</evaml>
