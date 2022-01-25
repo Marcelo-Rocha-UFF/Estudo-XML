@@ -1,160 +1,21 @@
-<evaml name="game-of-emotions" id="13c3202a5ba96766c2378874d4d550f1">
-	<settings>
-		<voice tone="pt-BR_IsabelaV3Voice" key="1000" />
-		<light-effects mode="on" />
-		<audio-effects mode="on" vol="100%" />
-	</settings>
-	<script>
-		
-		<light state="on" color="white" key="1001" />
-		<evaEmotion emotion="neutral" key="1002" />
-		<talk key="1003">Olá, eu sou o robô Eva!</talk>
-		<audio source="mario-game-intro" block="true" key="1004" />
-		<talk key="1005">Vamos jogar o jogo das emoções?</talk>
-		<evaEmotion emotion="happy" key="1006" />
-		<audio source="mario-start" block="true" key="1007" />
-		<evaEmotion emotion="neutral" key="1008" />
-		<talk key="1009">Qual o seu nome?</talk>
-		<audio source="mario-sound1" block="false" key="1010" />
-		<listen key="1011" />
-		<evaEmotion emotion="happy" key="1012" />
-		<talk key="1013">Que legal!</talk>
-		<talk key="1014">Vamos lá então $</talk>
-		<evaEmotion emotion="neutral" key="1015" />
-		<talk key="1016">Eu vou te mostrar quais são as minhas emoções</talk>
-		<audio source="mario-sound1" block="true" key="1017" />
-
-		<talk key="1018">Eu fico assim quando estou feliz</talk>
-		<evaEmotion emotion="happy" key="1019" />
-		<light state="on" color="green" key="1020" />
-		<led animation="happy" key="1021" />
-		<wait duration="5000" key="1022" />
-
-		<evaEmotion emotion="neutral" key="1023" />
-		<talk key="1024">Eu fico assim quando estou triste</talk>
-		<audio source="mario-sound1" block="false" key="1025" />
-		<evaEmotion emotion="sad" key="1026" />
-		<light state="on" color="blue" key="1027" />
-		<led animation="sad" key="1028" />
-		<wait duration="5000" key="1029" />
-
-		<evaEmotion emotion="neutral" key="1030" />
-		<talk key="1031">Eu fico assim quando estou com raiva</talk>
-		<audio source="mario-sound1" block="false" key="1032" />
-		<evaEmotion emotion="angry" key="1033" />
-		<light state="on" color="red" key="1034" />
-		<led animation="angry" key="1035" />
-		<wait duration="5000" key="1036" />
-
-		<evaEmotion emotion="neutral" key="1037" />
-		<light state="on" color="white" key="1038" />
-		<talk key="1039">Vamos começar o jogo</talk>
-
-		
-		<counter var="tentativa" op="=" value="1" key="1040" />
-		<evaEmotion id="EMOCAO1" emotion="neutral" key="1041" />
-		<light state="on" color="white" key="1042" />
-		<talk key="1043">Como estou me sentindo?</talk>
-		<talk key="1044">Feliz, triste ou com raiva?</talk>
-		<evaEmotion emotion="sad" key="1045" />
-		<light state="on" color="blue" key="1046" />
-		<audio source="mario-sound1" block="true" key="1047" />
-		<listen key="1048" />
-		<switch var="$">
-			<case op="contain" value="triste" key="1049">
-				<audio source="mario-start2" block="true" key="1050" />
-				<talk key="1051">Muito bem! Você acertou!</talk>
-			</case>
-			<default key="1052">
-				<audio source="mario-sound1" block="true" key="1053" />
-				<talk key="1054">Eu estou me sentindo triste</talk>
-				<switch var="tentativa">
-					<case op="eq" value="1" key="1055">
-						<counter var="tentativa" op="+" value="1" key="1056" />
-						<wait duration="2000" key="1057" />
-						<talk key="1058">Vamos tentar mais uma vez</talk>
-						<wait duration="2000" key="1059" />
-						<goto target="EMOCAO1" />
-					</case>
-					<case op="eq" value="2" key="1060">
-						<wait duration="100" key="1061" />
-					</case>
-				</switch>
-			</default>
-		</switch>
-		<evaEmotion emotion="happy" key="1062" />
-		<wait duration="3000" key="1063" />
-
-		
-		<counter var="tentativa" op="=" value="1" key="1064" />
-		<evaEmotion id="EMOCAO2" emotion="neutral" key="1065" />
-		<light state="on" color="white" key="1066" />
-		<talk key="1067">Como estou me sentindo?</talk>
-		<talk key="1068">Feliz, triste ou com raiva?</talk>
-		<evaEmotion emotion="angry" key="1069" />
-		<light state="on" color="red" key="1070" />
-		<audio source="mario-sound1" block="true" key="1071" />
-		<listen key="1072" />
-		<switch var="$">
-			<case op="contain" value="raiva" key="1073">
-				<audio source="mario-start2" block="true" key="1074" />
-				<talk key="1075">Muito bem! Você acertou!</talk>
-			</case>
-			<default key="1076">
-				<audio source="mario-sound1" block="true" key="1077" />
-				<talk key="1078">Eu estou me sentindo com raiva</talk>
-				<switch var="tentativa">
-					<case op="eq" value="1" key="1079">
-						<counter var="tentativa" op="+" value="1" key="1080" />
-						<wait duration="2000" key="1081" />
-						<talk key="1082">Vamos tentar mais uma vez</talk>
-						<wait duration="2000" key="1083" />
-						<goto target="EMOCAO2" />
-					</case>
-					<case op="eq" value="2" key="1084">
-						<wait duration="100" key="1085" />
-					</case>
-				</switch>
-			</default>
-		</switch>
-		<evaEmotion emotion="happy" key="1086" />
-		<wait duration="3000" key="1087" />
-		
-		
-		<counter var="tentativa" op="=" value="1" key="1088" />
-		<evaEmotion id="EMOCAO3" emotion="neutral" key="1089" />
-		<light state="on" color="white" key="1090" />
-		<talk key="1091">Como estou me sentindo?</talk>
-		<talk key="1092">Feliz, triste ou com raiva?</talk>
-		<evaEmotion emotion="happy" key="1093" />
-		<light state="on" color="green" key="1094" />
-		<audio source="mario-sound1" block="true" key="1095" />
-		<listen key="1096" />
-		<switch var="$">
-			<case op="contain" value="feliz" key="1097">
-				<audio source="mario-start2" block="true" key="1098" />
-				<talk key="1099">Muito bem! Você acertou!</talk>
-			</case>
-			<default key="1100">
-				<audio source="mario-sound1" block="true" key="1101" />
-				<talk key="1102">Eu estou me sentindo feliz</talk>
-				<switch var="tentativa">
-					<case op="eq" value="1" key="1103">
-						<counter var="tentativa" op="+" value="1" key="1104" />
-						<wait duration="2000" key="1105" />
-						<talk key="1106">Vamos tentar mais uma vez</talk>
-						<wait duration="2000" key="1107" />
-						<goto target="EMOCAO2" />
-					</case>
-					<case op="eq" value="2" key="1108">
-						<wait duration="100" key="1109" />
-					</case>
-				</switch>
-			</default>
-		</switch>
-		<evaEmotion emotion="happy" key="1110" />
-		<talk key="1111">Foi muito bom jogar com você $1</talk>
-		<audio source="mario-start3" block="true" key="1112" />
-		<light state="off" key="1113" />
-	</script>
-	</evaml>
+<evaml name="teste" id="698dc19d489c4e4db73e28a713eab07b">
+  <settings>
+    <voice tone="en-US_AllisonV3Voice" key="1000" />
+    <lightEffects mode="on" />
+    <audioEffects mode="on" vol="100%" />
+  </settings>
+  <script>
+    <random id="BEGIN" min="1" max="5" key="1001" />
+    <switch var="$">
+      <case op="eq" value="1" key="1002">
+      <talk key="1003">The value is 2</talk>
+      </case>
+      <case op="eq" value="2" key="1004">
+        <talk key="1005">The value is 2</talk>
+      </case>
+      <default key="1006">
+      <talk key="1007">The value is 2</talk>
+      </default>
+    </switch>
+  </script>
+</evaml>

@@ -50,7 +50,7 @@ def cria_link(node_from, node_to):
             exit(1) # termina com erro
         return
 
-    # "node_to" e' uma folha, que nao contem filhos. ex.: <wait>, <light> e etc
+    # "node_to" e' uma folha, que nao contem filhos. ex.: <wait>, <light>, <case> vazio e etc
     if len(node_to) == 0:
         lista_links.append(node_from.attrib["key"] + "," + node_to.attrib["key"])
         
@@ -81,7 +81,7 @@ def cria_link(node_from, node_to):
                 cria_link(case_elem, case_elem[0]) # conecta o <case> com o seu primeiro elemento filho
                 link_process(case_elem) # processa a lista de elem. do <case>
     # processa os node_to do tipo <case>            
-    elif (node_to.tag == "case"):
+    elif (node_to.tag == "case") or (node_to.tag == "default"):
         lista_links.append(node_from.attrib["key"] + "," + node_to.attrib["key"])
 
 

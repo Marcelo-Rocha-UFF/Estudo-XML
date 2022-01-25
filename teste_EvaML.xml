@@ -5,7 +5,17 @@
     <audioEffects mode="on" vol="100%" />
   </settings>
   <script>
-    <talk key="1001">ola</talk>
-    <stop />
-    </script>
-<links><link from="1000" to="1001" /></links></evaml>
+    <random id="BEGIN" min="1" max="5" key="1001" />
+    <switch var="$">
+      <case op="eq" value="1" key="1002" var="$">
+      <talk key="1003">The value is 2</talk>
+      </case>
+      <case op="eq" value="2" key="1004" var="$">
+        <talk key="1005">The value is 2</talk>
+      </case>
+      <default key="1006" var="$" value="" op="exact">
+      <talk key="1007">The value is 2</talk>
+      </default>
+    </switch>
+  </script>
+<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1001" to="1004" /><link from="1004" to="1005" /><link from="1001" to="1006" /><link from="1006" to="1007" /></links></evaml>
