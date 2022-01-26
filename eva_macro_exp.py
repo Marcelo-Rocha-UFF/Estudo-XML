@@ -13,7 +13,28 @@ import copy # lib para a geracao de copias de objetos
 import sys
 import xml.etree.ElementTree as ET
 
-tree = ET.parse(sys.argv[1])  # arquivo de codigo xml
+try:
+    # em caso de erro no parser da xml.etree
+    tree = ET.parse(sys.argv[1])  # arquivo de codigo xml
+except Exception as e:
+    print("Error ->There is problem with your script. He doesn't seem to be well-formed.\n\tNote the following instructions and review your code.")
+    print("""\nAt its base level well-formed documents require that:\n
+\t* Content be defined.
+\t* Content be delimited with a beginning and end tag
+\t* Content be properly nested (parents within roots, children within parents))\n""")
+    print("""To be a well-formed document, rules must be established about the declaration and treatment of entities.
+Tags are case sensitive, with attributes delimited with quotation marks. Empty elements have rules established.
+Overlapping tags invalidate a document. Ideally, a well-formed document conforms to the design goals of XML.
+Other key syntax rules provided in the specification include:\n
+\t* It contains only properly encoded legal Unicode characters.
+\t* None of the special syntax characters such as < and & appear except when performing their markup-delineation roles.
+\t* The begin, end, and empty-element tags that delimit the elements are correctly nested, with none missing and none overlapping.
+\t* The element tags are case-sensitive; the beginning and end tags must match exactly.
+\t* Tag names cannot contain any of the characters !"#$%&'()*+,/;<=>?@[\]^`{|}~, nor a space character, and cannot start with -, ., or a numeric digit.
+\t* There is a single "root" element that contains all the other elements.\n""")
+    exit(1)
+
+
 root = tree.getroot() # evaml root node
 script_node = root.find("script")
 macros_node = root.find("macros")
@@ -95,5 +116,6 @@ if macros_node != None:
 
 # gera o arquivo com as macros expandidas (caso existam) para a proxima etapa
 tree.write("_macros.xml", "UTF-8")
+
 
 exit(_error) # termina a execução indicando se houve erro (1) ou não (0)

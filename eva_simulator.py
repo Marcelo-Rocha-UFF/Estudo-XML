@@ -125,6 +125,7 @@ def runScript():
     print("Intializing the robot memory...")
     eva_memory.var_dolar = []
     eva_memory.vars = {}
+    eva_memory.reg_case = 0
     # initializing the memory of simulator
     fila_links =  []
     # buttons states

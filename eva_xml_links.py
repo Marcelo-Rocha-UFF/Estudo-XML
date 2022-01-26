@@ -21,6 +21,13 @@ def cria_link(node_from, node_to):
     # a conexão de um switch com outro elemento deve fazer com que o ultimo elemento de cada <case> seu (do switch) se conecte ao node_to
     # a concexão não ocorrerá caso o ultimo elemento de um <case> seja o <stop> ou seja um <goto>
     if node_from.tag == "switch":
+        # Eu pensei que esse caso não funcionasse, mas ele funcionou tanto no robô quanto no EvaSIM
+        # # CASO ESPECIAL: <switch> conectando a outro <switch>
+        # # ISSO NÃO PODE OCORRER, pois os cases de um <switch> são conectados (tem como origem) a UM elemento.
+        # # e um <switch> tem como saida mais de um elemento.
+        # if node_to.tag == "switch":
+        #     print('  Error -> Due to robot VPL limitations, using two consecutive <switch> commands is not allowed.')
+        #     exit(1)
         # vamos percorrer os elementos case e default do switch
         for case_elem in node_from:
             qtd = len(case_elem)
@@ -137,5 +144,6 @@ script_node.remove(root.find("script").find("voice"))
 
 # arquivo de saida
 tree.write(root.attrib['name'] + "_EvaML.xml", "UTF-8") # versao para o EvaSIM
+
 
 #tree.write("_xml_links.xml", "UTF-8") # versao para a etapa 4 do parser

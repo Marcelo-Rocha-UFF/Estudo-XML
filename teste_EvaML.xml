@@ -5,16 +5,16 @@
     <audioEffects mode="on" vol="100%" />
   </settings>
   <script>
-    <random id="BEGIN" min="1" max="5" key="1001" />
+    <random id="BEGIN" min="1" max="9" key="1001" />
     <switch var="$">
       <case op="eq" value="1" key="1002" var="$">
-      <talk key="1003">The value is 2</talk>
+      <talk key="1003">The value is 1</talk>
       </case>
       <case op="eq" value="2" key="1004" var="$">
         <talk key="1005">The value is 2</talk>
       </case>
       <default key="1006" var="$" value="" op="exact">
-      <talk key="1007">The value is 2</talk>
+        <talk key="1007">The value was $</talk>
       </default>
     </switch>
   </script>
