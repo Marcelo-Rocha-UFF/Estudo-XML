@@ -6,9 +6,9 @@
   </settings>
   <script>
     <switch var="$">
-      <case op="eq" value="1" key="1001">
+      <case op="eq" value="1" key="1001" var="$">
       <talk key="1002">The value is 1</talk>
       </case>
     </switch>
   </script>
-</evaml>
+<links><link from="1000" to="1001" /><link from="1001" to="1002" /></links></evaml>

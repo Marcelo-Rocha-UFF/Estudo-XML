@@ -70,6 +70,7 @@ canvas.pack()
 # Terminal text configuration
 terminal = Text ( window, fg = "cyan", bg = "black", height = "32", width = "75")
 terminal.configure(font = ("DejaVu Sans Mono", 9))
+terminal.tag_configure("error", foreground="red")
 # Defining the image files
 eva_image = PhotoImage(file = "images/eva.png") 
 bulb_image = PhotoImage(file = "images/bulb.png")
@@ -440,6 +441,11 @@ def exec_comando(node):
         # trata os tipos de comparacao e operadores
         # caso 1. Var=$.
         if node.attrib['var'] == "$":
+            # verifica se var_dolar tem algum valor
+            if (len(eva_memory.var_dolar)) == 0:
+                terminal.insert(INSERT, "\nError -> The variable $ has no value. Please, check your code.", "error")
+                terminal.see(tkinter.END)
+                exit(1)
             # case 1.1 (tipo de op="exact")
             if node.attrib['op'] == "exact":
                 if "#" in valor: # verifica se valor é uma variável
