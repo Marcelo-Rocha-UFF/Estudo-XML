@@ -722,7 +722,7 @@ def link_process(anterior = -1):
             exec_comando(busca_commando(from_key))
             anterior = from_key
         
-        if comando_from == "case": # se o comando executado foi um case
+        if (comando_from == "case") or (comando_from == "default"): # se o comando executado foi um case
             if eva_memory.reg_case == 1: # verifica a flag pra saber se o case foi verdadeiro
                 fila_links = [] # esvazia a fila, pois o fluxo seguira deste no case em diante
                 print("case command")

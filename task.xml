@@ -17,7 +17,7 @@
     <evaEmotion emotion="neutral" />
     <wait duration="2000" />
     <!-- tarefa (parte 02) ************************************************************************* -->
-    <talk>What is you name?</talk>
+    <talk>What is your name?</talk>
     <listen />
     <talk>Hello $, I'm going to present my expressions</talk>
     <evaEmotion emotion="happy"/>
