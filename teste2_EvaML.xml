@@ -5,10 +5,54 @@
     <audioEffects mode="on" vol="100%" />
   </settings>
   <script>
-    <switch var="$">
-      <case op="eq" value="1" key="1001" var="$">
-      <talk key="1002">The value is 1</talk>
+    <counter var="i" op="=" value="1" key="1001" />
+    <switch id="LOOP" var="i" key="1002">
+      <case op="eq" value="1" key="1003" var="i">
+        <light state="on" color="red" key="1004" />
+        <counter var="i" op="+" value="1" key="1005" />
       </case>
+      <case op="eq" value="2" key="1006" var="i">
+        <light state="on" color="blue" key="1007" />
+        <counter var="i" op="+" value="1" key="1008" />
+      </case>
+      <case op="eq" value="3" key="1009" var="i">
+        <light state="on" color="green" key="1010" />
+        <counter var="i" op="+" value="1" key="1011" />
+      </case>
+      <default key="1012" var="i" value="" op="exact">
+        <light state="on" color="pink" key="1013" />
+        <stop />
+      </default>
     </switch>
+    <wait duration="1000" key="1014" />
+    <goto target="LOOP" />
   </script>
-<links><link from="1000" to="1001" /><link from="1001" to="1002" /></links></evaml>
+  <links>
+    <link from="1000" to="1001" />
+    <link from="1001" to="1003" />
+    <link from="1003" to="1004" />
+    <link from="1004" to="1005" />
+    <link from="1001" to="1006" />
+    <link from="1006" to="1007" />
+    <link from="1007" to="1008" />
+    <link from="1001" to="1009" />
+    <link from="1009" to="1010" />
+    <link from="1010" to="1011" />
+    <link from="1001" to="1012" />
+    <link from="1012" to="1013" />
+    <link from="1005" to="1014" />
+    <link from="1008" to="1014" />
+    <link from="1011" to="1014" />
+    <link from="1014" to="1003" />
+    <link from="1003" to="1004" />
+    <link from="1004" to="1005" />
+    <link from="1014" to="1006" />
+    <link from="1006" to="1007" />
+    <link from="1007" to="1008" />
+    <link from="1014" to="1009" />
+    <link from="1009" to="1010" />
+    <link from="1010" to="1011" />
+    <link from="1014" to="1012" />
+    <link from="1012" to="1013" />
+  </links>
+</evaml>

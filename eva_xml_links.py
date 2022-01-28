@@ -49,7 +49,11 @@ def cria_link(node_from, node_to):
         for elem in script_node.iter(): # procura por target na interação
             if elem.get("id") != None:
                 if elem.attrib["id"] == node_to.attrib["target"]:
-                    lista_links.append(node_from.attrib["key"] + "," + elem.attrib["key"])
+                    # cria um link entre o no que queria se conectar ao goto (node_from) e o no para o qual o goto aponta
+                    # isso trás mais flexibilidade à conexão de nós que se conectam a elementos goto
+                    # com isso, um switch passou a poder ter o atributo id
+                    cria_link(node_from, elem)
+                    # lista_links.append(node_from.attrib["key"] + "," + elem.attrib["key"])
                     target_found = True
         if not (target_found):
             # target id not found

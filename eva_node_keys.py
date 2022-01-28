@@ -12,8 +12,9 @@ def key_gen(script):
     key = 1000 # valor da primeira chave.
     root.find("settings").find("voice").attrib["key"] = str(key)
     key += 1
-    #conjunto de nodes que nao recebem chaves
-    excluded_nodes = set(['script', 'switch', 'stop', 'goto'])
+    # conjunto de nodes que nao recebem chaves.
+    # A partir do dia 28-01-22 um switch passou a receber uma chave
+    excluded_nodes = set(['script', 'stop', 'goto'])
     for node in script.iter():
         if not(node.tag in excluded_nodes):
             node.attrib["key"] = str(key)

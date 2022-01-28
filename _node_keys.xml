@@ -5,10 +5,26 @@
     <audioEffects mode="on" vol="100%" />
   </settings>
   <script>
-    <switch var="$">
-      <case op="eq" value="1" key="1001">
-      <talk key="1002">The value is 1</talk>
+    <counter var="i" op="=" value="1" key="1001" />
+    <switch id="LOOP" var="i" key="1002">
+      <case op="eq" value="1" key="1003">
+        <light state="on" color="red" key="1004" />
+        <counter var="i" op="+" value="1" key="1005" />
       </case>
+      <case op="eq" value="2" key="1006">
+        <light state="on" color="blue" key="1007" />
+        <counter var="i" op="+" value="1" key="1008" />
+      </case>
+      <case op="eq" value="3" key="1009">
+        <light state="on" color="green" key="1010" />
+        <counter var="i" op="+" value="1" key="1011" />
+      </case>
+      <default key="1012">
+        <light state="on" color="pink" key="1013" />
+        <stop />
+      </default>
     </switch>
+    <wait duration="1000" key="1014" />
+    <goto target="LOOP" />
   </script>
 </evaml>
