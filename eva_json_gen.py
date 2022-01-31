@@ -524,7 +524,7 @@ def saida_links():
     return output
 
 
-print("step 04 - Mapping XML nodes and links to a JSON file...")
+print("step 04 - Mapping XML nodes and links to a JSON file... (OK)")
 
 # gerando o cabeçalho do Json
 # onde são inseridos o id e o nome da interação baseados nos dados xml

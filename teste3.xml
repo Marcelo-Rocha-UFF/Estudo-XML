@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<evaml name="teste3" >
+  <settings>
+    <voice tone="en-US_AllisonV3Voice"  />
+    <lightEffects mode="on" />
+    <audioEffects mode="on" vol="100%" />
+  </settings>
+  <script>
+  <random min="1" max="3"/>
+  <switch id="LOOP" var="$">
+    <case op="eq" value="1">
+      <light state="on" color="red"/>
+      <stop/>
+    </case>
+    <case op="eq" value="2">
+      <talk>The value was 2</talk>
+      <wait duration="1000"/>
+    </case>
+    <default>
+      <light state="on" color="blue"/>
+      <stop/>
+    </default>
+  </switch>
+  <goto target="LOOP"/>
+  <light state="on" color="red"/>
+  </script>
+</evaml>

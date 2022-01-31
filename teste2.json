@@ -25,7 +25,7 @@
         "__gohashid": 1
       },
       {
-        "key": 1003,
+        "key": 1002,
         "name": "Condition",
         "type": "if",
         "color": "white",
@@ -35,7 +35,7 @@
         "__gohashid": 2
         },
       {
-        "key": 1004,
+        "key": 1003,
         "name": "Light",
         "type": "light",
         "color": "#ffa500",
@@ -46,7 +46,7 @@
         "__gohashid": 3
       },
       {
-        "key": 1005,
+        "key": 1004,
         "name": "Counter",
         "type": "counter",
         "color": "lightblue",
@@ -58,7 +58,7 @@
         "__gohashid": 4
       },
       {
-        "key": 1006,
+        "key": 1005,
         "name": "Condition",
         "type": "if",
         "color": "white",
@@ -68,7 +68,7 @@
         "__gohashid": 5
         },
       {
-        "key": 1007,
+        "key": 1006,
         "name": "Light",
         "type": "light",
         "color": "#ffa500",
@@ -79,7 +79,7 @@
         "__gohashid": 6
       },
       {
-        "key": 1008,
+        "key": 1007,
         "name": "Counter",
         "type": "counter",
         "color": "lightblue",
@@ -91,7 +91,7 @@
         "__gohashid": 7
       },
       {
-        "key": 1009,
+        "key": 1008,
         "name": "Condition",
         "type": "if",
         "color": "white",
@@ -101,7 +101,7 @@
         "__gohashid": 8
         },
       {
-        "key": 1010,
+        "key": 1009,
         "name": "Light",
         "type": "light",
         "color": "#ffa500",
@@ -112,7 +112,7 @@
         "__gohashid": 9
       },
       {
-        "key": 1011,
+        "key": 1010,
         "name": "Counter",
         "type": "counter",
         "color": "lightblue",
@@ -124,7 +124,7 @@
         "__gohashid": 10
       },
       {
-        "key": 1012,
+        "key": 1011,
         "name": "Condition",
         "type": "if",
         "color": "white",
@@ -134,7 +134,7 @@
         "__gohashid": 11
       },
       {
-        "key": 1013,
+        "key": 1012,
         "name": "Light",
         "type": "light",
         "color": "#ffa500",
@@ -145,7 +145,7 @@
         "__gohashid": 12
       },
       {
-        "key": 1014,
+        "key": 1013,
         "name": "Wait",
         "type": "wait",
         "color": "lightblue",
@@ -162,128 +162,93 @@
       },
       { 
         "from": 1001,
-        "to": 1003,
+        "to": 1002,
         "__gohashid": 1
+      },
+      { 
+        "from": 1002,
+        "to": 1003,
+        "__gohashid": 2
       },
       { 
         "from": 1003,
         "to": 1004,
-        "__gohashid": 2
-      },
-      { 
-        "from": 1004,
-        "to": 1005,
         "__gohashid": 3
       },
       { 
         "from": 1001,
-        "to": 1006,
+        "to": 1005,
         "__gohashid": 4
+      },
+      { 
+        "from": 1005,
+        "to": 1006,
+        "__gohashid": 5
       },
       { 
         "from": 1006,
         "to": 1007,
-        "__gohashid": 5
-      },
-      { 
-        "from": 1007,
-        "to": 1008,
         "__gohashid": 6
       },
       { 
         "from": 1001,
-        "to": 1009,
+        "to": 1008,
         "__gohashid": 7
+      },
+      { 
+        "from": 1008,
+        "to": 1009,
+        "__gohashid": 8
       },
       { 
         "from": 1009,
         "to": 1010,
-        "__gohashid": 8
-      },
-      { 
-        "from": 1010,
-        "to": 1011,
         "__gohashid": 9
       },
       { 
         "from": 1001,
-        "to": 1012,
+        "to": 1011,
         "__gohashid": 10
       },
       { 
-        "from": 1012,
-        "to": 1013,
+        "from": 1011,
+        "to": 1012,
         "__gohashid": 11
       },
       { 
-        "from": 1005,
-        "to": 1014,
+        "from": 1004,
+        "to": 1013,
         "__gohashid": 12
       },
       { 
-        "from": 1008,
-        "to": 1014,
+        "from": 1007,
+        "to": 1013,
         "__gohashid": 13
       },
       { 
-        "from": 1011,
-        "to": 1014,
+        "from": 1010,
+        "to": 1013,
         "__gohashid": 14
       },
       { 
-        "from": 1014,
-        "to": 1003,
+        "from": 1013,
+        "to": 1002,
         "__gohashid": 15
       },
       { 
-        "from": 1003,
-        "to": 1004,
+        "from": 1013,
+        "to": 1005,
         "__gohashid": 16
       },
       { 
-        "from": 1004,
-        "to": 1005,
+        "from": 1013,
+        "to": 1008,
         "__gohashid": 17
       },
       { 
-        "from": 1014,
-        "to": 1006,
-        "__gohashid": 18
-      },
-      { 
-        "from": 1006,
-        "to": 1007,
-        "__gohashid": 19
-      },
-      { 
-        "from": 1007,
-        "to": 1008,
-        "__gohashid": 20
-      },
-      { 
-        "from": 1014,
-        "to": 1009,
-        "__gohashid": 21
-      },
-      { 
-        "from": 1009,
-        "to": 1010,
-        "__gohashid": 22
-      },
-      { 
-        "from": 1010,
+        "from": 1013,
         "to": 1011,
-        "__gohashid": 23
-      },
-      { 
-        "from": 1014,
-        "to": 1012,
-        "__gohashid": 24
-      },
-      { 
-        "from": 1012,
-        "to": 1013,
-        "__gohashid": 25
+        "__gohashid": 18
       }
     ]
   }

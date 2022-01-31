@@ -85,20 +85,9 @@ def macro_expander(script_node, macros_node):
             
             macro_expander(script_node, macros_node)
 
-        #macro_expander(macros_node)
-                    # mac_aux = copy.deepcopy(macros_node[m]) # duplica o obj.
-                    # if script_node[i].get("id") != None: # se tem id, copia para primeiro elemento da macro
-                    #     id_aux = script_node[i].attrib["id"]
-                    #     script_node.remove(script_node[i])
-                    #     script_node.insert(i, mac_aux)
-                    #     script_node[i][0].attrib["id"] = id_aux
-                    # else:
-                    #     script_node.remove(script_node[i]) # expande sem inserir o id
-                    #     script_node.insert(i, mac_aux)
-
 
 # expande as macros
-print("Step 01 - Processing Macros...")
+print("Step 01 - Processing Macros... (OK)")
 
 # testa se a seção macro existe
 #if macros_node == None:

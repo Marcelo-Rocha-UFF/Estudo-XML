@@ -13,11 +13,14 @@ def key_gen(script):
     root.find("settings").find("voice").attrib["key"] = str(key)
     key += 1
     # conjunto de nodes que nao recebem chaves.
-    # A partir do dia 28-01-22 um switch passou a receber uma chave
-    excluded_nodes = set(['script', 'stop', 'goto'])
+    # ???A partir do dia 28-01-22 um switch passou a receber uma chave????
+    excluded_nodes = set(['switch', 'script', 'stop', 'goto'])
     for node in script.iter():
         if not(node.tag in excluded_nodes):
             node.attrib["key"] = str(key)
+            if (node.tag == "case") or (node.tag == "default"): # add o atributo child_proc aos comandos case/default
+                # inicializa com o valor false. Esse atributo indica se os filhos do case/default (caso existam) foram processados
+                node.attrib["child_proc"] = "false" # esse atributo será usado na etapa de ger. dos links
             key += 1
 
 
@@ -29,7 +32,7 @@ def key_gen(script):
 hash_object = hashlib.md5(root.attrib["name"].encode())
 root.attrib["id"] = hash_object.hexdigest()
 
-print("Step 02 - Generating Elements keys...")
+print("Step 02 - Generating Elements keys... (OK)")
 key_gen(script_node)
 tree.write("_node_keys.xml", "UTF-8")
 

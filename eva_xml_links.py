@@ -18,22 +18,19 @@ def cria_link(node_from, node_to):
     if (node_to.tag == "stop"): # stop nao pode ser node_to
         return
 
+    # node goto como node_from
+    if (node_from.tag == "goto"): # goto nao pode ser node_from
+        return
+
+
     # a conexão de um switch com outro elemento deve fazer com que o ultimo elemento de cada <case> seu (do switch) se conecte ao node_to
     # a concexão não ocorrerá caso o ultimo elemento de um <case> seja o <stop> ou seja um <goto>
     if node_from.tag == "switch":
         # Eu pensei que esse caso não funcionasse, mas ele funcionou tanto no robô quanto no EvaSIM
-        # # CASO ESPECIAL: <switch> conectando a outro <switch>
-        # # ISSO NÃO PODE OCORRER, pois os cases de um <switch> são conectados (tem como origem) a UM elemento.
-        # # e um <switch> tem como saida mais de um elemento.
-        # if node_to.tag == "switch":
-        #     print('  Error -> Due to robot VPL limitations, using two consecutive <switch> commands is not allowed.')
-        #     exit(1)
-        # vamos percorrer os elementos case e default do switch
         for case_elem in node_from:
             qtd = len(case_elem)
             # só precisamos do ultimo elemento de cada bloco case/default
             if (qtd == 0): # case vazio, conecta o <case> ao node_to
-                #lista_links.append(case_elem.attrib["key"] + "," + node_to.attrib["key"])
                 cria_link(case_elem, node_to)
             else:
                 # caso do <stop> e do <goto>. Nesses casos ocorre um bypass
@@ -85,15 +82,20 @@ def cria_link(node_from, node_to):
             #lista_links.append(node_from.attrib["key"] + "," + case_elem.attrib["key"])
             cria_link(node_from, case_elem)
             
-            if (len(case_elem) == 0): # case o <case> seja vazio
-                # nao conecta o <case>
-                pass
-            else: # caso o case não seja vazio, gera o link entre o <case> e o primeiro elemento e depois processa o conteudo do <case>
-                cria_link(case_elem, case_elem[0]) # conecta o <case> com o seu primeiro elemento filho
-                link_process(case_elem) # processa a lista de elem. do <case>
     # processa os node_to do tipo <case>            
     elif (node_to.tag == "case") or (node_to.tag == "default"):
         lista_links.append(node_from.attrib["key"] + "," + node_to.attrib["key"])
+        # caso o case não seja vazio, gera o link entre o <case> e o primeiro elemento e depois processa o conteudo do <case>
+        if (len(node_to) == 0): # case o <case> seja vazio
+            # nao conecta o <case>
+            pass
+        else: # verifica se o elemento node_from está antes do case, para evitar que os elementos dos cases gerem links que já foram gerados
+            # caso o node_from esteja antes (key menor) blz! Cases esteja depois, apenas é gerado o link entre node_from e os cases,
+            # sem o processamento dos elementos internos ao case, que já foram processados anteriormente
+            if (node_to.attrib["child_proc"] == "false"): # verifica se o case/defalut já teve eus elementos processados
+                node_to.attrib["child_proc"] = "true" # marca o case/default como já processado
+                cria_link(node_to, node_to[0]) # conecta o <case> com o seu primeiro elemento filho
+                link_process(node_to) # processa a lista de elem. do <case>
 
 
 def link_process(node_list):
@@ -107,13 +109,18 @@ def link_process(node_list):
         # emite um aviso caso haja elemento(s) após um <goto>
         # se esse elemento não for referenciado em outra parte do script, ele poderá ficar desconectado do fluxo.
         if node_from.tag == "goto":
-            print("  Warning - there are elements after the <goto>. These elements may not be reached." + node_list[i+1].tag + ">")
+            print("  Warning - there are elements after the <goto>. These elements may not be reached.")
 
         # case especifico da tag <stop> que deve interromper a conexao dos do fluxo sendo processado
         # todos os elem. após um <stop> são removidos. O parser emite um aviso de remoção e os exibe no terminal.
         if (node_from.tag == "stop"):
             for s in range(i, qtd-1):
-                print("  Warning - removing unused commands ... <" + node_list[i+1].tag + ">")
+                if (node_list[i+1].get("id")) == None:
+                    print("  Warning - removing unused commands ... <" + node_list[i+1].tag + ">")
+                else:
+                    # emite um aviso especial caso um elemento com id seja excluído.
+                    print('  Warning - removing unused commands ... <' + node_list[i+1].tag + '>. ALERT! This element has an attribue "id" and it is "' + node_list[i+1].attrib["id"] + '"')
+                    exit(1)
                 node_list.remove(node_list[i+1])
             break
         else:
@@ -140,7 +147,31 @@ link_process(script_node)
 # gera os links no arquivo xml
 saida_links()
 
-print("step 03 - Creating the Elements <link>...")
+# verifica se há elementos não referenciados nos links (exceto para: 'voice', 'script', 'switch', 'stop', 'goto')
+links_node = root.find("links")
+script_node = root.find("script")
+excluded_nodes = set(['voice', 'script', 'switch', 'stop', 'goto'])
+error = False
+for elem in script_node.iter():
+    encontrado = False
+    for link in links_node.iter():
+        if (elem.get("key") != None):
+            if (elem.get("key") == link.get("to")):
+                encontrado = True
+                break
+    if not (encontrado) and not (elem.tag in excluded_nodes):
+        error = True
+        error_msg = "  Error -> the element <" + elem.tag + "> is disconnected from the execution flow. Attributes: "
+        for info in elem.attrib.items():
+            error_msg += '('
+            error_msg += ' = '.join(info)
+            error_msg += '), '
+        print(error_msg)
+
+if error:
+    exit(1)
+
+print("step 03 - Creating the Elements <link>... (OK)")
 
 # O elemento voice foi inserido ao script_node (list) para processamento, somente. 
 # Agora será removido da seção script
