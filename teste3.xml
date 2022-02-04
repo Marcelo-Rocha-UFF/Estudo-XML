@@ -1,27 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<evaml name="teste3" >
+<evaml
+  name="teste3"
+  xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <settings>
-    <voice tone="en-US_AllisonV3Voice"  />
+    <voice tone="pt-BR_IsabelaV3Voice" />
     <lightEffects mode="on" />
-    <audioEffects mode="on" vol="100%" />
+    <audioEffects mode="on"  />
   </settings>
   <script>
-  <random min="1" max="3"/>
-  <switch id="LOOP" var="$">
-    <case op="eq" value="1">
-      <light state="on" color="red"/>
-      <stop/>
-    </case>
-    <case op="eq" value="2">
-      <talk>The value was 2</talk>
-      <wait duration="1000"/>
-    </case>
-    <default>
-      <light state="on" color="blue"/>
-      <stop/>
-    </default>
-  </switch>
-  <goto target="LOOP"/>
-  <light state="on" color="red"/>
+    <led id="AQUI" animation="happy" />
+    <goto target="AQUI" />
   </script>
 </evaml>

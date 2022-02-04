@@ -283,7 +283,7 @@
 				<xs:element ref="settings"/>
 				<xs:element ref="script"/>
 				<xs:element ref="macros" minOccurs="0" maxOccurs="1"/>
-      </xs:sequence>
+			</xs:sequence>
 			<xs:attribute name="name" type="xs:string" use="required"/>
 		</xs:complexType>
 	</xs:element>

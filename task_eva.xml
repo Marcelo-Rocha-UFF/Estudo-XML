@@ -24,10 +24,13 @@
     <talk>Hello Luiza, I'm going to present my expressions</talk>
     <evaEmotion emotion="happy"/>
     <talk>I can express happiness</talk>
+    <wait duration="1500"/>
     <evaEmotion emotion="sad"/>
     <talk>I can express sadness</talk> 
+    <wait duration="1500"/>
     <evaEmotion emotion="angry"/>
     <talk>I can express anger</talk>
+    <wait duration="1500"/>
     <evaEmotion emotion="neutral"/>
     <talk>Hey Luiza, let's play the emotions game?</talk>
     <!-- <listen /> -->
@@ -35,6 +38,7 @@
     <wait duration="3000" />
     <evaEmotion emotion="happy" />
     <talk>Excelent! Let's go now</talk>
+    <wait duration="1500"/>
     <!-- tarefa (parte 03) ************************************************************************* -->
     <talk>I will show some emotions and you try to imitate me</talk>
     <counter var="score" op="=" value="0" />

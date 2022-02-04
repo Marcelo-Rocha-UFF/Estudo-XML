@@ -54,7 +54,7 @@ def cria_link(node_from, node_to):
                     target_found = True
         if not (target_found):
             # target id not found
-            print('  Error -> The "target" attribute from <goto> was not found:', node_to.attrib["target"])
+            print('  Error -> The <goto> "target" attribute was not found:', node_to.attrib["target"])
             exit(1) # termina com erro
         return
 
@@ -161,7 +161,7 @@ for elem in script_node.iter():
                 break
     if not (encontrado) and not (elem.tag in excluded_nodes):
         error = True
-        error_msg = "  Error -> the element <" + elem.tag + "> is disconnected from the execution flow. Attributes: "
+        error_msg = "  Error -> The element <" + elem.tag + "> is disconnected from the execution flow. Attributes: "
         for info in elem.attrib.items():
             error_msg += '('
             error_msg += ' = '.join(info)

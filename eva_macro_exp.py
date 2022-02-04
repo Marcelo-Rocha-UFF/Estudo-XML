@@ -9,36 +9,23 @@ O parser substitui a tag <useMacro> com problema, por uma tag <error> indicando 
 nesse caso “undefined_macro”, o nome da macro não definida e escreve essa informação no no arquivo de saída da etapa.
  """
 
-import copy # lib para a geracao de copias de objetos
+import copy
+from distutils.log import error # lib para a geracao de copias de objetos
 import sys
 import xml.etree.ElementTree as ET
+import eva_validator # funcão de validacao xmlschema
 
-try:
-    # em caso de erro no parser da xml.etree
-    tree = ET.parse(sys.argv[1])  # arquivo de codigo xml
-except Exception as e:
-    print("Error ->There is problem with your script. He doesn't seem to be well-formed.\n\tNote the following instructions and review your code.")
-    print("""\nAt its base level well-formed documents require that:\n
-\t* Content be defined.
-\t* Content be delimited with a beginning and end tag
-\t* Content be properly nested (parents within roots, children within parents))\n""")
-    print("""To be a well-formed document, rules must be established about the declaration and treatment of entities.
-Tags are case sensitive, with attributes delimited with quotation marks. Empty elements have rules established.
-Overlapping tags invalidate a document. Ideally, a well-formed document conforms to the design goals of XML.
-Other key syntax rules provided in the specification include:\n
-\t* It contains only properly encoded legal Unicode characters.
-\t* None of the special syntax characters such as < and & appear except when performing their markup-delineation roles.
-\t* The begin, end, and empty-element tags that delimit the elements are correctly nested, with none missing and none overlapping.
-\t* The element tags are case-sensitive; the beginning and end tags must match exactly.
-\t* Tag names cannot contain any of the characters !"#$%&'()*+,/;<=>?@[\]^`{|}~, nor a space character, and cannot start with -, ., or a numeric digit.
-\t* There is a single "root" element that contains all the other elements.\n""")
-    exit(1)
+_error = 0 # 0 indica que não houve falha na etapa. 
 
+tree = eva_validator.evaml_validator(sys.argv[1]) # chama a funcao de validacao do modulo eva_validator
+
+if tree == None: # tree == None indica que houve erro de validaçao, senão, tree tem o xml carregado
+    exit(1) # termina com erro
 
 root = tree.getroot() # evaml root node
 script_node = root.find("script")
 macros_node = root.find("macros")
-_error = 0 # 0 indica que não houve falha na etapa. 
+
 
 ###############################################################################
 # Processamento (expansao) das macros                                         #
@@ -59,6 +46,9 @@ def macro_expander(script_node, macros_node):
                 break
             match_macro = False
             for m in range(len(macros_node)):
+                if script_node[i].get("name") == None: # verifica se algum comando useMacro não usa o atrib name
+                    print("  Error -> Name attribute not found in <useMacro> command.")
+                    exit(1)
                 if macros_node[m].attrib["name"] == script_node[i].attrib["name"]:
                     match_macro = True
                     if (len(macros_node[m])) == 0:
@@ -86,20 +76,14 @@ def macro_expander(script_node, macros_node):
             macro_expander(script_node, macros_node)
 
 
-# expande as macros
+# expande as macros   
+macro_expander(script_node, macros_node)
+
+if _error == 1:
+    exit(1)
+
 print("Step 01 - Processing Macros... (OK)")
 
-# testa se a seção macro existe
-#if macros_node == None:
-#    print("  Warning -> The section macros does not exist.")
-# testa se a seção está vazia
-#elif len(macros_node) == 0:
-#    print("  Warning -> The macros section exists but is empty.")
-#else: 
-#    print()
-    # processa a seção de macros
-    
-macro_expander(script_node, macros_node)
 if macros_node != None:
     root.remove(macros_node) # remove a secao de macros, caso ela exista
 
