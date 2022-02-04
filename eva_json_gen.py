@@ -6,7 +6,6 @@ root = tree.getroot() # evaml root node
 script_node = root.find("script")
 output = ""
 gohashid = 0
-_error = 0 # 0 indica que não houve falha na etapa. 
 
 # percorre os elementos xml mapeando-os nos respectivos no modelo Json do Eva
 def mapping_xml_to_json():
@@ -84,19 +83,9 @@ def settings_process(node):
     # processar lightEffects
     # processar audioEffects
 
-# audio node processing
+# audio node processing #########################################################################
 def audio_process(audio_command):
-    global gohashid, _error
-
-    # verifica se os atributos foram definidos
-    if (audio_command.get("source")) == None:
-      print("  Error -> There is an <audio> command without 'source' attrinute.")
-      _error = 1
-    if (audio_command.get("block")) == None:
-      print("  Error -> There is an <audio> command without 'block' attrinute.")
-      _error = 1
-    if (_error == 1):
-      exit(_error)
+    global gohashid
 
     audio_source = audio_command.attrib['source']
     # audioEffects settings processing
@@ -120,20 +109,7 @@ def audio_process(audio_command):
 
 # counter node processing #########################################################################
 def counter_process(counter_command):
-    global gohashid, _error
-
-    # verifica se os atributos foram definidos
-    if (counter_command.get("var")) == None:
-      print("  Error -> There is a <counter> command without 'var' attrinute.")
-      _error = 1
-    if (counter_command.get("op")) == None:
-      print("  Error -> There is a <counter> command without 'op' attrinute.")
-      _error = 1
-    if (counter_command.get("value")) == None:
-      print("  Error -> There is a <counter> command without 'value' attrinute.")
-      _error = 1
-    if (_error == 1):
-      exit(_error)
+    global gohashid
 
     if counter_command.attrib['op'] == "=":
       op_eva = "assign"
@@ -162,19 +138,9 @@ def counter_process(counter_command):
     return counter_node
 
 
-# light node processing
+# light node processing #########################################################################
 def light_process(light_command):
-    global gohashid, _error
-
-    # verifica se os atributos foram definidos
-    if (light_command.get("state")) == None:
-      print("  Error -> There is a <light> command without 'state' attrinute.")
-      _error = 1
-    elif ((light_command.attrib["state"] == "on") and (light_command.get("color") == None)):
-      print("  Error -> There is a <light> command without 'color' attrinute.")
-      _error = 1
-    if (_error == 1):
-      exit(_error)
+    global gohashid
 
     bulb_state = light_command.attrib['state']
     if bulb_state == "off": # a ideia é admitir a ausencia do parametro color quando o estado da lampada for off
@@ -223,16 +189,9 @@ def listen_process(listen_command):
     return listen_node
 
 
-# led animation processing
+# led animation processing #########################################################################
 def led_process(led_command):
-    global gohashid, _error
-
-    # verifica se os atributos foram definidos
-    if (led_command.get("animation")) == None:
-      print("  Error -> There is a <led> command without 'animation' attrinute.")
-      _error = 1
-    if (_error == 1):
-      exit(_error)
+    global gohashid
 
     # mapping 
     if led_command.attrib['animation'] == "stop": # just to show what is happening here
@@ -264,16 +223,14 @@ def led_process(led_command):
     return led_node
 
 
-# talk node processing
+# talk node processing #########################################################################
 def talk_process(talk_command):
-    global gohashid, _error
+    global gohashid
 
     # verifica se os atributos foram definidos
     if (talk_command.text == None):
       print("  Error -> There is a <talk> command without a text.")
-      _error = 1
-    if (_error == 1):
-      exit(_error)
+      exit(1)
       
     talk_node = """      {
         "key": """ + talk_command.attrib["key"] + """,
@@ -288,7 +245,7 @@ def talk_process(talk_command):
     return talk_node
 
 
-# voice node processing
+# voice node processing #########################################################################
 def voice_process(voice_command):
   global gohashid
   voice_node = """      {
@@ -303,7 +260,7 @@ def voice_process(voice_command):
   gohashid += 1
   return voice_node
 
-# userEmotion node processing
+# userEmotion node processing #########################################################################
 def user_emotion_process(user_emotion_command):
   global gohashid
   user_emotion_node = """      {
@@ -320,16 +277,9 @@ def user_emotion_process(user_emotion_command):
   return user_emotion_node
 
 
-# eva_emotion node processing 
+# eva_emotion node processing #########################################################################
 def eva_emotion_process(eva_emotion_command):
-    global gohashid, _error
-
-    # verifica se os atributos foram definidos
-    if (eva_emotion_command.get("emotion")) == None:
-      print("  Error -> There is an <evaEmotion> command without 'emotion' attrinute.")
-      _error = 1
-    if (_error == 1):
-      exit(_error)
+    global gohashid
 
     # speed 0 é o valor default. Não vejo necessidade de implementar isso
 
@@ -358,19 +308,9 @@ def eva_emotion_process(eva_emotion_command):
     return eva_emotion_node
 
 
-# random node processing
+# random node processing #########################################################################
 def random_process(random_command):
-    global gohashid, _error
-
-    # verifica se os atributos foram definidos
-    if (random_command.get("min")) == None:
-      print("  Error -> There is a <random> command without 'min' attrinute.")
-      _error = 1
-    if (random_command.get("max")) == None:
-      print("  Error -> There is a <random> command without 'max' attrinute.")
-      _error = 1
-    if (_error == 1):
-      exit(_error)
+    global gohashid
 
     random_node = """      {
         "key": """ + random_command.attrib["key"] + """,
@@ -389,17 +329,7 @@ def random_process(random_command):
 
 # condition node (case and default) processing
 def case_process(case_command):
-  global gohashid, _error
-
-  # verifica se os atributos foram definidos
-  if (case_command.get("op")) == None:
-    print("  Error -> There is a <case> command without 'op' attrinute.")
-    _error = 1
-  if (case_command.get("value")) == None:
-    print("  Error -> There is a <case> command without 'value' attrinute.")
-    _error = 1
-  if (_error == 1):
-    exit(_error)
+  global gohashid
   
   # traducao dos operadores lógicos. Nós usamos o mesmo padrão que NCL
   if case_command.attrib['op'] == "lt":  op = "<"
@@ -469,16 +399,9 @@ def case_process(case_command):
       return case_node
 
 
-# wait node processing
+# wait node processing #########################################################################
 def wait_process(wait_command):
-    global gohashid, _error
-
-    # verifica se os atributos foram definidos
-    if (wait_command.get("duration")) == None:
-      print("  Error -> There is a <wait> command without 'duration' attrinute.")
-      _error = 1
-    if (_error == 1):
-      exit(_error)
+    global gohashid
 
     wait_node = """      {
         "key": """ + wait_command.attrib["key"] + """,
@@ -497,7 +420,7 @@ def saida_links():
     node_links = root.find("links")
     # verifica se há links a processar
     if len(node_links) == 0:
-      print('  Error -> no execution flow found. Please, check your code.')
+      print('  Error -> No execution flow found. Please, check your code.')
       exit(1)
     output ="""
     ],

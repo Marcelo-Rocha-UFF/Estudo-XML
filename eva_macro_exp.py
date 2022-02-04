@@ -19,7 +19,7 @@ _error = 0 # 0 indica que não houve falha na etapa.
 
 tree = eva_validator.evaml_validator(sys.argv[1]) # chama a funcao de validacao do modulo eva_validator
 
-if tree == None: # tree == None indica que houve erro de validaçao, senão, tree tem o xml carregado
+if tree == None: # tree == None indica que houve erro de validaçao, senão, tree tem o objeto xml carregado
     exit(1) # termina com erro
 
 root = tree.getroot() # evaml root node
@@ -90,5 +90,3 @@ if macros_node != None:
 # gera o arquivo com as macros expandidas (caso existam) para a proxima etapa
 tree.write("_macros.xml", "UTF-8")
 
-
-exit(_error) # termina a execução indicando se houve erro (1) ou não (0)

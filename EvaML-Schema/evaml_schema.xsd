@@ -121,7 +121,7 @@
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="state" type="lightStateType" use="required"/>
 			<!-- Dúvida sobre os dois tipos de cor (lista e rgb) -->
-			<xs:attribute name="color" type="lightColorType"/>
+			<xs:attribute name="color" type="lightColorType" default="white"/>
 		</xs:complexType>
 	</xs:element>
 

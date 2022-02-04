@@ -70,9 +70,6 @@ def cria_link(node_from, node_to):
             # verifica se ha o atrib. "var", senão emite o sinal de erro e pára.
             if node_to.get("var") != None:
                 case_elem.attrib["var"] = node_to.attrib["var"] # existe "var" no switch, então transfere para o <case>
-            else:
-                print('  Error -> There is a <switch> without attribute "var", please fix it.')
-                exit(1)
 
             if case_elem.tag == "default": # preenche o default com os parametros default
                 case_elem.attrib["value"] = ""
@@ -109,17 +106,17 @@ def link_process(node_list):
         # emite um aviso caso haja elemento(s) após um <goto>
         # se esse elemento não for referenciado em outra parte do script, ele poderá ficar desconectado do fluxo.
         if node_from.tag == "goto":
-            print("  Warning - there are elements after the <goto>. These elements may not be reached.")
+            print("  Warning - There are elements after the <goto>. These elements may not be reached.")
 
         # case especifico da tag <stop> que deve interromper a conexao dos do fluxo sendo processado
         # todos os elem. após um <stop> são removidos. O parser emite um aviso de remoção e os exibe no terminal.
         if (node_from.tag == "stop"):
             for s in range(i, qtd-1):
                 if (node_list[i+1].get("id")) == None:
-                    print("  Warning - removing unused commands ... <" + node_list[i+1].tag + ">")
+                    print("  Warning - Removing unused commands ... <" + node_list[i+1].tag + ">")
                 else:
                     # emite um aviso especial caso um elemento com id seja excluído.
-                    print('  Warning - removing unused commands ... <' + node_list[i+1].tag + '>. ALERT! This element has an attribue "id" and it is "' + node_list[i+1].attrib["id"] + '"')
+                    print('  Warning - Removing unused commands ... <' + node_list[i+1].tag + '>. ALERT! This element has an attribue "id" and it is "' + node_list[i+1].attrib["id"] + '"')
                     exit(1)
                 node_list.remove(node_list[i+1])
             break

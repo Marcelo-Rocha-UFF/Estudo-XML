@@ -5,7 +5,5 @@
     <audioEffects mode="on" />
   </settings>
   <script>
-    <led id="AQUI" animation="happy" key="1001" />
-    <goto target="AQUI" />
   </script>
-<links><link from="1000" to="1001" /><link from="1001" to="1001" /></links></evaml>
+<links /></evaml>
