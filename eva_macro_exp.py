@@ -9,8 +9,7 @@ O parser substitui a tag <useMacro> com problema, por uma tag <error> indicando 
 nesse caso “undefined_macro”, o nome da macro não definida e escreve essa informação no no arquivo de saída da etapa.
  """
 
-import copy
-from distutils.log import error # lib para a geracao de copias de objetos
+import copy # lib para a geracao de copias de objetos
 import sys
 import xml.etree.ElementTree as ET
 import eva_validator # funcão de validacao xmlschema
@@ -46,9 +45,6 @@ def macro_expander(script_node, macros_node):
                 break
             match_macro = False
             for m in range(len(macros_node)):
-                if script_node[i].get("name") == None: # verifica se algum comando useMacro não usa o atrib name
-                    print("  Error -> Name attribute not found in <useMacro> command.")
-                    exit(1)
                 if macros_node[m].attrib["name"] == script_node[i].attrib["name"]:
                     match_macro = True
                     if (len(macros_node[m])) == 0:
@@ -56,7 +52,7 @@ def macro_expander(script_node, macros_node):
                         _error = 1 # falha
                         script_node[i].attrib["type"] = "macro_is_empty"
                         script_node[i].attrib["macro_name"] = script_node[i].attrib["name"]
-                        print("  Error -> The macro", macros_node[m].attrib["name"], "is empty..." )
+                        print("  Error -> The <useMacro> references the macro", macros_node[m].attrib["name"], "that is empty." )
                         script_node[i].attrib.pop("name")
                     else:
                         script_node.remove(script_node[i])

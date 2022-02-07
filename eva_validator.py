@@ -6,9 +6,7 @@ import xmlschema # xmlschema validation
 # podem ocorrer dois tipos de erro (1) xml mal-formado (2) erro de validação
 schema = xmlschema.XMLSchema("EvaML-Schema/evaml_schema.xsd")
 
-tree = None # objeto vazio
-
-def evaml_validator(evaml_file):
+def evaml_validator(evaml_file): # função que é chamado pelo mod. macro exp.
   global tree
   try:
     valido = True
@@ -18,16 +16,17 @@ def evaml_validator(evaml_file):
       valido = False
   except Exception as e:
     print(e)
-    return tree
+    return None
   else:
     if valido == True:
-      tree = ET.parse(evaml_file)
+      obj = schema.decode(evaml_file) # retorna uma estrutura tipo dict com o XML processado (com a inserção dos valores default do schema)
+      xml_validado_element = schema.encode(obj, "evaml") # codifica a estrutura em obj para um etree.element
+      xml_validade_string = xmlschema.etree_tostring(xml_validado_element) # converte o etree.element para um xml em string
+      with open("_xml_validated.xml", "w") as text_file: # grava o xml processado (temporario) em um arquivo para ser importado pelo parser
+        text_file.write(xml_validade_string)
+  
+      tree = ET.parse("_xml_validated.xml") # faz o parser do arquivo processado retornando um obj etree.ElementTree
+      
       return tree
     else:
-      return tree
-
-""" for l in range(len(errors)):
-  print(errors[l]) """
-""" import os
-
-os.system('xmllint --noout --schema evaml_schema.xsd teste.xml') """
+      return None

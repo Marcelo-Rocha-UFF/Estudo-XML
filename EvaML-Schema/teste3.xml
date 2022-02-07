@@ -9,13 +9,21 @@
     <audioEffects mode="on" />
   </settings>
   <script>
+    <useMacro name="M1" />
     <light id="AQUI" state="on"/>
+    <wait duration="1000" />
+    <audio source="mario" block="false"/>
+    <switch id="ALI" var="$">
+      <case op="gte" value="100">
+      </case>
+    </switch>
+    <stop />
+    <counter var="$" op="=" value="1" />
+    <audio source="sdasd" block="true" />
+    <led id="OI" animation="happy" />
   </script>
   <macros>
     <macro name="M1">
-      <led animation="happy" />
-    </macro>
-    <macro name="M2">
       <led animation="happy" />
     </macro>
   </macros>

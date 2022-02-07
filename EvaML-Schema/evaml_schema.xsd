@@ -1,7 +1,7 @@
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <!-- ********************** Data type definitions ********************** -->
 	<xs:simpleType name="idType">
-		<xs:restriction base="xs:string"/>
+		<xs:restriction base="xs:ID"/>
 	</xs:simpleType>
 
 	<xs:simpleType name="modeType">
@@ -114,7 +114,10 @@
 		</xs:complexType>
 	</xs:element>
 
-	<xs:element name="stop"/>
+	<xs:element name="stop">
+		<xs:complexType>
+		</xs:complexType>
+	</xs:element>
 
 	<xs:element name="light">
 		<xs:complexType>
@@ -127,7 +130,7 @@
 
 	<xs:element name="goto">
 		<xs:complexType>
-			<xs:attribute name="target" type="xs:string" use="required"/>
+			<xs:attribute name="target" type="xs:IDREF" use="required"/>
 		</xs:complexType>
 	</xs:element>
 
@@ -146,7 +149,7 @@
 
 	<xs:element name="useMacro">
 		<xs:complexType>
-			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="name" type="xs:IDREF" use="required"/>
 		</xs:complexType>
 	</xs:element>
 
@@ -272,7 +275,7 @@
 				<xs:element ref="counter"/>
 				<xs:element ref="switch"/>
 			</xs:choice>
-			<xs:attribute name="name" type="xs:string" use="required" />
+			<xs:attribute name="name" type="idType" use="required" />
 		</xs:complexType>
 	</xs:element>
 

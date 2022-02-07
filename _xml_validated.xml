@@ -7,4 +7,12 @@
     <script>
         <light id="AQUI" state="on" color="white" />
     </script>
-    </evaml>
+    <macros>
+        <macro name="M1">
+            <led animation="happy" />
+        </macro>
+        <macro name="M2">
+            <led animation="happy" />
+        </macro>
+    </macros>
+</evaml>

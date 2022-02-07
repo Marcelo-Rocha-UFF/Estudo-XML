@@ -14,12 +14,13 @@
       },
       {
         "key": 1001,
-        "name": "Leds",
-        "type": "led",
-        "color": "lightblue",
+        "name": "Light",
+        "type": "light",
+        "color": "#ffa500",
         "isGroup": false,
         "group": "",
-        "anim": "joy",
+        "lcolor": "#ffffff",
+        "state": "on",
         "__gohashid": 1
       }
     ],
@@ -28,11 +29,6 @@
         "from": 1000,
         "to": 1001,
         "__gohashid": 0
-      },
-      { 
-        "from": 1001,
-        "to": 1001,
-        "__gohashid": 1
       }
     ]
   }
