@@ -146,6 +146,9 @@ def light_process(light_command):
     if bulb_state == "off": # a ideia é admitir a ausencia do parametro color quando o estado da lampada for off
       light_command.attrib['color'] = "black" # mesmo se o atributo não tiver sido setado, ele será setado aqui
     
+    if (bulb_state == "on") and (light_command.get("color") == None): 
+      light_command.attrib['color'] = "white" # default color "white" mesmo se o atributo não tiver sido setado, ele será setado aqui
+    
     color = light_command.attrib['color']
     color_map = {"white":"#ffffff", "black":"#000000", "red":"#ff0000", "pink":"#e6007e", "green":"#00ff00", "yellow":"#ffff00", "blue":"#0000ff"}
     if color_map.get(color) != None:

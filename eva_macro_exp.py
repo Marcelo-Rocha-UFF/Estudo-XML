@@ -45,15 +45,15 @@ def macro_expander(script_node, macros_node):
                 break
             match_macro = False
             for m in range(len(macros_node)):
-                if macros_node[m].attrib["name"] == script_node[i].attrib["name"]:
+                if macros_node[m].attrib["id"] == script_node[i].attrib["macro"]:
                     match_macro = True
                     if (len(macros_node[m])) == 0:
                         script_node[i].tag = "error"
                         _error = 1 # falha
                         script_node[i].attrib["type"] = "macro_is_empty"
-                        script_node[i].attrib["macro_name"] = script_node[i].attrib["name"]
-                        print("  Error -> The <useMacro> references the macro", macros_node[m].attrib["name"], "that is empty." )
-                        script_node[i].attrib.pop("name")
+                        script_node[i].attrib["macro_id"] = script_node[i].attrib["macro"]
+                        print("  Error -> The <useMacro> references the macro", macros_node[m].attrib["id"], "that is empty." )
+                        script_node[i].attrib.pop("macro")
                     else:
                         script_node.remove(script_node[i])
 
@@ -65,9 +65,9 @@ def macro_expander(script_node, macros_node):
                 script_node[i].tag = "error"
                 _error = 1 # falha
                 script_node[i].attrib["type"] = "undefined_macro"
-                script_node[i].attrib["macro_name"] = script_node[i].attrib["name"]
-                print("  Error -> The <useMacro> references a macro that has not been defined:", script_node[i].attrib["name"])
-                script_node[i].attrib.pop("name")  
+                script_node[i].attrib["macro_id"] = script_node[i].attrib["macro"]
+                print("  Error -> The <useMacro> references an element that is not a macro. Element ID:", script_node[i].attrib["macro"])
+                script_node[i].attrib.pop("macro")  
             
             macro_expander(script_node, macros_node)
 

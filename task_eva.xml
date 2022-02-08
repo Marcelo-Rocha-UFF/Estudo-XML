@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<evaml name="task_eva" >
+<evaml name="task_eva"
+      xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <settings>
     <voice tone="en-US_AllisonV3Voice"  />
     <lightEffects mode="on" />
@@ -48,39 +50,39 @@
       <case op="eq" value="1">
         <evaEmotion emotion="sad" />
         <light state="on" color="blue" />
-        <useMacro name="GET_EXPRESSION" />
+        <useMacro macro="GET_EXPRESSION" />
         <switch var="$">
           <case op="exact" value="sad">
-            <useMacro name="RIGHT_ANSWER" />
+            <useMacro macro="RIGHT_ANSWER" />
           </case>
           <default>
-            <useMacro name="WRONG_ANSWER" />
+            <useMacro macro="WRONG_ANSWER" />
           </default>
         </switch>
       </case>
       <case op="eq" value="2">
         <evaEmotion emotion="happy" />
         <light state="on" color="yellow" />
-        <useMacro name="GET_EXPRESSION" />
+        <useMacro macro="GET_EXPRESSION" />
         <switch var="$">
           <case op="exact" value="happy">
-            <useMacro name="RIGHT_ANSWER" />
+            <useMacro macro="RIGHT_ANSWER" />
           </case>
           <default>
-            <useMacro name="WRONG_ANSWER" />
+            <useMacro macro="WRONG_ANSWER" />
           </default>
         </switch>
       </case>
       <case op="eq" value="3">
         <evaEmotion emotion="angry" />
         <light state="on" color="red" />
-        <useMacro name="GET_EXPRESSION" />
+        <useMacro macro="GET_EXPRESSION" />
         <switch var="$">
           <case op="exact" value="angry">
-            <useMacro name="RIGHT_ANSWER" />
+            <useMacro macro="RIGHT_ANSWER" />
           </case>
           <default>
-            <useMacro name="WRONG_ANSWER" />
+            <useMacro macro="WRONG_ANSWER" />
           </default>
         </switch>
       </case>
@@ -101,19 +103,19 @@
   </script>
   <macros>
     <!-- Usada na tarefa 3 -->
-    <macro name="GET_EXPRESSION">
+    <macro id="GET_EXPRESSION">
       <talk>Can you imitate me?</talk>
       <userEmotion />
       <wait duration="5000" />
     </macro>
     <!-- Usada na tarefa 3 -->
-    <macro name="RIGHT_ANSWER">
+    <macro id="RIGHT_ANSWER">
       <evaEmotion emotion="happy" />
       <talk>Ok! You are correct</talk>
       <counter var="score" op="+" value="1" />
     </macro>
     <!-- Usada na tarefa 3 -->
-    <macro name="WRONG_ANSWER">
+    <macro id="WRONG_ANSWER">
       <evaEmotion emotion="sad" />
       <talk>You are wrong</talk>
     </macro>

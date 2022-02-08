@@ -16,6 +16,9 @@ def key_gen(script):
     excluded_nodes = set(['switch', 'script', 'stop', 'goto'])
     for node in script.iter():
         if not(node.tag in excluded_nodes):
+            if node.tag == "light": # light color default white ##### deveria ser rosolvido no schema
+                if node.get("state") == "on" and node.get("color") == None:
+                    node.attrib["color"] = "white"
             node.attrib["key"] = str(key)
             if (node.tag == "case") or (node.tag == "default"): # add o atributo child_proc aos comandos case/default
                 # inicializa com o valor false. Esse atributo indica se os filhos do case/default (caso existam) foram processados

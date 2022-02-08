@@ -61,7 +61,13 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:simpleType name="lightColorType">
+	<xs:simpleType name="lightRgbColorType">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="#[\dA-F | a-f ]{6}([\dA-F | a-f][\dA-F | a-f])?"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="lightListColorType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="white"/>
 			<xs:enumeration value="black"/>
@@ -72,6 +78,10 @@
 			<xs:enumeration value="blue"/>
 		</xs:restriction>
 	</xs:simpleType>
+
+		<xs:simpleType name="lightColorType">
+			<xs:union memberTypes="lightListColorType lightRgbColorType" />
+		</xs:simpleType>
 
 	<xs:simpleType name="counterOpType">
 		<xs:restriction base="xs:string">
@@ -149,7 +159,7 @@
 
 	<xs:element name="useMacro">
 		<xs:complexType>
-			<xs:attribute name="name" type="xs:IDREF" use="required"/>
+			<xs:attribute name="macro" type="xs:IDREF" use="required"/>
 		</xs:complexType>
 	</xs:element>
 
@@ -275,7 +285,7 @@
 				<xs:element ref="counter"/>
 				<xs:element ref="switch"/>
 			</xs:choice>
-			<xs:attribute name="name" type="idType" use="required" />
+			<xs:attribute name="id" type="idType" use="required" />
 		</xs:complexType>
 	</xs:element>
 

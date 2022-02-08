@@ -1,10 +1,10 @@
 <evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="teste3" xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd">
-    <settings>
-        <voice tone="pt-BR_IsabelaV3Voice" />
-        <lightEffects mode="on" />
-        <audioEffects mode="on" vol="100%" />
-    </settings>
-    <script>
-        <light id="AQUI" state="on" color="white" />
-    </script>
-    </evaml>
+  <settings>
+    <voice tone="pt-BR_IsabelaV3Voice" />
+    <lightEffects mode="on" />
+    <audioEffects mode="on" />
+  </settings>
+  <script>
+    <light state="on" />
+  </script>
+</evaml>

@@ -9,22 +9,8 @@
     <audioEffects mode="on" />
   </settings>
   <script>
-    <useMacro name="M1" />
-    <light id="AQUI" state="on"/>
-    <wait duration="1000" />
-    <audio source="mario" block="false"/>
-    <switch id="ALI" var="$">
-      <case op="gte" value="100">
-      </case>
-    </switch>
-    <stop />
-    <counter var="$" op="=" value="1" />
-    <audio source="sdasd" block="true" />
-    <led id="OI" animation="happy" />
+    <!-- tarefa (parte 01) *********************************************************************** -->
+    <talk>Hi, I'm the robot Eva / Hello, my name is Eva / Hi, what is up. I am the robot Eva</talk>
+
   </script>
-  <macros>
-    <macro name="M1">
-      <led animation="happy" />
-    </macro>
-  </macros>
 </evaml>

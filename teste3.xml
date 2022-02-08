@@ -9,14 +9,6 @@
     <audioEffects mode="on" />
   </settings>
   <script>
-    <light id="AQUI" state="on"/>
+    <light state="on" />
   </script>
-  <macros>
-    <macro name="M1">
-      <led animation="happy" />
-    </macro>
-    <macro name="M2">
-      <led animation="happy" />
-    </macro>
-  </macros>
 </evaml>
