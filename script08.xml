@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- voz portugues: pt-BR_IsabelaV3Voice -->
-<!-- voz inglês		: en-US_AllisonV3Voice" -->
-<evaml name="script08">
-	<settings>
-		<voice tone="pt-BR_IsabelaV3Voice" />
-		<light-effects mode="on" />
-		<audio-effects mode="on" vol="100%" />
-	</settings>
+<evaml name="script08"
+  xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <settings>
+      <voice tone="en-US_AllisonV3Voice" />
+      <lightEffects mode="on" />
+      <audioEffects mode="on" vol="100%" />
+    </settings>
 	<script>
 		<talk>Olá, eu sou o robô EVA</talk>
 		<audio source="mario-game-intro" block="true" />
 		<talk>Qual o seu nome?</talk>
 		<listen />
-		<useMacro name="PARTE1" />
+		<useMacro macro="PARTE1" />
 		<counter var="p" op="=" value="0" /> <!-- pontuacao -->
 		<counter var="i" op="=" value="1" /> <!-- controle do num. de repeticoes-->
 		<talk id="INICIO">Vamos lá então</talk>
@@ -67,7 +67,7 @@
 		<switch var="i">
 			<case op="eq" value="3">
 				<talk>O seu número de pontos foi #p</talk>
-				<useMacro name="FINAL" />
+				<useMacro macro="FINAL" />
 				<audio source="mario-end" block="true" />
 				<light state="off" color="black" />
 				<stop />
@@ -79,11 +79,11 @@
 		</switch>
 	</script>
 	<macros>
-		<macro name="PARTE1">
+		<macro id="PARTE1">
 			<talk>Vou sortear um número de um a três</talk>
 			<talk>quero ver se você consegue advinhar $</talk>
 		</macro>
-		<macro name="FINAL">
+		<macro id="FINAL">
 			<talk>Já vou embora / Está ficando tarde / Pra mim já deu</talk>
 		</macro>
 	</macros>

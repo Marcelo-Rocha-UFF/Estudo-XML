@@ -11,7 +11,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-	<xs:simpleType name="voiceType">
+	<xs:simpleType name="voiceListType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="pt-BR_IsabelaV3Voice"/>
 			<xs:enumeration value="en-US_AllisonV3Voice"/>
@@ -20,6 +20,14 @@
 			<xs:enumeration value="es-LA_SofiaV3Voice"/>
 			<xs:enumeration value="es-ES_EnriqueV3Voice"/>
 		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="voiceStringType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+
+	<xs:simpleType name="voiceType">
+		<xs:union memberTypes="voiceListType voiceStringType" />
 	</xs:simpleType>
 
 	<xs:simpleType name="caseOpType">
@@ -32,13 +40,6 @@
 			<xs:enumeration value="lte"/>
 			<xs:enumeration value="gte"/>
 			<xs:enumeration value="ne"/>
-		</xs:restriction>
-	</xs:simpleType>
-
-	<xs:simpleType name="lightStateType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="on"/>
-			<xs:enumeration value="off"/>
 		</xs:restriction>
 	</xs:simpleType>
 
@@ -61,6 +62,13 @@
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:simpleType name="lightStateType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="on"/>
+			<xs:enumeration value="off"/>
+		</xs:restriction>
+	</xs:simpleType>
+
 	<xs:simpleType name="lightRgbColorType">
 		<xs:restriction base="xs:token">
 			<xs:pattern value="#[\dA-F | a-f ]{6}([\dA-F | a-f][\dA-F | a-f])?"/>
@@ -79,9 +87,9 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-		<xs:simpleType name="lightColorType">
-			<xs:union memberTypes="lightListColorType lightRgbColorType" />
-		</xs:simpleType>
+	<xs:simpleType name="lightColorType">
+		<xs:union memberTypes="lightListColorType lightRgbColorType" />
+	</xs:simpleType>
 
 	<xs:simpleType name="counterOpType">
 		<xs:restriction base="xs:string">

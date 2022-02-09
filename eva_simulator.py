@@ -356,6 +356,11 @@ def exec_comando(node):
         texto_aux = texto
         for i in range(len(texto)):
             if texto[i] == "#":
+                # verifica se a memoria (vars) do robô está vazia
+                if eva_memory.vars == {}:
+                    terminal.insert(INSERT, "\nError -> No variables have been defined. Please, check your code.", "error")
+                    terminal.see(tkinter.END)
+                    exit(1)
                 inicio = i
                 while texto[i] != " ":
                     i += 1
@@ -365,10 +370,23 @@ def exec_comando(node):
                     for v in eva_memory.vars:
                         if v == texto[inicio + 1: i]:
                             texto_aux = texto_aux.replace(texto[inicio: i], str(eva_memory.vars[v]))
+                        else:
+                            # Se a variavel não existe na memoria do robô, exibe mensagem de erro.
+                            error_string = "\nError -> The variable #" + texto[inicio + 1: i] + " has not been declared. Please, check your code."
+                            terminal.insert(INSERT, error_string, "error")
+                            terminal.see(tkinter.END)
+                            exit(1)
         texto = texto_aux
 
         # esta parte substitui o $, ou o $-1 ou o $1 no texto
         if "$" in texto: # verifica se tem $ no texto
+
+            # verifica se var_dolar tem algum valor
+            if (len(eva_memory.var_dolar)) == 0:
+                terminal.insert(INSERT, "\nError -> The variable $ has no value. Please, check your code.", "error")
+                terminal.see(tkinter.END)
+                exit(1)
+
             if len(eva_memory.var_dolar) != 0: # verifica se tem conteudo em $
                 # Obs, a ordem importa na comparacao a seguir
                 if "$-1" in texto:
@@ -379,9 +397,7 @@ def exec_comando(node):
                     texto = texto.replace("$2", eva_memory.var_dolar[1])
                 if "$" in texto:
                     texto = texto.replace("$", eva_memory.var_dolar[-1])
-            else:
-                print("Erro: A variável $ não possui qualquer valor e não pode ser utilizada.")
-                exit(1)
+            
         # esta parte implementa o texto aleatorio gerado pelo uso do caractere /
         texto = texto.split(sep="/") # texto vira uma lista com a qtd de frases divididas pelo caract. /
         print(texto)
@@ -472,6 +488,12 @@ def exec_comando(node):
 ### PRECISA DE TESTE         
             # case 1.3 (tipo de op="MATEMATICA") Comparando $ com uma var (em valor) de maneira matemática
             if "#" in valor: # verifica se valor é uma variável
+                # verifica se var #... NÃO existe na memória
+                if not(valor[1:] in eva_memory.vars):
+                    error_string = "\nError -> The variable #" + valor[1:] + " has not been declared. Please, check your code."
+                    terminal.insert(INSERT, error_string, "error")
+                    terminal.see(tkinter.END)
+                    exit(1)
                 if node.attrib['op'] == "eq": # 
                     if int(eva_memory.var_dolar[-1]) == int(eva_memory.vars[valor[1:]]): # é preciso retirar o # da variável
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira

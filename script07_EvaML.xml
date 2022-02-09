@@ -1,31 +1,31 @@
-<evaml name="script07" id="da18cc78832b817e3abe63fe7428278e">
-	<settings>
-		<voice tone="pt-BR_IsabelaV3Voice" key="1000" />
-		<light-effects mode="on" />
-		<audio-effects mode="on" vol="100%" />
-	</settings>
+<evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="script07" xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd" id="da18cc78832b817e3abe63fe7428278e">
+  <settings>
+      <voice tone="en-US_AllisonV3Voice" key="1000" />
+      <lightEffects mode="on" />
+      <audioEffects mode="on" vol="100%" />
+    </settings>
   <script>
 		<counter var="x" op="=" value="0" key="1001" />
 		<light id="INICIO" state="on" color="white" key="1002" />
 		<talk key="1003">Está chovendo agora?</talk>
 		<listen key="1004" />
 		<switch var="$">
-			<case op="contain" value="sim" key="1005" var="$">
+			<case op="contain" value="sim" key="1005" child_proc="true" var="$">
 				<talk key="1006">Isso mesmo! Está chovendo</talk>
 				<counter var="x" op="+" value="1" key="1007" />
 				<switch var="x">
-					<case op="eq" value="3" key="1008" var="x">
+					<case op="eq" value="3" key="1008" child_proc="true" var="x">
 						<talk key="1009">O x chegou a 3, vou terminar</talk>
 					</case>
-					<case op="lt" value="3" key="1010" var="x">
+					<case op="lt" value="3" key="1010" child_proc="true" var="x">
 						<goto target="INICIO" />
 					</case>
 				</switch>
 			</case>
-			<case op="contain" value="não" key="1011" var="$">
+			<case op="contain" value="não" key="1011" child_proc="true" var="$">
 				<talk key="1012">Você errou! Tente novamente</talk>
 				<goto target="INICIO" />
 			</case>
 		</switch>
 	</script>
-  <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1007" /><link from="1007" to="1008" /><link from="1008" to="1009" /><link from="1007" to="1010" /><link from="1010" to="1002" /><link from="1004" to="1011" /><link from="1011" to="1012" /><link from="1012" to="1002" /></links></evaml>
+<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1007" /><link from="1007" to="1008" /><link from="1008" to="1009" /><link from="1007" to="1010" /><link from="1010" to="1002" /><link from="1004" to="1011" /><link from="1011" to="1012" /><link from="1012" to="1002" /></links></evaml>

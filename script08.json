@@ -9,7 +9,7 @@
         "type": "voice",
         "color": "#0020ff",
         "isGroup": false,
-        "voice": "pt-BR_IsabelaV3Voice",
+        "voice": "en-US_AllisonV3Voice",
         "__gohashid": 0
       },
       {
@@ -578,154 +578,174 @@
         "__gohashid": 18
       },
       { 
+        "from": 1016,
+        "to": 1020,
+        "__gohashid": 19
+      },
+      { 
         "from": 1020,
         "to": 1021,
-        "__gohashid": 19
+        "__gohashid": 20
       },
       { 
         "from": 1012,
         "to": 1022,
-        "__gohashid": 20
+        "__gohashid": 21
       },
       { 
         "from": 1022,
         "to": 1023,
-        "__gohashid": 21
+        "__gohashid": 22
       },
       { 
         "from": 1023,
         "to": 1024,
-        "__gohashid": 22
+        "__gohashid": 23
       },
       { 
         "from": 1024,
         "to": 1025,
-        "__gohashid": 23
+        "__gohashid": 24
       },
       { 
         "from": 1025,
         "to": 1026,
-        "__gohashid": 24
+        "__gohashid": 25
       },
       { 
         "from": 1026,
         "to": 1027,
-        "__gohashid": 25
+        "__gohashid": 26
       },
       { 
         "from": 1027,
         "to": 1028,
-        "__gohashid": 26
+        "__gohashid": 27
+      },
+      { 
+        "from": 1025,
+        "to": 1029,
+        "__gohashid": 28
       },
       { 
         "from": 1029,
         "to": 1030,
-        "__gohashid": 27
+        "__gohashid": 29
       },
       { 
         "from": 1012,
         "to": 1031,
-        "__gohashid": 28
+        "__gohashid": 30
       },
       { 
         "from": 1031,
         "to": 1032,
-        "__gohashid": 29
+        "__gohashid": 31
       },
       { 
         "from": 1032,
         "to": 1033,
-        "__gohashid": 30
+        "__gohashid": 32
       },
       { 
         "from": 1033,
         "to": 1034,
-        "__gohashid": 31
+        "__gohashid": 33
       },
       { 
         "from": 1034,
         "to": 1035,
-        "__gohashid": 32
+        "__gohashid": 34
       },
       { 
         "from": 1035,
         "to": 1036,
-        "__gohashid": 33
+        "__gohashid": 35
       },
       { 
         "from": 1036,
         "to": 1037,
-        "__gohashid": 34
+        "__gohashid": 36
+      },
+      { 
+        "from": 1034,
+        "to": 1038,
+        "__gohashid": 37
       },
       { 
         "from": 1038,
         "to": 1039,
-        "__gohashid": 35
+        "__gohashid": 38
       },
       { 
         "from": 1019,
         "to": 1040,
-        "__gohashid": 36
+        "__gohashid": 39
       },
       { 
         "from": 1021,
         "to": 1040,
-        "__gohashid": 37
+        "__gohashid": 40
       },
       { 
         "from": 1028,
         "to": 1040,
-        "__gohashid": 38
+        "__gohashid": 41
       },
       { 
         "from": 1030,
         "to": 1040,
-        "__gohashid": 39
+        "__gohashid": 42
       },
       { 
         "from": 1037,
         "to": 1040,
-        "__gohashid": 40
+        "__gohashid": 43
       },
       { 
         "from": 1039,
         "to": 1040,
-        "__gohashid": 41
+        "__gohashid": 44
       },
       { 
         "from": 1040,
         "to": 1041,
-        "__gohashid": 42
+        "__gohashid": 45
       },
       { 
         "from": 1041,
         "to": 1042,
-        "__gohashid": 43
+        "__gohashid": 46
       },
       { 
         "from": 1042,
         "to": 1043,
-        "__gohashid": 44
+        "__gohashid": 47
       },
       { 
         "from": 1043,
         "to": 1044,
-        "__gohashid": 45
+        "__gohashid": 48
       },
       { 
         "from": 1044,
         "to": 1045,
-        "__gohashid": 46
+        "__gohashid": 49
+      },
+      { 
+        "from": 1040,
+        "to": 1046,
+        "__gohashid": 50
       },
       { 
         "from": 1046,
         "to": 1047,
-        "__gohashid": 47
+        "__gohashid": 51
       },
       { 
         "from": 1047,
         "to": 1009,
-        "__gohashid": 48
+        "__gohashid": 52
       }
     ]
   }

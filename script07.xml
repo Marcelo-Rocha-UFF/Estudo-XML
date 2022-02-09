@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- voz portugues: pt-BR_IsabelaV3Voice -->
-<!-- voz inglês		: en-US_AllisonV3Voice" -->
-<evaml name="script07">
-	<settings>
-		<voice tone="pt-BR_IsabelaV3Voice" />
-		<light-effects mode="on" />
-		<audio-effects mode="on" vol="100%" />
-	</settings>
+<evaml name="script07"
+  xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <settings>
+      <voice tone="en-US_AllisonV3Voice" />
+      <lightEffects mode="on" />
+      <audioEffects mode="on" vol="100%" />
+    </settings>
   <script>
 		<counter var="x" op="=" value="0" />
 		<light id="INICIO" state="on" color="white" />
@@ -31,6 +31,4 @@
 			</case>
 		</switch>
 	</script>
-  <macros>
-  </macros>
 </evaml>

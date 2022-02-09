@@ -4,11 +4,17 @@
   xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <settings>
-    <voice tone="pt-BR_IsabelaV3Voice" />
-    <lightEffects mode="on" />
-    <audioEffects mode="on" />
-  </settings>
-  <script>
-    <light state="on" />
-  </script>
+      <voice tone="en-US_AllisonV3Voice" />
+      <lightEffects mode="on" />
+      <audioEffects mode="on" vol="100%" />
+    </settings>
+    <script>
+      <counter var="y" op="=" value="1" />
+      <talk>Hello $</talk>
+    </script>
+    <macros>
+      <macro id="M1">
+        <talk>I am in the macro M1</talk>
+      </macro>
+    </macros>
 </evaml>
