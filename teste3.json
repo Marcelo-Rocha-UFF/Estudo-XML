@@ -14,24 +14,131 @@
       },
       {
         "key": 1001,
-        "name": "Counter",
-        "type": "counter",
-        "color": "lightblue",
+        "name": "Random",
+        "type": "random",
+        "color": "pink",
         "isGroup": false,
         "group": "",
-        "count": "y",
-        "ops": "assign",
-        "value": 1,
+        "min": 1,
+        "max": 1,
         "__gohashid": 1
       },
       {
         "key": 1002,
+        "name": "Random",
+        "type": "random",
+        "color": "pink",
+        "isGroup": false,
+        "group": "",
+        "min": 2,
+        "max": 2,
+        "__gohashid": 2
+      },
+      {
+        "key": 1003,
+        "name": "Random",
+        "type": "random",
+        "color": "pink",
+        "isGroup": false,
+        "group": "",
+        "min": 3,
+        "max": 3,
+        "__gohashid": 3
+      },
+      {
+        "key": 1004,
+        "name": "Random",
+        "type": "random",
+        "color": "pink",
+        "isGroup": false,
+        "group": "",
+        "min": 4,
+        "max": 4,
+        "__gohashid": 4
+      },
+      {
+        "key": 1005,
+        "name": "Random",
+        "type": "random",
+        "color": "pink",
+        "isGroup": false,
+        "group": "",
+        "min": 5,
+        "max": 5,
+        "__gohashid": 5
+      },
+      {
+        "key": 1006,
+        "name": "Random",
+        "type": "random",
+        "color": "pink",
+        "isGroup": false,
+        "group": "",
+        "min": 6,
+        "max": 6,
+        "__gohashid": 6
+      },
+      {
+        "key": 1007,
+        "name": "Random",
+        "type": "random",
+        "color": "pink",
+        "isGroup": false,
+        "group": "",
+        "min": 7,
+        "max": 7,
+        "__gohashid": 7
+      },
+      {
+        "key": 1008,
+        "name": "Random",
+        "type": "random",
+        "color": "pink",
+        "isGroup": false,
+        "group": "",
+        "min": 8,
+        "max": 8,
+        "__gohashid": 8
+      },
+      {
+        "key": 1009,
+        "name": "Random",
+        "type": "random",
+        "color": "pink",
+        "isGroup": false,
+        "group": "",
+        "min": 9,
+        "max": 9,
+        "__gohashid": 9
+      },
+      {
+        "key": 1010,
+        "name": "Random",
+        "type": "random",
+        "color": "pink",
+        "isGroup": false,
+        "group": "",
+        "min": 10,
+        "max": 10,
+        "__gohashid": 10
+      },
+      {
+        "key": 1011,
         "name": "Talk",
         "type": "speak",
         "color": "#00ff00",
         "isGroup": false,
-        "text": "Hello $",
-        "__gohashid": 2
+        "text": "The values is $1 $2 $3 $4 $5 $6 $7 $8 $9 $10",
+        "__gohashid": 11
+      },
+      {
+        "key": 1012,
+        "name": "Talk",
+        "type": "speak",
+        "color": "#00ff00",
+        "isGroup": false,
+        "text": "The random value is $ /The random value is $-1 /The random value is $-2 /The random value is $-3 /The random value is $-4 /The random value is $-5 /The random value is $-6 /The random value is $-7 /The random value is $-8 /The random value is $-9",
+        "__gohashid": 12
       }
     ],
     "link": [
@@ -44,6 +151,56 @@
         "from": 1001,
         "to": 1002,
         "__gohashid": 1
+      },
+      { 
+        "from": 1002,
+        "to": 1003,
+        "__gohashid": 2
+      },
+      { 
+        "from": 1003,
+        "to": 1004,
+        "__gohashid": 3
+      },
+      { 
+        "from": 1004,
+        "to": 1005,
+        "__gohashid": 4
+      },
+      { 
+        "from": 1005,
+        "to": 1006,
+        "__gohashid": 5
+      },
+      { 
+        "from": 1006,
+        "to": 1007,
+        "__gohashid": 6
+      },
+      { 
+        "from": 1007,
+        "to": 1008,
+        "__gohashid": 7
+      },
+      { 
+        "from": 1008,
+        "to": 1009,
+        "__gohashid": 8
+      },
+      { 
+        "from": 1009,
+        "to": 1010,
+        "__gohashid": 9
+      },
+      { 
+        "from": 1010,
+        "to": 1011,
+        "__gohashid": 10
+      },
+      { 
+        "from": 1011,
+        "to": 1012,
+        "__gohashid": 11
       }
     ]
   }

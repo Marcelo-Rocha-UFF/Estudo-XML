@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from ast import And
 import hashlib
-#from logging import _levelToName
+import re # expressões regulares
 import os
 
 import random as rnd
@@ -381,22 +381,36 @@ def exec_comando(node):
         # esta parte substitui o $, ou o $-1 ou o $1 no texto
         if "$" in texto: # verifica se tem $ no texto
 
-            # verifica se var_dolar tem algum valor
+            # verifica se var_dolar tem algum valor na memoria do robô
             if (len(eva_memory.var_dolar)) == 0:
                 terminal.insert(INSERT, "\nError -> The variable $ has no value. Please, check your code.", "error")
                 terminal.see(tkinter.END)
                 exit(1)
+            else:
+                dollars_list = re.findall(r'\$[-0-9]*', texto) # encontra os padroes do dolar e retorna uma lista com as ocorrencias
+                dollars_list = sorted(dollars_list, key=len, reverse=True) # ordena a lista em ordem decrescente do len(do elemmento)
+                print(dollars_list)
+                for var_dollar in dollars_list:
+                    if len(var_dollar) == 1: # é o dollar ($)
+                        texto = texto.replace(var_dollar, eva_memory.var_dolar[-1])
+                    else: # pode ser do tipo $n ou $n-x
+                        if "-" in var_dollar:
+                            indice = int(var_dollar[2:]) # var dollar é do tipo $-1. então pega somente o 1 e converte para int
+                            texto = texto.replace(var_dollar, eva_memory.var_dolar[-(indice + 1)]) 
+                        else:
+                            indice = int(var_dollar[1:]) # var dollar é do tipo $1. então pega somente o 1 e converte para int
+                            texto = texto.replace(var_dollar, eva_memory.var_dolar[(indice - 1)])
 
-            if len(eva_memory.var_dolar) != 0: # verifica se tem conteudo em $
-                # Obs, a ordem importa na comparacao a seguir
-                if "$-1" in texto:
-                    texto = texto.replace("$-1", eva_memory.var_dolar[-2])
-                if "$1" in texto:
-                    texto = texto.replace("$1", eva_memory.var_dolar[0])
-                if "$2" in texto:
-                    texto = texto.replace("$2", eva_memory.var_dolar[1])
-                if "$" in texto:
-                    texto = texto.replace("$", eva_memory.var_dolar[-1])
+            # if len(eva_memory.var_dolar) != 0: # verifica se tem conteudo em $
+            #     # Obs, a ordem importa na comparacao a seguir
+            #     if "$-1" in texto:
+            #         texto = texto.replace("$-1", eva_memory.var_dolar[-2])
+            #     if "$1" in texto:
+            #         texto = texto.replace("$1", eva_memory.var_dolar[0])
+            #     if "$2" in texto:
+            #         texto = texto.replace("$2", eva_memory.var_dolar[1])
+            #     if "$" in texto:
+            #         texto = texto.replace("$", eva_memory.var_dolar[-1])
             
         # esta parte implementa o texto aleatorio gerado pelo uso do caractere /
         texto = texto.split(sep="/") # texto vira uma lista com a qtd de frases divididas pelo caract. /
