@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from ast import And
 import hashlib
 import re # expressões regulares
 import os
@@ -297,6 +296,12 @@ def exec_comando(node):
     elif node.tag == "random":
         min = node.attrib["min"]
         max = node.attrib["max"]
+        # verifica se min <= max
+        if (int(min) > int(max)):
+            terminal.insert(INSERT, "\nError -> The 'min' attribute of the random command must be less than or equal to the 'max' attribute. Please, check your code.", "error")
+            terminal.see(tkinter.END)
+            exit(1)
+
         eva_memory.var_dolar.append(str(rnd.randint(int(min), int(max))))
         terminal.insert(INSERT, "\nstate: Generating a random number: " + eva_memory.var_dolar[-1])
         terminal.see(tkinter.END)
@@ -353,29 +358,50 @@ def exec_comando(node):
     elif node.tag == "talk":
         texto = node.text
         # substitui as variaveis através do texto. as variaveis devem existir na memoria
-        texto_aux = texto
-        for i in range(len(texto)):
-            if texto[i] == "#":
-                # verifica se a memoria (vars) do robô está vazia
-                if eva_memory.vars == {}:
-                    terminal.insert(INSERT, "\nError -> No variables have been defined. Please, check your code.", "error")
+        if "#" in texto:
+            # verifica se a memoria (vars) do robô está vazia
+            if eva_memory.vars == {}:
+                terminal.insert(INSERT, "\nError -> No variables have been defined. Please, check your code.", "error")
+                terminal.see(tkinter.END)
+                exit(1)
+
+            var_list = re.findall(r'\#[a-zA-Z]+[0-9]*', texto) # gera lista de ocorrencias de vars (#...)
+            for v in var_list:
+                if v[1:] in eva_memory.vars:
+                    texto = texto.replace(v, str(eva_memory.vars[v[1:]]))
+                else:
+                    # Se a variavel não existe na memoria do robô, exibe mensagem de erro.
+                    print("================================")
+                    error_string = "\nError -> The variable #" + v[1:] + " has not been declared. Please, check your code."
+                    terminal.insert(INSERT, error_string, "error")
                     terminal.see(tkinter.END)
                     exit(1)
-                inicio = i
-                while texto[i] != " ":
-                    i += 1
-                    if i == len(texto):
-                        break
-                if i - inicio > 0:
-                    for v in eva_memory.vars:
-                        if v == texto[inicio + 1: i]:
-                            texto_aux = texto_aux.replace(texto[inicio: i], str(eva_memory.vars[v]))
-                        else:
-                            # Se a variavel não existe na memoria do robô, exibe mensagem de erro.
-                            error_string = "\nError -> The variable #" + texto[inicio + 1: i] + " has not been declared. Please, check your code."
-                            terminal.insert(INSERT, error_string, "error")
-                            terminal.see(tkinter.END)
-                            exit(1)
+
+        texto_aux = texto
+        # for i in range(len(texto)):
+        #     if texto[i] == "#":
+        #         # re.findall(r'\#[a-zA-Z]+[0-9]*', a) ##########
+        #         # verifica se a memoria (vars) do robô está vazia
+        #         if eva_memory.vars == {}:
+        #             terminal.insert(INSERT, "\nError -> No variables have been defined. Please, check your code.", "error")
+        #             terminal.see(tkinter.END)
+        #             exit(1)
+        #         inicio = i
+        #         while texto[i] != " ":
+        #             i += 1
+        #             if i == len(texto):
+        #                 break
+        #         if i - inicio > 0:
+        #             for v in eva_memory.vars:
+        #                 if v == texto[inicio + 1: i]:
+        #                     texto_aux = texto_aux.replace(texto[inicio: i], str(eva_memory.vars[v]))
+        #                 else:
+        #                     # Se a variavel não existe na memoria do robô, exibe mensagem de erro.
+        #                     print("================================")
+        #                     error_string = "\nError -> The variable #" + texto[inicio + 1: i] + " has not been declared. Please, check your code."
+        #                     terminal.insert(INSERT, error_string, "error")
+        #                     terminal.see(tkinter.END)
+        #                     exit(1)
         texto = texto_aux
 
         # esta parte substitui o $, ou o $-1 ou o $1 no texto
@@ -386,31 +412,19 @@ def exec_comando(node):
                 terminal.insert(INSERT, "\nError -> The variable $ has no value. Please, check your code.", "error")
                 terminal.see(tkinter.END)
                 exit(1)
-            else:
+            else: # encontra os padroes $ $n ou $-n no string e substitui pelos valores correspondentes
                 dollars_list = re.findall(r'\$[-0-9]*', texto) # encontra os padroes do dolar e retorna uma lista com as ocorrencias
                 dollars_list = sorted(dollars_list, key=len, reverse=True) # ordena a lista em ordem decrescente do len(do elemmento)
-                print(dollars_list)
                 for var_dollar in dollars_list:
                     if len(var_dollar) == 1: # é o dollar ($)
                         texto = texto.replace(var_dollar, eva_memory.var_dolar[-1])
-                    else: # pode ser do tipo $n ou $n-x
-                        if "-" in var_dollar:
-                            indice = int(var_dollar[2:]) # var dollar é do tipo $-1. então pega somente o 1 e converte para int
+                    else: # pode ser do tipo $n ou $-n
+                        if "-" in var_dollar: # tipo $-n
+                            indice = int(var_dollar[2:]) # var dollar é do tipo $-n. então pega somente o n e converte para int
                             texto = texto.replace(var_dollar, eva_memory.var_dolar[-(indice + 1)]) 
-                        else:
-                            indice = int(var_dollar[1:]) # var dollar é do tipo $1. então pega somente o 1 e converte para int
+                        else: # tipo $n
+                            indice = int(var_dollar[1:]) # var dollar é do tipo $n. então pega somente o n e converte para int
                             texto = texto.replace(var_dollar, eva_memory.var_dolar[(indice - 1)])
-
-            # if len(eva_memory.var_dolar) != 0: # verifica se tem conteudo em $
-            #     # Obs, a ordem importa na comparacao a seguir
-            #     if "$-1" in texto:
-            #         texto = texto.replace("$-1", eva_memory.var_dolar[-2])
-            #     if "$1" in texto:
-            #         texto = texto.replace("$1", eva_memory.var_dolar[0])
-            #     if "$2" in texto:
-            #         texto = texto.replace("$2", eva_memory.var_dolar[1])
-            #     if "$" in texto:
-            #         texto = texto.replace("$", eva_memory.var_dolar[-1])
             
         # esta parte implementa o texto aleatorio gerado pelo uso do caractere /
         texto = texto.split(sep="/") # texto vira uma lista com a qtd de frases divididas pelo caract. /
@@ -459,8 +473,15 @@ def exec_comando(node):
         terminal.insert(INSERT, message_audio)
         terminal.see(tkinter.END)
         ledAnimation("speak")
-        playsound(sound_file, block = block)
-        ledAnimation("stop")
+        try:
+            playsound(sound_file, block = block)
+            ledAnimation("stop")
+        except Exception as e:
+            # trata uma exceção. não achei exceções na documentação da biblioteca
+            error_string = "\nError -> " + str(e) + "."
+            terminal.insert(INSERT, error_string, "error")
+            terminal.see(tkinter.END)
+            exit(1)
 
 
     elif node.tag == "case": 
@@ -503,7 +524,7 @@ def exec_comando(node):
             # case 1.3 (tipo de op="MATEMATICA") Comparando $ com uma var (em valor) de maneira matemática
             if "#" in valor: # verifica se valor é uma variável
                 # verifica se var #... NÃO existe na memória
-                if not(valor[1:] in eva_memory.vars):
+                if (valor[1:] in eva_memory.vars) == False:
                     error_string = "\nError -> The variable #" + valor[1:] + " has not been declared. Please, check your code."
                     terminal.insert(INSERT, error_string, "error")
                     terminal.see(tkinter.END)

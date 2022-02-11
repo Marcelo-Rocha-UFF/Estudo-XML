@@ -5,6 +5,9 @@
       <audioEffects mode="on" vol="100%" />
     </settings>
     <script>
-      <random min="2" max="1" key="1001" />
+      <counter var="x" op="=" value="1" key="1001" />
+      <talk key="1002">The value of x is #x</talk>
+      <counter var="y" op="=" value="2" key="1003" />
+      <talk key="1004">The value of y is #y</talk>
     </script>
 </evaml>
