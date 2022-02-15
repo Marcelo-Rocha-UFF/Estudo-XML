@@ -341,7 +341,7 @@ def case_process(case_command):
   if case_command.attrib['op'] == "eq":  op = "=="
   if case_command.attrib['op'] == "lte": op = "<="
   if case_command.attrib['op'] == "gte": op = ">="
-  if case_command.attrib['op'] == "ne":  op = "!==" # preciso verificar este.parece que os mexicanos nao implementaram o not.
+  if case_command.attrib['op'] == "ne":  op = "!=" # preciso verificar este.parece que os mexicanos nao implementaram o not.
     
   # verifica qual o tipo de comparacao para $. Exact ou contain
   if case_command.attrib["op"] == "exact":

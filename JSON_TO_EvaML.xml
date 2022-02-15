@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf8'?>
+<evaml name="script20"><settings><voice tone="en-US_AllisonV3Voice" key="1000" /><lightEffects mode="on" /><audioEffects mode="on" vol="100%" /></settings><script><random key="1001" min="1" max="1" /><case key="1002" op="eq" value="1" var="$" /><talk key="1003">OK</talk><default key="1004" op="exact" value="" var="$" /><talk key="1005">False</talk></script><links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1001" to="1004" /><link from="1004" to="1005" /></links></evaml>

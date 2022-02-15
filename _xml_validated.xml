@@ -1,2 +1,2 @@
 <?xml version='1.0' encoding='utf8'?>
-<evaml name="teste3" xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><settings><voice tone="pt-BR_IsabelaV3Voice" /><lightEffects mode="on" /><audioEffects mode="on" vol="100%" /></settings><script><script><talk><End of script /></talk></script></script></evaml>
+<evaml><settings><voice tone="marcelo" key="1000" /><lightEffects mode="on" /><audioEffects mode="on" vol="100%" /></settings><script /><links /></evaml>

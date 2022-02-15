@@ -5,16 +5,6 @@
       <audioEffects mode="on" vol="100%" />
     </settings>
 	<script>
-		<talk key="1001">Hi! I am the robot EVA</talk>
-		<light state="on" color="blue" key="1002" />
-		<counter var="x" op="=" value="1" key="1003" />
-		<switch var="x">
-			<case op="lte" value="0" key="1004" child_proc="true" var="x">
-				<talk key="1005">Ok</talk>
-			</case>
-			<default key="1006" child_proc="true" var="x" value="" op="exact">
-				<talk key="1007">Wrong</talk>
-			</default>
-		</switch>
+		<light state="on" color="blue" key="1001" />
 	</script>
-	<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1003" to="1006" /><link from="1006" to="1007" /></links></evaml>
+	<links><link from="1000" to="1001" /></links></evaml>
