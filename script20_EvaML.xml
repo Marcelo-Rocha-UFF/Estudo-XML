@@ -5,14 +5,13 @@
       <audioEffects mode="on" vol="100%" />
     </settings>
 	<script>
-		<random min="1" max="1" key="1001" />
-		<switch var="$">
-			<case op="eq" value="1" key="1002" child_proc="true" var="$">
-				<talk key="1003">OK</talk>
+		<switch var="x">
+			<case op="eq" value="#y" key="1001" child_proc="true" var="x">
+				<talk key="1002">OK</talk>
 			</case>
-			<default key="1004" child_proc="true" var="$" value="" op="exact">
-				<talk key="1005">False</talk>
+			<default key="1003" child_proc="true" var="x" value="" op="exact">
+				<talk key="1004">False</talk>
 			</default>
 		</switch>
 	</script>
-<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1001" to="1004" /><link from="1004" to="1005" /></links></evaml>
+<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1000" to="1003" /><link from="1003" to="1004" /></links></evaml>

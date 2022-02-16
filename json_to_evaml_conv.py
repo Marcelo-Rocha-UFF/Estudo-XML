@@ -7,14 +7,14 @@ from click import command # pode retirar depois
 
 
 # lendo do arquivo json
-with open('script20.json', 'r') as openfile:
+with open('json01.json', 'r') as openfile:
   json_object = json.load(openfile) # é um dict.
     
 comandos_json = json_object["data"]["node"] # Lista de nós. Cada nó (um comando) é um dict. com os seus pares chave/valor do respectivo elemento.
 links_json = json_object["data"]["link"] # Lista de links. Cada link é um dict. com as chaves "from" e "to"
-print(json_object.keys(),"\n")
-print(comandos_json,"\n")
-print(links_json)
+#print(json_object.keys(),"\n")
+#print(comandos_json,"\n")
+#print(links_json)
 
 # cria o elemento raiz <evaml> e seus subelementos
 evaml_atributos = {"name":json_object["nombre"]}
@@ -23,7 +23,7 @@ evaml = ET.Element("evaml", evaml_atributos )
 settings = ET.SubElement(evaml, "settings")
 # add os subelementos de settings com seus atributos
 for comando in comandos_json:
-  if comando["name"] == "Voice": # busca comando voice e seus atributos
+  if comando["type"] == "voice": # busca comando voice e seus atributos
     voice_atributos = {"tone":comando["voice"], "key":str(comando["key"])}
 
 voice = ET.SubElement(settings, "voice", voice_atributos)
@@ -45,7 +45,7 @@ def processa_nodes(script, comandos_json):
 
     # <light>
     if comando["type"] == "light":
-      light_atributos = {"key" : str(comando["key"]), "state" : comando["state"], "color" : comando["color"]}
+      light_atributos = {"key" : str(comando["key"]), "state" : comando["state"], "color" : comando["lcolor"]}
       ET.SubElement(script, "light", light_atributos)
   
 
@@ -128,38 +128,65 @@ def processa_nodes(script, comandos_json):
 
     # <if>
     if comando["type"] == "if":
-      tag = "case" # a tag padrão é a case
+      exp_logica = comando["text"] # string com a expressao logica do condition
+      tag = "case" # temos esta variável aqui, para que, caso seja necessário, criemos o elemento default.
       # mapping "op" types
-      if (comando["opt"]) == 4: # exact com $
-        op = "exact" # exact
-        value = comando["text"]
-        if (value == ""): # caso op seja exact e value "", identifica o condicion como default. Isso gera uma restrição na construção de scripts usando a VPL
-          tag = "default"
+      if (comando["opt"]) == 4: # exact é sempre comparado com $
         var = "$"
+        op = "exact" # exact
+        value = exp_logica # neste não tem exp. logica no conteudo, só uma string
+        if (value == ""): # caso op seja exact e value "", fica definido aqui o "condicion" como <default>. Isso gera uma restrição na construção de scripts usando a VPL
+          tag = "default"
       elif (comando["opt"]) == 2: # contain com $
         op = "contain"
         value = comando["text"]
         var = "$"
-      elif (comando["opt"]) == 5: # eq com #variavel
-        if ("==" in comando["text"]): op = "eq"
-        elif (">=" in comando["text"]): op = "gte"
-        elif ("<=" in comando["text"]): op = "lte"
-        elif ("!=" in comando["text"]): op = "ne"
-        elif (">" in comando["text"]): op = "gt"
-        elif ("<" in comando["text"]): op = "lt"
+      elif (comando["opt"]) == 5: # comparacao matemática
+        if ("==" in exp_logica): # faz o map. e retira da expressão, restando apenas os operandos separados por espaçoes vazios
+          op = "eq"
+          exp_logica = exp_logica.replace("==", "  ")
+        elif (">=" in exp_logica):
+          op = "gte"
+          exp_logica = exp_logica.replace(">=", "  ")
+        elif ("<=" in exp_logica):
+          op = "lte"
+          exp_logica = exp_logica.replace("<=", "  ")
+        elif ("!=" in exp_logica):
+          op = "ne"
+          exp_logica = exp_logica.replace("!=", "  ")
+        elif (">" in exp_logica):
+          op = "gt"
+          exp_logica = exp_logica.replace(">", "  ")
+        elif ("<" in exp_logica):
+          op = "lt"
+          exp_logica = exp_logica.replace("<", "  ")
 
         # com opt igual 5, comando["text"] tem algo desse tipo #x == 2 ou $ == 2(comparação matematica)
-        # a exp reg, por padrao, ret uma lista. Pegamos o prim. e unico elemento, a partir do seg. caract. ou seja, depois do "#"
-        if ("$" in comando["text"]):
-          var = "$" # comparacao com dolar
+        if ("$" in exp_logica):
+          var = "$" # dolar é o primeiro operando.
         else:
-          var = (re.findall(r'\#[a-zA-Z]+[0-9]*', comando["text"]))[0][1:] # comparacao com variavel
-
-        value = (re.findall(r'[0-9]+', comando["text"]))[0]
+          # a exp. logica tem um ou dois operandos do tipo #n
+          # a expressão regular retorna uma lista de #x, #y e etc
+          var = (re.findall(r'\#[a-zA-Z]+[0-9]*', exp_logica)) 
+        
+        if (type(var) == str): # type str indica que var é $, caso contrário var é uma lista resultante da expressao regular
+          # pegando o "value". tenta ler um numero
+          value = (re.findall(r'[0-9]+', exp_logica))
+          if (len(value) == 0): # não encontrou um numero na expressao
+            # se não é um captura a var #n no oprando da direita
+            value = re.findall(r'\#[a-zA-Z]+[0-9]*', exp_logica)[0] # captura a variavel do tipo #n e coloca em value. neste caso precisa ir com #
+          else: # encontrou o numero. lembrando que a exp. regular retorna uma lista
+            value = value[0] # entao value[0] é a string retornada pela exp. regular
+        else: # neste caso $ não está na exp. e var é um lista. precisamos verificar se tem um ou dois elementos
+          print(len(var))
+          if (len(var) == 1): # o operando da esquerda é uma var #n
+            var = var[0][1:] # pegamos a variavle sem o #
+            value = (re.findall(r'[0-9]+', exp_logica))[0] # neste caso value só pode ser um número
+          else: # var tem dois elementos, ou seja, os dois operandos sao do tipo #n #m
+            var = var[0][1:] # pegamos a variavle sem o #
+            value = var[1] # uma var em value precisa ir com o caracter #
       if_atributos = {"key" : str(comando["key"]), "op" : op, "value" : value, "var" : var}
       ET.SubElement(script, tag , if_atributos)
-
-      #<case op="eq" value="1" key="1034" child_proc="true" var="$">
 
 
 
@@ -173,7 +200,7 @@ def processa_links(links, links_json):
   xml_processed = ET.tostring(evaml, encoding='utf8').decode('utf8')
   with open("JSON_TO_EvaML.xml", "w") as text_file: # grava o xml processado (temporario) em um arquivo para ser importado pelo parser
       text_file.write(xml_processed)
-  pprint(xml_processed)
+  #pprint(xml_processed)
 
 
 

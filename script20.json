@@ -14,52 +14,41 @@
       },
       {
         "key": 1001,
-        "name": "Random",
-        "type": "random",
-        "color": "pink",
-        "isGroup": false,
-        "group": "",
-        "min": 1,
-        "max": 1,
-        "__gohashid": 1
-      },
-      {
-        "key": 1002,
         "name": "Condition",
         "type": "if",
         "color": "white",
         "isGroup": false,
-        "text": "$ == 1",
+        "text": "#x == #y",
         "opt": 5,
-        "__gohashid": 2
-      },
+        "__gohashid": 1
+        },
       {
-        "key": 1003,
+        "key": 1002,
         "name": "Talk",
         "type": "speak",
         "color": "#00ff00",
         "isGroup": false,
         "text": "OK",
-        "__gohashid": 3
+        "__gohashid": 2
       },
       {
-        "key": 1004,
+        "key": 1003,
         "name": "Condition",
         "type": "if",
         "color": "white",
         "isGroup": false,
         "text": "",
         "opt": 4,
-        "__gohashid": 4
+        "__gohashid": 3
       },
       {
-        "key": 1005,
+        "key": 1004,
         "name": "Talk",
         "type": "speak",
         "color": "#00ff00",
         "isGroup": false,
         "text": "False",
-        "__gohashid": 5
+        "__gohashid": 4
       }
     ],
     "link": [
@@ -74,19 +63,14 @@
         "__gohashid": 1
       },
       { 
-        "from": 1002,
+        "from": 1000,
         "to": 1003,
         "__gohashid": 2
       },
       { 
-        "from": 1001,
+        "from": 1003,
         "to": 1004,
         "__gohashid": 3
-      },
-      { 
-        "from": 1004,
-        "to": 1005,
-        "__gohashid": 4
       }
     ]
   }

@@ -1,0 +1,125 @@
+{
+  "_id": "e9c5da0e-5e33-47c1-adb5-25c1a6fb4872",
+  "nombre": "json01",
+  "data": {
+    "node": [
+      {
+        "key": 1645008671396,
+        "name": "Voice_1",
+        "type": "voice",
+        "color": "lightblue",
+        "isGroup": false,
+        "voice": "pt-BR_IsabelaV3Voice",
+        "__gohashid": 586
+      },
+      {
+        "key": 1645008679854,
+        "name": "Random_2",
+        "type": "random",
+        "color": "lightblue",
+        "isGroup": false,
+        "min": 1,
+        "max": 5,
+        "__gohashid": 690
+      },
+      {
+        "key": 1645008726620,
+        "name": "Condition_6",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "",
+        "opt": 4,
+        "__gohashid": 1671
+      },
+      {
+        "key": 1645008760608,
+        "name": "Light_8",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "lcolor": "#548dd4",
+        "state": "on",
+        "__gohashid": 2326
+      },
+      {
+        "key": 1645008791568,
+        "name": "Light_9",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "lcolor": "#ff0000",
+        "state": "on",
+        "__gohashid": 2642
+      },
+      {
+        "key": 1645008815364,
+        "name": "Talk_10",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "$",
+        "__gohashid": 3007
+      },
+      {
+        "key": 1645008694139,
+        "name": "Condition_3",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "text": "$ == 1",
+        "opt": 5,
+        "__gohashid": 4327
+      },
+      {
+        "key": 1645008704008,
+        "name": "Condition_4",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "text": "$ == 2",
+        "opt": 5,
+        "__gohashid": 4741
+      }
+    ],
+    "link": [
+      {
+        "from": 1645008671396,
+        "to": 1645008679854,
+        "__gohashid": 692
+      },
+      {
+        "from": 1645008679854,
+        "to": 1645008694139,
+        "__gohashid": 815
+      },
+      {
+        "from": 1645008679854,
+        "to": 1645008704008,
+        "__gohashid": 982
+      },
+      {
+        "from": 1645008679854,
+        "to": 1645008726620,
+        "__gohashid": 1673
+      },
+      {
+        "from": 1645008694139,
+        "to": 1645008760608,
+        "__gohashid": 2328
+      },
+      {
+        "from": 1645008704008,
+        "to": 1645008791568,
+        "__gohashid": 2644
+      },
+      {
+        "from": 1645008726620,
+        "to": 1645008815364,
+        "__gohashid": 3009
+      }
+    ]
+  }
+}

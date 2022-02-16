@@ -132,7 +132,8 @@ def runScript():
     bt_run['state'] = DISABLED
     bt_stop['state'] = NORMAL
     play = True # ativa a var do play do script
-    busca_links("1000")
+    root.find("settings").find("voice").attrib["key"]
+    busca_links(root.find("settings").find("voice").attrib["key"]) # o primeiro elemento da interação é o
     threading.Thread(target=link_process, args=()).start()
 
 # Encerra a thread que roda o script
@@ -754,6 +755,7 @@ def busca_commando(key): # keys são strings
 		if elem.get("key") != None: # verifica se node tem atributo id
 			if elem.attrib["key"] == key:
 				return elem
+
 
 
 # busca e insere na lista os links que tem att_from igual ao from do link
