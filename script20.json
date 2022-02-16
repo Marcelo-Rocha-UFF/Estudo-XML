@@ -14,41 +14,35 @@
       },
       {
         "key": 1001,
-        "name": "Condition",
-        "type": "if",
-        "color": "white",
+        "name": "Eva_Emotion",
+        "type": "emotion",
+        "color": "lightcoral",
         "isGroup": false,
-        "text": "#x == #y",
-        "opt": 5,
+        "group": "",
+        "emotion": "anger",
+        "level": 0,
+        "speed": 0,
         "__gohashid": 1
-        },
+      },
       {
         "key": 1002,
         "name": "Talk",
         "type": "speak",
         "color": "#00ff00",
         "isGroup": false,
-        "text": "OK",
+        "text": "Hello how are you",
         "__gohashid": 2
       },
       {
         "key": 1003,
-        "name": "Condition",
-        "type": "if",
-        "color": "white",
+        "name": "Light",
+        "type": "light",
+        "color": "#ffa500",
         "isGroup": false,
-        "text": "",
-        "opt": 4,
+        "group": "",
+        "lcolor": "#ff0000",
+        "state": "on",
         "__gohashid": 3
-      },
-      {
-        "key": 1004,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
-        "isGroup": false,
-        "text": "False",
-        "__gohashid": 4
       }
     ],
     "link": [
@@ -63,14 +57,9 @@
         "__gohashid": 1
       },
       { 
-        "from": 1000,
+        "from": 1002,
         "to": 1003,
         "__gohashid": 2
-      },
-      { 
-        "from": 1003,
-        "to": 1004,
-        "__gohashid": 3
       }
     ]
   }

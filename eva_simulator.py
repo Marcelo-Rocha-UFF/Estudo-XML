@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import hashlib
+import mimetypes
 import re # expressões regulares
 import os
 
@@ -9,6 +10,7 @@ import xml.etree.ElementTree as ET
 
 from ibm_watson.text_to_speech_v1 import Voice
 import eva_memory # modulo de memoria do EvaSIM
+import json_to_evaml_conv # modulo de conversao de json para XML
 
 from tkinter import *
 from tkinter import filedialog as fd
@@ -147,8 +149,19 @@ def stopScript():
 def importFile():
     global root, script_node, links_node
     print("Importing a file...")
-    filetypes = (('evaML files', '*.xml'), )
+    # agora o EvaSIM pode ler json
+    filetypes = (('evaML files', '*.xml *.json'), )
     script_file = fd.askopenfile(mode = "r", title = 'Open an EvaML Script File', initialdir = './', filetypes = filetypes)
+    # imaginado que o cara vai ler um json ou um xml
+    if (re.findall(r'\.(xml|json|JSON|XML)', str(script_file)))[0].lower() == "json": # leitura de json
+        print("Convertendo e executando um arquivo do tipo JSON")
+        #  script_file não é uma string e ainda possui infos além do caminho do arquivo
+        # por isso precisa ser processada antes de ser passada para o modulo de conversão
+        json_to_evaml_conv.converte(str(script_file).split("'")[1])
+        script_file = "__json_to_evam_converted.xml" # arquivo json convertido para XML
+    else: # leitura de um XML
+        print("Executando um arquivo do tipo XML")
+
     # variaveis da vm
     tree = ET.parse(script_file)  # arquivo de codigo xml
     root = tree.getroot() # evaml root node

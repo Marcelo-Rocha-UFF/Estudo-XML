@@ -8,13 +8,8 @@
       <audioEffects mode="on" vol="100%" />
     </settings>
 	<script>
-		<switch var="x">
-			<case op="eq" value="#y">
-				<talk>OK</talk>
-			</case>
-			<default>
-				<talk>False</talk>
-			</default>
-		</switch>
+		<evaEmotion emotion="angry" />
+		<talk>Hello how are you</talk>
+		<light state="on" color="red" />
 	</script>
 </evaml>

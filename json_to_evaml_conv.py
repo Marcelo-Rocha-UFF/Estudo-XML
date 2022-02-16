@@ -3,43 +3,50 @@ import xml.etree.ElementTree as ET
 import re # expressão regular
 from pprint import pprint
 
-from click import command # pode retirar depois
+script = ""
+comandos_json= ""
+links = ""
+links_json = ""
+evaml = ""
+
+def converte(json_file_name):
+  global script, comandos_json, links, links_json, evaml
+  # lendo do arquivo json
+  with open(json_file_name, 'r') as openfile:
+    json_object = json.load(openfile) # é um dict.
+      
+  comandos_json = json_object["data"]["node"] # Lista de nós. Cada nó (um comando) é um dict. com os seus pares chave/valor do respectivo elemento.
+  links_json = json_object["data"]["link"] # Lista de links. Cada link é um dict. com as chaves "from" e "to"
+
+  # cria o elemento raiz <evaml> e seus subelementos
+  evaml_atributos = {"name":json_object["nombre"]}
+  evaml = ET.Element("evaml", evaml_atributos )
+  #
+  settings = ET.SubElement(evaml, "settings")
+  # add os subelementos de settings com seus atributos
+  for comando in comandos_json:
+    if comando["type"] == "voice": # busca comando voice e seus atributos
+      voice_atributos = {"tone":comando["voice"], "key":str(comando["key"])}
+
+  voice = ET.SubElement(settings, "voice", voice_atributos)
+
+  # este elementos ficam com os valores default pois ainda não foram implementados no robô
+  lightEffects_atributos = {"mode":"on"}
+  lightEffects = ET.SubElement(settings, "lightEffects", lightEffects_atributos)
+
+  audioEffects_atributos = {"mode":"on",  "vol":"100%"}
+  audioEffects = ET.SubElement(settings, "audioEffects", audioEffects_atributos)
+
+  # cria as outras secões do documento EvaML
+  script = ET.SubElement(evaml, "script")
+  links = ET.SubElement(evaml, "links")
+
+  # chama as funções de processamento
+  processa_nodes(script, comandos_json) # converte os nós json para nós XML
+  processa_links(links, links_json) # converte os links json para links XML
 
 
-# lendo do arquivo json
-with open('json01.json', 'r') as openfile:
-  json_object = json.load(openfile) # é um dict.
-    
-comandos_json = json_object["data"]["node"] # Lista de nós. Cada nó (um comando) é um dict. com os seus pares chave/valor do respectivo elemento.
-links_json = json_object["data"]["link"] # Lista de links. Cada link é um dict. com as chaves "from" e "to"
-#print(json_object.keys(),"\n")
-#print(comandos_json,"\n")
-#print(links_json)
-
-# cria o elemento raiz <evaml> e seus subelementos
-evaml_atributos = {"name":json_object["nombre"]}
-evaml = ET.Element("evaml", evaml_atributos )
-#
-settings = ET.SubElement(evaml, "settings")
-# add os subelementos de settings com seus atributos
-for comando in comandos_json:
-  if comando["type"] == "voice": # busca comando voice e seus atributos
-    voice_atributos = {"tone":comando["voice"], "key":str(comando["key"])}
-
-voice = ET.SubElement(settings, "voice", voice_atributos)
-
-# este elementos ficam com os valores default pois ainda não foram implementados no robô
-lightEffects_atributos = {"mode":"on"}
-lightEffects = ET.SubElement(settings, "lightEffects", lightEffects_atributos)
-
-audioEffects_atributos = {"mode":"on",  "vol":"100%"}
-audioEffects = ET.SubElement(settings, "audioEffects", audioEffects_atributos)
-
-# 
-script = ET.SubElement(evaml, "script")
-links = ET.SubElement(evaml, "links")
-
-# processamentos dos comandos no arquivo json
+# processamentos dos comandos no arquivo json #######################################################################################
 def processa_nodes(script, comandos_json):
   for comando in comandos_json:
 
@@ -190,20 +197,15 @@ def processa_nodes(script, comandos_json):
 
 
 
-# processamentos dos links no arquivo json
+# processamentos dos links no arquivo json #######################################################################################################
 def processa_links(links, links_json):
   for link in links_json:
     link_atributos = {"from" : str(link["from"]), "to" : str(link["to"])}
     ET.SubElement(links, "link", link_atributos)
 
-  # somente para impressão
+  # gera o arquivo XML no disco
   xml_processed = ET.tostring(evaml, encoding='utf8').decode('utf8')
-  with open("JSON_TO_EvaML.xml", "w") as text_file: # grava o xml processado (temporario) em um arquivo para ser importado pelo parser
+  with open("__json_to_evam_converted.xml", "w") as text_file: # grava o xml processado (temporario) em um arquivo para ser importado pelo parser
       text_file.write(xml_processed)
-  #pprint(xml_processed)
 
 
-
-processa_nodes(script, comandos_json)
-processa_links(links, links_json)
-#ET.dump(evaml)
