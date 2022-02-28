@@ -1,0 +1,278 @@
+{
+  "_id": "104895d9-cb82-4de6-9a40-40ab320a879f",
+  "nombre": "json02",
+  "data": {
+    "node": [
+      {
+        "key": 1645051203502,
+        "name": "Voice_1",
+        "type": "voice",
+        "color": "lightblue",
+        "isGroup": false,
+        "voice": "en-US_AllisonV3Voice",
+        "__gohashid": 945
+      },
+      {
+        "key": 1645051558808,
+        "name": "Talk_2",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Hello everyone! I am the Eva simulator software",
+        "__gohashid": 1078
+      },
+      {
+        "key": 1645051602815,
+        "name": "Eva_Emotion_3",
+        "type": "emotion",
+        "color": "lightyellow",
+        "isGroup": false,
+        "emotion": "joy",
+        "level": 0,
+        "__gohashid": 1226
+      },
+      {
+        "key": 1645051698915,
+        "name": "Audio_4",
+        "type": "sound",
+        "color": "lightblue",
+        "isGroup": false,
+        "src": "mario-end",
+        "wait": true,
+        "__gohashid": 2712
+      },
+      {
+        "key": 1645051775448,
+        "name": "Eva_Emotion_6",
+        "type": "emotion",
+        "color": "lightcoral",
+        "isGroup": false,
+        "emotion": "anger",
+        "level": 0,
+        "__gohashid": 3270
+      },
+      {
+        "key": 1645051844591,
+        "name": "Talk_7",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "I will draw a number from 1 to 3. I will say the number and show a color for each one of them",
+        "__gohashid": 3584
+      },
+      {
+        "key": 1645051865085,
+        "name": "Random_8",
+        "type": "random",
+        "color": "lightblue",
+        "isGroup": false,
+        "min": 1,
+        "max": 3,
+        "__gohashid": 3972
+      },
+      {
+        "key": 1645051879784,
+        "name": "Condition_9",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "1",
+        "opt": 4,
+        "__gohashid": 4409
+      },
+      {
+        "key": 1645051887376,
+        "name": "Condition_10",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "2",
+        "opt": 4,
+        "__gohashid": 4870
+      },
+      {
+        "key": 1645051892585,
+        "name": "Condition_11",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "3",
+        "opt": 4,
+        "__gohashid": 5380
+      },
+      {
+        "key": 1645051960952,
+        "name": "Talk_12",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "The number is $",
+        "__gohashid": 10680
+      },
+      {
+        "key": 1645051976676,
+        "name": "Light_13",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "lcolor": "#ff0000",
+        "state": "on",
+        "__gohashid": 11294
+      },
+      {
+        "key": 1645052010811,
+        "name": "Light_14",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "lcolor": "#00b050",
+        "state": "on",
+        "__gohashid": 14218
+      },
+      {
+        "key": 1645052026079,
+        "name": "Talk_15",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "The number is $",
+        "__gohashid": 14930
+      },
+      {
+        "key": 1645052054012,
+        "name": "Light_16",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "lcolor": "#ff0066",
+        "state": "on",
+        "__gohashid": 15691
+      },
+      {
+        "key": 1645052070412,
+        "name": "Talk_17",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "The number is $",
+        "__gohashid": 16529
+      },
+      {
+        "key": 1645052094164,
+        "name": "Talk_18",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Bye bye!",
+        "__gohashid": 17413
+      },
+      {
+        "key": 1645051738321,
+        "name": "Talk_5",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "group": "",
+        "text": "Now, I can run J son scripts too",
+        "__gohashid": 22279
+      }
+    ],
+    "link": [
+      {
+        "from": 1645051203502,
+        "to": 1645051602815,
+        "__gohashid": 1228
+      },
+      {
+        "__gohashid": 1436,
+        "from": 1645051602815,
+        "to": 1645051558808
+      },
+      {
+        "from": 1645051558808,
+        "to": 1645051698915,
+        "__gohashid": 2714
+      },
+      {
+        "from": 1645051698915,
+        "to": 1645051738321,
+        "__gohashid": 2930
+      },
+      {
+        "from": 1645051738321,
+        "to": 1645051775448,
+        "__gohashid": 3272
+      },
+      {
+        "from": 1645051775448,
+        "to": 1645051844591,
+        "__gohashid": 3586
+      },
+      {
+        "from": 1645051844591,
+        "to": 1645051865085,
+        "__gohashid": 3974
+      },
+      {
+        "from": 1645051865085,
+        "to": 1645051879784,
+        "__gohashid": 4411
+      },
+      {
+        "__gohashid": 6006,
+        "from": 1645051865085,
+        "to": 1645051887376
+      },
+      {
+        "__gohashid": 7882,
+        "from": 1645051865085,
+        "to": 1645051892585
+      },
+      {
+        "from": 1645051879784,
+        "to": 1645051976676,
+        "__gohashid": 11296
+      },
+      {
+        "__gohashid": 11985,
+        "from": 1645051976676,
+        "to": 1645051960952
+      },
+      {
+        "from": 1645051887376,
+        "to": 1645052010811,
+        "__gohashid": 14220
+      },
+      {
+        "from": 1645052010811,
+        "to": 1645052026079,
+        "__gohashid": 14932
+      },
+      {
+        "from": 1645051892585,
+        "to": 1645052054012,
+        "__gohashid": 15693
+      },
+      {
+        "from": 1645052054012,
+        "to": 1645052070412,
+        "__gohashid": 16531
+      },
+      {
+        "from": 1645052070412,
+        "to": 1645052094164,
+        "__gohashid": 17415
+      },
+      {
+        "__gohashid": 18354,
+        "from": 1645052026079,
+        "to": 1645052094164
+      },
+      {
+        "__gohashid": 19523,
+        "from": 1645051960952,
+        "to": 1645052094164
+      }
+    ]
+  }
+}

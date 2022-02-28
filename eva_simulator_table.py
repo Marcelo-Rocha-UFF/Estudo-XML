@@ -16,6 +16,7 @@ from tkinter import *
 from tkinter import filedialog as fd
 from tkinter import messagebox
 import tkinter
+from  tkinter import ttk # usando tabelas
 
 from playsound import playsound
 
@@ -63,15 +64,95 @@ def on_closing():
 # Create the Tkinter window
 window = Tk()
 window.title("Eva Simulator for EvaML - Version 1.0 - UFF/MidiaCom/CICESE")
-w = 945
+w = 1200
 h = 525
 window.geometry(str(w) + "x" + str(h))
-canvas = Canvas(window, bg = "#d9d9d9", width = w, height = h) # o canvas e' necessario para usar imagens com transparencia
+
+# define o frame para a imagem do robô
+frame_robot = tkinter.Frame(master=window, width= 400, height=h, bg="red")
+frame_robot.pack(fill=tkinter.Y, side=tkinter.LEFT)
+
+# criando o canvas gráfico
+canvas = Canvas(frame_robot, bg = "#d9d9d9", width = 380, height = h) # o canvas e' necessario para usar imagens com transparencia
 canvas.pack()
-# Terminal text configuration
-terminal = Text ( window, fg = "cyan", bg = "black", height = "32", width = "75")
-terminal.configure(font = ("DejaVu Sans Mono", 9))
-terminal.tag_configure("error", foreground="red")
+
+# define o frame para o terminal e o menu de botões
+frame_centro = tkinter.Frame(master=window, width= 530, height=h)
+frame_centro.pack(fill=tkinter.Y, side=tkinter.LEFT)
+
+# define o frame para as tabelas de memória
+frame_memory = tkinter.Frame(master=window, width= 180, height=h)
+frame_memory.place(x=938, y=60)
+
+# define o frame para o menu de botões
+frame_botoes = tkinter.Frame(master=frame_centro)
+frame_botoes.pack(fill=tkinter.X, pady=15, padx=10)
+
+# define o frame para o terminal
+frame_terminal = tkinter.Frame(master=frame_centro, height=400)
+frame_terminal.pack(fill=tkinter.X)
+
+# cria a tabela de memoria
+# define as propriedads da tabela com o mapa de memoria de $
+tkinter.Label(frame_memory, bg="gray70", width="30", relief="raised",  text="Variable $ (Memory Map)", pady=4).pack()
+tab_dollar = ttk.Treeview(frame_memory, height=11)
+tab_dollar.pack()
+
+tab_dollar['columns']= ('Index', 'Content', "Source")
+tab_dollar.column("#0", width=0,  stretch=NO)
+tab_dollar.column("Index",anchor=CENTER, width=45)
+tab_dollar.column("Content",anchor=CENTER, width=130)
+tab_dollar.column("Source",anchor=CENTER, width=67)
+
+tab_dollar.heading("#0",text="",anchor=CENTER)
+tab_dollar.heading("Index",text="Index",anchor=CENTER)
+tab_dollar.heading("Content",text="Content",anchor=CENTER)
+tab_dollar.heading("Source",text="Source",anchor=CENTER)
+
+# label so pra separar as tabelas
+tkinter.Label(frame_memory, text="").pack()
+
+# define as propriedads da tabela com o mapa de memoria de variaveis do usuario
+tkinter.Label(frame_memory, width="30", relief="raised", bg="gray70", text="User Variables (Memory Map)", pady=4).pack()
+tab_vars = ttk.Treeview(frame_memory, height=6)
+tab_vars.pack(fill=tkinter.Y)
+
+tab_vars['columns']= ('Var', 'Value')
+tab_vars.column("#0", width=0,  stretch=NO)
+tab_vars.column("Var",anchor=CENTER, width=130)
+tab_vars.column("Value",anchor=CENTER, width=110)
+
+tab_vars.heading("#0",text="",anchor=CENTER)
+tab_vars.heading("Var",text="Var",anchor=CENTER)
+tab_vars.heading("Value",text="Value",anchor=CENTER)
+
+
+# funcao para escrever os dados da memeria na tabela de variaveis
+def tab_load_mem_vars():
+    for i in tab_vars.get_children(): # limpa os valores da tabela
+        tab_vars.delete(i)
+
+    for var_name in eva_memory.vars: # lê a memória inserindo os valoes na tabela
+        tab_vars.insert(parent='',index='end',text='', values=(var_name, eva_memory.vars[var_name]))
+
+
+# funcao para escrever os dados da memeria na tabela mem dollar
+def tab_load_mem_dollar():
+    indice = 1 # indice para a variável dollar
+    for i in tab_dollar.get_children(): # limpa os valores da tabela
+        tab_dollar.delete(i)
+
+    for var_dollar in eva_memory.var_dolar: # lê a memória inserindo os valoes na tabela
+        if indice == len(eva_memory.var_dolar):
+            var_name = "$"
+        else:
+            var_name = "$" + str(indice)
+
+        tab_dollar.insert(parent='',index='end',text='', values=(var_name, var_dollar))
+        indice = indice + 1
+
+
+
 # Defining the image files
 eva_image = PhotoImage(file = "images/eva.png") 
 bulb_image = PhotoImage(file = "images/bulb.png")
@@ -94,7 +175,6 @@ im_bt_stop = PhotoImage(file = "images/bt_stop.png")
 canvas.create_image(160, 262, image = eva_image)
 canvas.create_oval(300, 205, 377, 285, fill = "#000000", outline = "#000000" ) # cor preta indica light off
 canvas.create_image(340, 285, image = bulb_image)
-
 
 # Eva initialization function
 def evaInit():
@@ -128,6 +208,10 @@ def runScript():
     eva_memory.var_dolar = []
     eva_memory.vars = {}
     eva_memory.reg_case = 0
+    # Limpando as tabelas
+    print("Clearing memory map tables...")
+    tab_load_mem_dollar()
+    tab_load_mem_vars()
     # initializing the memory of simulator
     fila_links =  []
     # buttons states
@@ -177,23 +261,28 @@ def clear_terminal():
     terminal.delete('1.0', END)
     # criando terminal text
     terminal.insert(INSERT, "===========================================================================\n")
-    terminal.insert(INSERT, "                         Eva Simulator for EvaML\n                Version 1.0 - UFF/MidiaCom/CICESE [2021]\n")
+    terminal.insert(INSERT, "                         Eva Simulator for EvaML\n                Version 1.0 - UFF/MidiaCom/CICESE [2022]\n")
     terminal.insert(INSERT, "===========================================================================")
 
 # criacao dos botoes da interface com usuário
-bt_power = Button ( window, text = "Power On", command = powerOn)
-bt_import = Button ( window, text = "Import Script File...", state = DISABLED, command = importFile)
-bt_run = Button ( window, text = "Run", image = im_bt_play, state = DISABLED, compound = LEFT, command = runScript)
-bt_stop = Button ( window, text = "Stop", image = im_bt_stop, state = DISABLED, compound = LEFT, command = stopScript)
-bt_clear = Button ( window, text = "Clear Term.", state = NORMAL, compound = LEFT, command = clear_terminal)
-# limpa e desenha o texto padrao do terminal
+bt_power = Button (frame_botoes, text = "Power On", command = powerOn)
+bt_power.pack(side=tkinter.LEFT, padx=5)
+bt_import = Button (frame_botoes, text = "Import Script File...", state = DISABLED, command = importFile)
+bt_import.pack(side=tkinter.LEFT, padx=5)
+bt_run = Button (frame_botoes, text = "Run", image = im_bt_play, state = DISABLED, compound = LEFT, command = runScript)
+bt_run.pack(side=tkinter.LEFT, padx=5)
+bt_stop = Button (frame_botoes, text = "Stop", image = im_bt_stop, state = DISABLED, compound = LEFT, command = stopScript)
+bt_stop.pack(side=tkinter.LEFT, padx=5)
+bt_clear = Button (frame_botoes, text = "Clear Term.", state = NORMAL, compound = LEFT, command = clear_terminal)
+bt_clear.pack(side=tkinter.LEFT, padx=5)
+
+# Terminal text configuration
+terminal = Text (frame_terminal, fg = "cyan", bg = "black", height = "32", width = "75")
+terminal.configure(font = ("DejaVu Sans Mono", 9))
+terminal.tag_configure("error", foreground="red")
+# limpa e desenha e coloca terminal no frame dele
 clear_terminal()
-terminal.place(x = 400, y = 60)
-bt_power.place(x = 400, y = 20)
-bt_import.place(x = 496, y = 20)
-bt_run.place(x = 652, y = 20)
-bt_stop.place(x = 742, y = 20)
-bt_clear.place(x = 835, y = 20)
+terminal.pack()
 
 
 # led "animations"
@@ -318,6 +407,7 @@ def exec_comando(node):
 
         eva_memory.var_dolar.append(str(rnd.randint(int(min), int(max))))
         terminal.insert(INSERT, "\nstate: Generating a random number: " + eva_memory.var_dolar[-1])
+        tab_load_mem_dollar()
         terminal.see(tkinter.END)
         print("random command, min = " + min + ", max = " + max + ", valor = " + eva_memory.var_dolar[-1])
 
@@ -330,6 +420,7 @@ def exec_comando(node):
             print(var.get())
             eva_memory.var_dolar.append(var.get())
             terminal.insert(INSERT, "\nstate: Listening : var=$" + ", value=" + eva_memory.var_dolar[-1])
+            tab_load_mem_dollar()
             terminal.see(tkinter.END)
             pop.destroy()
             unlock_thread_pop() # reativa a thread de processamento do script
@@ -339,6 +430,7 @@ def exec_comando(node):
             print(var.get())
             eva_memory.var_dolar.append(var.get())
             terminal.insert(INSERT, "\nstate: Listening : var=$" + ", value=" + eva_memory.var_dolar[-1])
+            tab_load_mem_dollar()
             terminal.see(tkinter.END)
             pop.destroy()
             unlock_thread_pop() # reativa a thread de processamento do script
@@ -704,6 +796,7 @@ def exec_comando(node):
         
         print("Eva ram => ", eva_memory.vars)
         terminal.insert(INSERT, "\nstate: Counter : var=" + var_name + ", value=" + str(var_value) + ", op(" + op + "), result=" + str(eva_memory.vars[var_name]))
+        tab_load_mem_vars() # entra com os dados da memoria de variaveis na tabela de vars
         terminal.see(tkinter.END)
 
 
@@ -715,6 +808,7 @@ def exec_comando(node):
             print(var.get())
             eva_memory.var_dolar.append(var.get())
             terminal.insert(INSERT, "\nstate: userEmotion : var=$" + ", value=" + eva_memory.var_dolar[-1])
+            tab_load_mem_dollar()
             terminal.see(tkinter.END)
             pop.destroy()
             unlock_thread_pop() # reativa a thread de processamento do script

@@ -10,12 +10,7 @@
       <random min="3" max="3" key="1003" />
       <random min="4" max="4" key="1004" />
       <random min="5" max="5" key="1005" />
-      <random min="6" max="6" key="1006" />
-      <random min="7" max="7" key="1007" />
-      <random min="8" max="8" key="1008" />
-      <random min="9" max="9" key="1009" />
-      <random min="10" max="10" key="1010" />
-      <talk key="1011">The values is $1 $2 $3 $4 $5 $6 $7 $8 $9 $10</talk>
-      <talk key="1012">The random value is $ /The random value is $-1 /The random value is $-2 /The random value is $-3 /The random value is $-4 /The random value is $-5 /The random value is $-6 /The random value is $-7 /The random value is $-8 /The random value is $-9</talk>
+      <talk key="1006">The values is $1 $2 $3 $4 $</talk>
+      <talk key="1007">The value of dollar 1 $1 / The value of dollar 2 is $2 / The value of dollar 3 is $3 / The value of dollar 4 is $4 / The value of dollar is $</talk>
     </script>
-    <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1007" /><link from="1007" to="1008" /><link from="1008" to="1009" /><link from="1009" to="1010" /><link from="1010" to="1011" /><link from="1011" to="1012" /></links></evaml>
+    <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1007" /></links></evaml>

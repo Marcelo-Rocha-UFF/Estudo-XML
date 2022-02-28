@@ -14,13 +14,8 @@
       <random min="3" max="3" />
       <random min="4" max="4" />
       <random min="5" max="5" />
-      <random min="6" max="6" />
-      <random min="7" max="7" />
-      <random min="8" max="8" />
-      <random min="9" max="9" />
-      <random min="10" max="10" />
-      <talk>The values is $1 $2 $3 $4 $5 $6 $7 $8 $9 $10</talk>
-      <talk>The random value is $ /The random value is $-1 /The random value is $-2 /The random value is $-3 /The random value is $-4 /The random value is $-5 /The random value is $-6 /The random value is $-7 /The random value is $-8 /The random value is $-9</talk>
+      <talk>The values is $1 $2 $3 $4 $</talk>
+      <talk>The value of dollar 1 $1 / The value of dollar 2 is $2 / The value of dollar 3 is $3 / The value of dollar 4 is $4 / The value of dollar is $</talk>
     </script>
     <macros>
       <macro id="M1">
