@@ -101,8 +101,8 @@ tab_dollar.pack()
 tab_dollar['columns']= ('Index', 'Content', "Source")
 tab_dollar.column("#0", width=0,  stretch=NO)
 tab_dollar.column("Index",anchor=CENTER, width=45)
-tab_dollar.column("Content",anchor=CENTER, width=130)
-tab_dollar.column("Source",anchor=CENTER, width=67)
+tab_dollar.column("Content",anchor=CENTER, width=90)
+tab_dollar.column("Source",anchor=CENTER, width=107)
 
 tab_dollar.heading("#0",text="",anchor=CENTER)
 tab_dollar.heading("Index",text="Index",anchor=CENTER)
@@ -148,7 +148,7 @@ def tab_load_mem_dollar():
         else:
             var_name = "$" + str(indice)
 
-        tab_dollar.insert(parent='',index='end',text='', values=(var_name, var_dollar))
+        tab_dollar.insert(parent='',index='end',text='', values=(var_name, var_dollar[0], var_dollar[1]))
         indice = indice + 1
 
 
@@ -405,11 +405,11 @@ def exec_comando(node):
             terminal.see(tkinter.END)
             exit(1)
 
-        eva_memory.var_dolar.append(str(rnd.randint(int(min), int(max))))
-        terminal.insert(INSERT, "\nstate: Generating a random number: " + eva_memory.var_dolar[-1])
+        eva_memory.var_dolar.append([str(rnd.randint(int(min), int(max))), "<random>"])
+        terminal.insert(INSERT, "\nstate: Generating a random number: " + eva_memory.var_dolar[-1][0])
         tab_load_mem_dollar()
         terminal.see(tkinter.END)
-        print("random command, min = " + min + ", max = " + max + ", valor = " + eva_memory.var_dolar[-1])
+        print("random command, min = " + min + ", max = " + max + ", valor = " + eva_memory.var_dolar[-1][0])
 
 
     elif node.tag == "listen":
@@ -418,8 +418,8 @@ def exec_comando(node):
         # função de fechamento da janela pop up para a tecla <return)
         def fechar_pop_ret(self): 
             print(var.get())
-            eva_memory.var_dolar.append(var.get())
-            terminal.insert(INSERT, "\nstate: Listening : var=$" + ", value=" + eva_memory.var_dolar[-1])
+            eva_memory.var_dolar.append([var.get(), "<listen>"])
+            terminal.insert(INSERT, "\nstate: Listening : var=$" + ", value=" + eva_memory.var_dolar[-1][0])
             tab_load_mem_dollar()
             terminal.see(tkinter.END)
             pop.destroy()
@@ -428,8 +428,8 @@ def exec_comando(node):
         # função de fechamento da janela pop up par o botão ok
         def fechar_pop_bt(): 
             print(var.get())
-            eva_memory.var_dolar.append(var.get())
-            terminal.insert(INSERT, "\nstate: Listening : var=$" + ", value=" + eva_memory.var_dolar[-1])
+            eva_memory.var_dolar.append([var.get(), "<listen>"])
+            terminal.insert(INSERT, "\nstate: Listening : var=$" + ", value=" + eva_memory.var_dolar[-1][0])
             tab_load_mem_dollar()
             terminal.see(tkinter.END)
             pop.destroy()
@@ -523,14 +523,14 @@ def exec_comando(node):
                 dollars_list = sorted(dollars_list, key=len, reverse=True) # ordena a lista em ordem decrescente do len(do elemmento)
                 for var_dollar in dollars_list:
                     if len(var_dollar) == 1: # é o dollar ($)
-                        texto = texto.replace(var_dollar, eva_memory.var_dolar[-1])
+                        texto = texto.replace(var_dollar, eva_memory.var_dolar[-1][0])
                     else: # pode ser do tipo $n ou $-n
                         if "-" in var_dollar: # tipo $-n
                             indice = int(var_dollar[2:]) # var dollar é do tipo $-n. então pega somente o n e converte para int
-                            texto = texto.replace(var_dollar, eva_memory.var_dolar[-(indice + 1)]) 
+                            texto = texto.replace(var_dollar, eva_memory.var_dolar[-(indice + 1)][0]) 
                         else: # tipo $n
                             indice = int(var_dollar[1:]) # var dollar é do tipo $n. então pega somente o n e converte para int
-                            texto = texto.replace(var_dollar, eva_memory.var_dolar[(indice - 1)])
+                            texto = texto.replace(var_dollar, eva_memory.var_dolar[(indice - 1)][0])
             
         # esta parte implementa o texto aleatorio gerado pelo uso do caractere /
         texto = texto.split(sep="/") # texto vira uma lista com a qtd de frases divididas pelo caract. /
@@ -607,22 +607,22 @@ def exec_comando(node):
             if node.attrib['op'] == "exact":
                 if "#" in valor: # verifica se valor é uma variável
                     print("valor ", valor, type(valor))
-                    if eva_memory.var_dolar[-1] == str(eva_memory.vars[valor[1:]]).lower(): # compara valor $ com a variavel #..
+                    if eva_memory.var_dolar[-1][0] == str(eva_memory.vars[valor[1:]]).lower(): # compara valor $ com a variavel #..
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
                 else:    
                     print("valor ", valor, type(valor))
-                    if valor == eva_memory.var_dolar[-1].lower(): # compara valor com o topo da pilha da variavel var_dolar
+                    if valor == eva_memory.var_dolar[-1][0].lower(): # compara valor com o topo da pilha da variavel var_dolar
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
             # case 1.2 (tipo de op="contain")
             elif node.attrib['op'] == "contain":
                 if "#" in valor: # verifica se valor é uma variável
                     print("valor ", valor, type(valor))
-                    if str(eva_memory.vars[valor[1:]]).lower() in eva_memory.var_dolar[-1]: # verifica se var #.. está contida em $
+                    if str(eva_memory.vars[valor[1:]][0]).lower() in eva_memory.var_dolar[-1][0]: # verifica se var #.. está contida em $
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
                 else:    
                     print("valor ", valor, type(valor))
-                    if valor in eva_memory.var_dolar[-1].lower(): # verifica se valor está contido em $
+                    if valor in eva_memory.var_dolar[-1][0].lower(): # verifica se valor está contido em $
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
 
@@ -636,53 +636,53 @@ def exec_comando(node):
                     terminal.see(tkinter.END)
                     exit(1)
                 if node.attrib['op'] == "eq": # 
-                    if int(eva_memory.var_dolar[-1]) == int(eva_memory.vars[valor[1:]]): # é preciso retirar o # da variável
+                    if int(eva_memory.var_dolar[-1][0]) == int(eva_memory.vars[valor[1:]]): # é preciso retirar o # da variável
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
                 elif node.attrib['op'] == "lt": # igualdade
-                    if int(eva_memory.var_dolar[-1]) < int(eva_memory.vars[valor[1:]]):
+                    if int(eva_memory.var_dolar[-1][0]) < int(eva_memory.vars[valor[1:]]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
                 elif node.attrib['op'] == "gt": # igualdade
-                    if int(eva_memory.var_dolar[-1]) > int(eva_memory.vars[valor[1:]]):
+                    if int(eva_memory.var_dolar[-1][0]) > int(eva_memory.vars[valor[1:]]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
                 
                 elif node.attrib['op'] == "lte": # igualdade
-                    if int(eva_memory.var_dolar[-1]) <= int(eva_memory.vars[valor[1:]]):
+                    if int(eva_memory.var_dolar[-1][0]) <= int(eva_memory.vars[valor[1:]]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
                 elif node.attrib['op'] == "gte": # igualdade
-                    if int(eva_memory.var_dolar[-1]) >= int(eva_memory.vars[valor[1:]]):
+                    if int(eva_memory.var_dolar[-1][0]) >= int(eva_memory.vars[valor[1:]]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
                 elif node.attrib['op'] == "ne": # igualdade
-                    if int(eva_memory.var_dolar[-1]) != int(eva_memory.vars[valor[1:]]):
+                    if int(eva_memory.var_dolar[-1][0]) != int(eva_memory.vars[valor[1:]]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
             
 
             else: # case 1.4 comparação MATEMÁTICA entre $ e uma constante
                 if node.attrib['op'] == "eq": # 
-                    if int(eva_memory.var_dolar[-1]) == int(valor): # converte valor para int (comparação matemática)
+                    if int(eva_memory.var_dolar[-1][0]) == int(valor): # converte valor para int (comparação matemática)
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
                 elif node.attrib['op'] == "lt": # igualdade
-                    if int(eva_memory.var_dolar[-1]) < int(valor):
+                    if int(eva_memory.var_dolar[-1][0]) < int(valor):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
                 elif node.attrib['op'] == "gt": # igualdade
-                    if int(eva_memory.var_dolar[-1]) > int(valor):
+                    if int(eva_memory.var_dolar[-1][0]) > int(valor):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
                 
                 elif node.attrib['op'] == "lte": # igualdade
-                    if int(eva_memory.var_dolar[-1]) <= int(valor):
+                    if int(eva_memory.var_dolar[-1][0]) <= int(valor):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
                 elif node.attrib['op'] == "gte": # igualdade
-                    if int(eva_memory.var_dolar[-1]) >= int(valor):
+                    if int(eva_memory.var_dolar[-1][0]) >= int(valor):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
                 elif node.attrib['op'] == "ne": # igualdade
-                    if int(eva_memory.var_dolar[-1]) != int(valor):
+                    if int(eva_memory.var_dolar[-1][0]) != int(valor):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 ########
    
@@ -717,27 +717,27 @@ def exec_comando(node):
             # case 2.2 - comparando var com $
             elif "$" in valor: # valor é $
                 if node.attrib['op'] == "eq": # testa a igualdade do valor contido em var com o $".
-                    if int(eva_memory.vars[node.attrib['var']]) == int(eva_memory.var_dolar[-1]):
+                    if int(eva_memory.vars[node.attrib['var']]) == int(eva_memory.var_dolar[-1][0]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
                 if node.attrib['op'] == "lt": # menor que
-                    if int(eva_memory.vars[node.attrib['var']]) < int(eva_memory.var_dolar[-1]):
+                    if int(eva_memory.vars[node.attrib['var']]) < int(eva_memory.var_dolar[-1][0]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
                 if node.attrib['op'] == "gt": # maior que
-                    if int(eva_memory.vars[node.attrib['var']]) > int(eva_memory.var_dolar[-1]):
+                    if int(eva_memory.vars[node.attrib['var']]) > int(eva_memory.var_dolar[-1][0]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
                 
                 if node.attrib['op'] == "lte": # menor ou igual
-                    if int(eva_memory.vars[node.attrib['var']]) <= int(eva_memory.var_dolar[-1]):
+                    if int(eva_memory.vars[node.attrib['var']]) <= int(eva_memory.var_dolar[-1][0]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
                 if node.attrib['op'] == "gte": # maior ou igual
-                    if int(eva_memory.vars[node.attrib['var']]) >= int(eva_memory.var_dolar[-1]):
+                    if int(eva_memory.vars[node.attrib['var']]) >= int(eva_memory.var_dolar[-1][0]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
                 if node.attrib['op'] == "ne": # diferente
-                    if int(eva_memory.vars[node.attrib['var']]) != int(eva_memory.var_dolar[-1]):
+                    if int(eva_memory.vars[node.attrib['var']]) != int(eva_memory.var_dolar[-1][0]):
                         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
 
@@ -806,8 +806,8 @@ def exec_comando(node):
 
         def fechar_pop(): # função de fechamento da janela pop up
             print(var.get())
-            eva_memory.var_dolar.append(var.get())
-            terminal.insert(INSERT, "\nstate: userEmotion : var=$" + ", value=" + eva_memory.var_dolar[-1])
+            eva_memory.var_dolar.append([var.get(), "<userEmotion>"])
+            terminal.insert(INSERT, "\nstate: userEmotion : var=$" + ", value=" + eva_memory.var_dolar[-1][0])
             tab_load_mem_dollar()
             terminal.see(tkinter.END)
             pop.destroy()

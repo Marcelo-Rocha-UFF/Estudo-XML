@@ -5,9 +5,8 @@
       <audioEffects mode="on" vol="100%" />
     </settings>
     <script>
-      <counter var="x" op="=" value="1" key="1001" />
-      <talk key="1002">The value of x is #x</talk>
-      <counter var="y" op="=" value="2" key="1003" />
-      <talk key="1004">The value of y is #y</talk>
+      <random min="1" max="5" key="1001" />
+      <listen key="1002" />
+      <talk key="1003">Speaking dolar, $</talk>
     </script>
-<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /></links></evaml>
+<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /></links></evaml>

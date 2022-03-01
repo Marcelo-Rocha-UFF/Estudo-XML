@@ -9,9 +9,8 @@
       <audioEffects mode="on" vol="100%" />
     </settings>
     <script>
-      <counter var="x" op="=" value="1" />
-      <talk>The value of x is #x</talk>
-      <counter var="y" op="=" value="2" />
-      <talk>The value of y is #y</talk>
+      <random min="1" max="5" />
+      <listen />
+      <talk>Speaking dolar, $</talk>
     </script>
 </evaml>

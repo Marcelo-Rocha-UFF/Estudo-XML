@@ -1,16 +1,12 @@
-<evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="teste3" xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd" id="507eb04c9c427e9f961e47a7204fac41">
+<evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="teste4" xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd" id="73bf3127fb3c9791e88a4d308171fd85">
   <settings>
       <voice tone="en-US_AllisonV3Voice" key="1000" />
       <lightEffects mode="on" />
       <audioEffects mode="on" vol="100%" />
     </settings>
     <script>
-      <random min="1" max="1" key="1001" />
-      <random min="2" max="2" key="1002" />
-      <random min="3" max="3" key="1003" />
-      <random min="4" max="4" key="1004" />
-      <random min="5" max="5" key="1005" />
-      <talk key="1006">The values is $1 $2 $3 $4 $</talk>
-      <talk key="1007">The value of dollar 1 $1 / The value of dollar 2 is $2 / The value of dollar 3 is $3 / The value of dollar 4 is $4 / The value of dollar is $</talk>
+      <random min="1" max="5" key="1001" />
+      <listen key="1002" />
+      <talk key="1003">Speaking dolar, $</talk>
     </script>
-    </evaml>
+</evaml>
