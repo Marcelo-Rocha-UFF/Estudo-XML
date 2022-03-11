@@ -1,12 +1,119 @@
-<evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="teste4" xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd">
-  <settings>
-      <voice tone="en-US_AllisonV3Voice" />
-      <lightEffects mode="on" />
-      <audioEffects mode="on" vol="100%" />
-    </settings>
-    <script>
-      <random min="1" max="5" />
-      <listen />
-      <talk>Speaking dolar, $</talk>
-    </script>
+<evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="game-of-colors" xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd">
+	<settings>
+		<voice tone="pt-BR_IsabelaV3Voice" />
+	</settings>
+	<script>
+		<light state="off" />
+		<evaEmotion emotion="neutral" />
+		<talk>Olá, eu sou o robô Eva!</talk>
+		<audio source="mario-game-intro" block="true" />
+		<talk>Vamos jogar o jogo das cores?</talk>
+		<evaEmotion emotion="happy" />
+		<audio source="mario-start" block="true" />
+		<talk>Qual o seu nome?</talk>
+		<audio source="mario-sound1" block="false" />
+		<listen />
+		<talk>Que legal!</talk>
+		<talk>Vamos lá então $</talk>
+		
+		<counter var="tentativa" op="=" value="1" />
+		<evaEmotion id="COR1" emotion="neutral" />
+		<talk>Qual é essa cor</talk>
+		<audio source="mario-sound1" block="false" />
+		<light state="on" color="blue" />
+		<listen />
+		<switch var="$">
+			<case op="contain" value="azul">
+				<audio source="mario-start2" block="true" />
+				<talk>Muito bem! Você acertou!</talk>
+			</case>
+			<default>
+				<audio source="mario-sound1" block="true" />
+				<talk>Essa cor é a azul</talk>
+				<switch var="tentativa">
+					<case op="eq" value="1">
+						<counter var="tentativa" op="+" value="1" />
+						<wait duration="2000" />
+						<talk>Vamos tentar mais uma vez</talk>
+						<light state="off" />
+						<wait duration="2000" />
+						<goto target="COR1" />
+					</case>
+					<case op="eq" value="2">
+						<wait duration="100" />
+					</case>
+				</switch>
+			</default>
+		</switch>
+		<evaEmotion emotion="happy" />
+		<light state="off" />
+		<wait duration="3000" />
+		
+		<counter var="tentativa" op="=" value="1" />
+		<evaEmotion id="COR2" emotion="neutral" />
+		<talk>Qual é essa cor</talk>
+		<audio source="mario-sound1" block="false" />
+		<light state="on" color="red" />
+		<listen />
+		<switch var="$">
+			<case op="contain" value="vermelh">
+				<audio source="mario-start2" block="true" />
+				<talk>Muito bem! Você acertou!</talk>
+			</case>
+			<default>
+				<audio source="mario-sound1" block="true" />
+				<talk>Essa cor é a vermelha</talk>
+				<switch var="tentativa">
+					<case op="eq" value="1">
+						<counter var="tentativa" op="+" value="1" />
+						<wait duration="2000" />
+						<talk>Vamos tentar mais uma vez</talk>
+						<light state="off" />
+						<wait duration="2000" />
+						<goto target="COR2" />
+					</case>
+					<case op="eq" value="2">
+						<wait duration="100" />
+					</case>
+				</switch>
+			</default>
+		</switch>
+		<evaEmotion emotion="happy" />
+		<light state="off" />
+		<wait duration="3000" />
+		
+		<counter var="tentativa" op="=" value="1" />
+		<evaEmotion id="COR3" emotion="neutral" />
+		<talk>Qual é essa cor</talk>
+		<audio source="mario-sound1" block="false" />
+		<light state="on" color="green" />
+		<listen />
+		<switch var="$">
+			<case op="contain" value="verde">
+				<audio source="mario-start2" block="true" />
+				<talk>Muito bem! Você acertou!</talk>
+			</case>
+			<default>
+				<audio source="mario-sound1" block="true" />
+				<talk>Essa cor é a verde</talk>
+				<switch var="tentativa">
+					<case op="eq" value="1">
+						<counter var="tentativa" op="+" value="1" />
+						<wait duration="2000" />
+						<talk>Vamos tentar mais uma vez</talk>
+						<light state="off" />
+						<wait duration="2000" />
+						<goto target="COR3" />
+					</case>
+					<case op="eq" value="2">
+						<wait duration="100" />
+					</case>
+				</switch>
+			</default>
+		</switch>
+		<evaEmotion emotion="happy" />
+		<talk>Foi muito bom jogar com você $1</talk>
+		<audio source="mario-start3" block="true" />
+		<light state="off" />
+	</script>
 </evaml>

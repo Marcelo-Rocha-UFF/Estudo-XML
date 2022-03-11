@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf8'?>
+<evaml  name="script01">
+ <script>
+  <voice  key="1646387240212" tone="en-US_AllisonV3Voice"/>
+  <random key="1646387248220" min="1" max="2"/>
+  <case   key="1646387260007" op="eq" value="1" var="$"/>
+  <case   key="1646387268473" op="eq" value="2" var="$"/>
+  <light  key="1646387289446" state="on" color="#00b0ff"/>
+  <talk   key="1646387340575">Hello!</talk>
+ </script>
+ <links>
+  <link from="1646387240212" to="1646387248220"/>
+  <link from="1646387248220" to="1646387260007"/>
+  <link from="1646387248220" to="1646387268473"/>
+  <link from="1646387260007" to="1646387289446"/>
+  <link from="1646387268473" to="1646387340575"/>
+ </links>
+</evaml>

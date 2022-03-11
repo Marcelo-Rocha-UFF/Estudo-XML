@@ -1,0 +1,93 @@
+{
+  "_id": "c82c9a0b-9926-4e12-9235-f0cee62d7e65",
+  "name": "artigo",
+  "data": {
+    "node": [
+      {
+        "key": 1646387240212,
+        "name": "Voice_0",
+        "type": "voice",
+        "color": "lightblue",
+        "isGroup": false,
+        "voice": "en-US_AllisonV3Voice",
+        "__gohashid": 3077
+      },
+      {
+        "key": 1646387248220,
+        "name": "Random_1",
+        "type": "random",
+        "color": "lightblue",
+        "isGroup": false,
+        "min": 1,
+        "max": 2,
+        "__gohashid": 3143
+      },
+      {
+        "key": 1646387260007,
+        "name": "Condition_2",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "1",
+        "opt": 4,
+        "__gohashid": 3261
+      },
+      {
+        "key": 1646387268473,
+        "name": "Condition_3",
+        "type": "if",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "2",
+        "opt": 4,
+        "__gohashid": 3428
+      },
+      {
+        "key": 1646387289446,
+        "name": "Light_4",
+        "type": "light",
+        "color": "lightblue",
+        "isGroup": false,
+        "lcolor": "#00b0ff",
+        "state": "on",
+        "__gohashid": 3649
+      },
+      {
+        "key": 1646387340575,
+        "name": "Talk_5",
+        "type": "speak",
+        "color": "lightblue",
+        "isGroup": false,
+        "text": "Hello!",
+        "__gohashid": 3919
+      }
+    ],
+    "link": [
+      {
+        "from": 1646387240212,
+        "to": 1646387248220,
+        "__gohashid": 3145
+      },
+      {
+        "from": 1646387248220,
+        "to": 1646387260007,
+        "__gohashid": 3263
+      },
+      {
+        "from": 1646387248220,
+        "to": 1646387268473,
+        "__gohashid": 3430
+      },
+      {
+        "from": 1646387260007,
+        "to": 1646387289446,
+        "__gohashid": 3651
+      },
+      {
+        "from": 1646387268473,
+        "to": 1646387340575,
+        "__gohashid": 3921
+      }
+    ]
+  }
+}

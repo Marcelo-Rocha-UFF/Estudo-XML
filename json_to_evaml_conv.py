@@ -204,7 +204,8 @@ def processa_links(links, links_json):
     ET.SubElement(links, "link", link_atributos)
 
   # gera o arquivo XML no disco
-  xml_processed = ET.tostring(evaml, encoding='utf8').decode('utf8')
+  xml_processed = ET.tostring(evaml, encoding="unicode")#.decode('utf8')
+  print("Processando XML..............")
   with open("_json_to_evaml_converted.xml", "w") as text_file: # grava o xml processado (temporario) em um arquivo para ser importado pelo parser
       text_file.write(xml_processed)
 
