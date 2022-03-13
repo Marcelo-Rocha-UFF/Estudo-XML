@@ -190,7 +190,7 @@ def processa_nodes(script, comandos_json):
             var = var[0][1:] # pegamos a variavle sem o #
             value = (re.findall(r'[0-9]+', exp_logica))[0] # neste caso value só pode ser um número
           else: # var tem dois elementos, ou seja, os dois operandos sao do tipo #n #m
-            var = var[0][1:] # pegamos a variavle sem o #
+            var = var[0][1:] # pegamos a variable sem o #
             value = var[1] # uma var em value precisa ir com o caracter #
       if_atributos = {"key" : str(comando["key"]), "op" : op, "value" : value, "var" : var}
       ET.SubElement(script, tag , if_atributos)

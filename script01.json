@@ -52,23 +52,22 @@
       },
       {
         "key": 1005,
+        "name": "Light",
+        "type": "light",
+        "color": "#ffa500",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#00ff00",
+        "state": "on",
+        "__gohashid": 5
+      },
+      {
+        "key": 1006,
         "name": "Talk",
         "type": "speak",
         "color": "#00ff00",
         "isGroup": false,
         "text": "Hi $, how are you? Let's start the script",
-        "__gohashid": 5
-      },
-      {
-        "key": 1006,
-        "name": "Counter",
-        "type": "counter",
-        "color": "lightblue",
-        "isGroup": false,
-        "group": "",
-        "count": "x",
-        "ops": "assign",
-        "value": 0,
         "__gohashid": 6
       },
       {
@@ -78,9 +77,9 @@
         "color": "lightblue",
         "isGroup": false,
         "group": "",
-        "count": "y",
+        "count": "x",
         "ops": "assign",
-        "value": 3,
+        "value": 0,
         "__gohashid": 7
       },
       {
@@ -97,53 +96,24 @@
       },
       {
         "key": 1009,
-        "name": "Condition",
-        "type": "if",
-        "color": "white",
+        "name": "Talk",
+        "type": "speak",
+        "color": "#00ff00",
         "isGroup": false,
-        "text": "#x <= 3",
-        "opt": 5,
+        "text": "The value of x is #x",
         "__gohashid": 9
-        },
+      },
       {
         "key": 1010,
         "name": "Talk",
         "type": "speak",
         "color": "#00ff00",
         "isGroup": false,
-        "text": "The value of x is #x",
+        "text": "Hey $, I will terminate. Bye",
         "__gohashid": 10
       },
       {
         "key": 1011,
-        "name": "Condition",
-        "type": "if",
-        "color": "white",
-        "isGroup": false,
-        "text": "#x > #y",
-        "opt": 5,
-        "__gohashid": 11
-        },
-      {
-        "key": 1012,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
-        "isGroup": false,
-        "text": "The value of x is #x and its greater than the value of y, that is #y",
-        "__gohashid": 12
-      },
-      {
-        "key": 1013,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
-        "isGroup": false,
-        "text": "Hey $, I will terminate. Bye",
-        "__gohashid": 13
-      },
-      {
-        "key": 1014,
         "name": "Light",
         "type": "light",
         "color": "#ffa500",
@@ -151,7 +121,7 @@
         "group": "",
         "lcolor": "#000000",
         "state": "off",
-        "__gohashid": 14
+        "__gohashid": 11
       }
     ],
     "link": [
@@ -207,28 +177,8 @@
       },
       { 
         "from": 1010,
-        "to": 1008,
-        "__gohashid": 10
-      },
-      { 
-        "from": 1008,
         "to": 1011,
-        "__gohashid": 11
-      },
-      { 
-        "from": 1011,
-        "to": 1012,
-        "__gohashid": 12
-      },
-      { 
-        "from": 1012,
-        "to": 1013,
-        "__gohashid": 13
-      },
-      { 
-        "from": 1013,
-        "to": 1014,
-        "__gohashid": 14
+        "__gohashid": 10
       }
     ]
   }

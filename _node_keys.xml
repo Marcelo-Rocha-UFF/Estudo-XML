@@ -1,119 +1,25 @@
-<evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="game-of-colors" xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd" id="d92c8b0bb930c317ad963efa2541c00d">
-	<settings>
-		<voice tone="pt-BR_IsabelaV3Voice" key="1000" />
-	</settings>
-	<script>
-		<light state="off" key="1001" />
-		<evaEmotion emotion="neutral" key="1002" />
-		<talk key="1003">Olá, eu sou o robô Eva!</talk>
-		<audio source="mario-game-intro" block="true" key="1004" />
-		<talk key="1005">Vamos jogar o jogo das cores?</talk>
-		<evaEmotion emotion="happy" key="1006" />
-		<audio source="mario-start" block="true" key="1007" />
-		<talk key="1008">Qual o seu nome?</talk>
-		<audio source="mario-sound1" block="false" key="1009" />
-		<listen key="1010" />
-		<talk key="1011">Que legal!</talk>
-		<talk key="1012">Vamos lá então $</talk>
-		
-		<counter var="tentativa" op="=" value="1" key="1013" />
-		<evaEmotion id="COR1" emotion="neutral" key="1014" />
-		<talk key="1015">Qual é essa cor</talk>
-		<audio source="mario-sound1" block="false" key="1016" />
-		<light state="on" color="blue" key="1017" />
-		<listen key="1018" />
-		<switch var="$">
-			<case op="contain" value="azul" key="1019" child_proc="false">
-				<audio source="mario-start2" block="true" key="1020" />
-				<talk key="1021">Muito bem! Você acertou!</talk>
-			</case>
-			<default key="1022" child_proc="false">
-				<audio source="mario-sound1" block="true" key="1023" />
-				<talk key="1024">Essa cor é a azul</talk>
-				<switch var="tentativa">
-					<case op="eq" value="1" key="1025" child_proc="false">
-						<counter var="tentativa" op="+" value="1" key="1026" />
-						<wait duration="2000" key="1027" />
-						<talk key="1028">Vamos tentar mais uma vez</talk>
-						<light state="off" key="1029" />
-						<wait duration="2000" key="1030" />
-						<goto target="COR1" />
-					</case>
-					<case op="eq" value="2" key="1031" child_proc="false">
-						<wait duration="100" key="1032" />
-					</case>
-				</switch>
-			</default>
-		</switch>
-		<evaEmotion emotion="happy" key="1033" />
-		<light state="off" key="1034" />
-		<wait duration="3000" key="1035" />
-		
-		<counter var="tentativa" op="=" value="1" key="1036" />
-		<evaEmotion id="COR2" emotion="neutral" key="1037" />
-		<talk key="1038">Qual é essa cor</talk>
-		<audio source="mario-sound1" block="false" key="1039" />
-		<light state="on" color="red" key="1040" />
-		<listen key="1041" />
-		<switch var="$">
-			<case op="contain" value="vermelh" key="1042" child_proc="false">
-				<audio source="mario-start2" block="true" key="1043" />
-				<talk key="1044">Muito bem! Você acertou!</talk>
-			</case>
-			<default key="1045" child_proc="false">
-				<audio source="mario-sound1" block="true" key="1046" />
-				<talk key="1047">Essa cor é a vermelha</talk>
-				<switch var="tentativa">
-					<case op="eq" value="1" key="1048" child_proc="false">
-						<counter var="tentativa" op="+" value="1" key="1049" />
-						<wait duration="2000" key="1050" />
-						<talk key="1051">Vamos tentar mais uma vez</talk>
-						<light state="off" key="1052" />
-						<wait duration="2000" key="1053" />
-						<goto target="COR2" />
-					</case>
-					<case op="eq" value="2" key="1054" child_proc="false">
-						<wait duration="100" key="1055" />
-					</case>
-				</switch>
-			</default>
-		</switch>
-		<evaEmotion emotion="happy" key="1056" />
-		<light state="off" key="1057" />
-		<wait duration="3000" key="1058" />
-		
-		<counter var="tentativa" op="=" value="1" key="1059" />
-		<evaEmotion id="COR3" emotion="neutral" key="1060" />
-		<talk key="1061">Qual é essa cor</talk>
-		<audio source="mario-sound1" block="false" key="1062" />
-		<light state="on" color="green" key="1063" />
-		<listen key="1064" />
-		<switch var="$">
-			<case op="contain" value="verde" key="1065" child_proc="false">
-				<audio source="mario-start2" block="true" key="1066" />
-				<talk key="1067">Muito bem! Você acertou!</talk>
-			</case>
-			<default key="1068" child_proc="false">
-				<audio source="mario-sound1" block="true" key="1069" />
-				<talk key="1070">Essa cor é a verde</talk>
-				<switch var="tentativa">
-					<case op="eq" value="1" key="1071" child_proc="false">
-						<counter var="tentativa" op="+" value="1" key="1072" />
-						<wait duration="2000" key="1073" />
-						<talk key="1074">Vamos tentar mais uma vez</talk>
-						<light state="off" key="1075" />
-						<wait duration="2000" key="1076" />
-						<goto target="COR3" />
-					</case>
-					<case op="eq" value="2" key="1077" child_proc="false">
-						<wait duration="100" key="1078" />
-					</case>
-				</switch>
-			</default>
-		</switch>
-		<evaEmotion emotion="happy" key="1079" />
-		<talk key="1080">Foi muito bom jogar com você $1</talk>
-		<audio source="mario-start3" block="true" key="1081" />
-		<light state="off" key="1082" />
-	</script>
+<evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="teste4" xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd" id="73bf3127fb3c9791e88a4d308171fd85">
+  <settings>
+      <voice tone="en-US_AllisonV3Voice" key="1000" />
+      <lightEffects mode="on" />
+      <audioEffects mode="on" vol="100%" />
+    </settings>
+    <script>
+      <listen key="1001" />
+      <counter var="i" op="=" value="1" key="1002" />
+      <userEmotion key="1003" />
+      <switch id="LOOP" var="i">
+        <case op="lte" value="5" key="1004" child_proc="false">
+          <random min="1" max="20" key="1005" />
+          <counter var="i" op="+" value="1" key="1006" />
+          <goto target="LOOP" />
+        </case>
+        <default key="1007" child_proc="false" />
+      </switch>
+      <switch var="$">
+        <case op="eq" value="1" key="1008" child_proc="false">
+          <talk key="1009">Ok</talk>
+        </case>
+      </switch>
+    </script>
 </evaml>

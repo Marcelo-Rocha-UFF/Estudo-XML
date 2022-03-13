@@ -3,7 +3,7 @@
   xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <settings>
-      <voice tone="en-US_AllisonV3Voice" />
+      <voice tone="pt-BR_IsabelaV3Voice" />
       <lightEffects mode="on" />
       <audioEffects mode="on" vol="100%" />
     </settings>
@@ -36,7 +36,7 @@
 			</case>
 			<case op="exact" value="2">
 				<light state="on" color="pink" />
-				<talk>E ai? Qual foi  o número?</talk>
+				<talk>E aí? Qual foi  o número?</talk>
 				<listen />
 				<switch var="$">
 					<case op="contain" value="2">
@@ -50,7 +50,7 @@
 			</case>
 			<case op="exact" value="3">
 				<light state="on" color="green" />
-				<talk>E ai? Qual foi  o número?</talk>
+				<talk>E aí? Qual foi  o número?</talk>
 				<listen />
 				<switch var="$">
 					<case op="contain" value="3">

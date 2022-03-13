@@ -5,8 +5,21 @@
       <audioEffects mode="on" vol="100%" />
     </settings>
     <script>
-      <random min="1" max="5" key="1001" />
-      <listen key="1002" />
-      <talk key="1003">Speaking dolar, $</talk>
+      <listen key="1001" />
+      <counter var="i" op="=" value="1" key="1002" />
+      <userEmotion key="1003" />
+      <switch id="LOOP" var="i">
+        <case op="lte" value="5" key="1004" child_proc="true" var="i">
+          <random min="1" max="20" key="1005" />
+          <counter var="i" op="+" value="1" key="1006" />
+          <goto target="LOOP" />
+        </case>
+        <default key="1007" child_proc="false" var="i" value="" op="exact" />
+      </switch>
+      <switch var="$">
+        <case op="eq" value="1" key="1008" child_proc="true" var="$">
+          <talk key="1009">Ok</talk>
+        </case>
+      </switch>
     </script>
-<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /></links></evaml>
+<links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1004" to="1005" /><link from="1005" to="1006" /><link from="1006" to="1004" /><link from="1006" to="1007" /><link from="1003" to="1007" /><link from="1007" to="1008" /><link from="1008" to="1009" /></links></evaml>

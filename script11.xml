@@ -5,24 +5,22 @@
   <settings>
       <voice tone="en-US_AllisonV3Voice" />
       <lightEffects mode="on" />
-      <audioEffects mode="on" vol="100%" />
+      <audioEffects mode="off" vol="100%" />
     </settings>
 	<script>
-		<useMacro macro="GREETINGS" />
-		<light state="on" color="blue" />
-		<counter var="x" op="=" value="1" />
 		<switch var="x">
-			<case op="lte" value="0">
-				<talk>Ok</talk>
+			<case op="eq" value="1">
+				<talk>1</talk>
+			</case>
+			<case op="eq" value="2">
+				<talk>2</talk>
+			</case>
+			<case op="eq" value="3">
+				<talk>3</talk>
 			</case>
 			<default>
-				<talk>Wrong</talk>
+				<talk>Something is wrong</talk>
 			</default>
 		</switch>
 	</script>
-	<macros>
-		<macro id="GREETINGS">
-			<talk>Hi! I am the robot EVA</talk>
-		</macro>
-	</macros>
 </evaml>

@@ -1,6 +1,6 @@
 {
-  "_id": "73bf3127fb3c9791e88a4d308171fd85",
-  "nombre": "teste4",
+  "_id": "6ee7a7f22c4024cef59d25be2365a5a7",
+  "nombre": "teste5",
   "data": {
     "node": [
       {
@@ -14,33 +14,34 @@
       },
       {
         "key": 1001,
-        "name": "Listen",
-        "type": "listen",
-        "color": "#ffff00",
+        "name": "Random",
+        "type": "random",
+        "color": "pink",
         "isGroup": false,
-        "opt": "",
+        "group": "",
+        "min": 1,
+        "max": 4,
         "__gohashid": 1
       },
       {
         "key": 1002,
-        "name": "Counter",
-        "type": "counter",
-        "color": "lightblue",
+        "name": "Condition",
+        "type": "if",
+        "color": "white",
         "isGroup": false,
-        "group": "",
-        "count": "i",
-        "ops": "assign",
-        "value": 1,
+        "text": "$ == 1",
+        "opt": 5,
         "__gohashid": 2
       },
       {
         "key": 1003,
-        "name": "User_Emotion",
-        "type": "user_emotion",
-        "color": "lightgreen",
+        "name": "Light",
+        "type": "light",
+        "color": "#ffa500",
         "isGroup": false,
         "group": "",
-        "vision": "capture",
+        "lcolor": "#ff0000",
+        "state": "on",
         "__gohashid": 3
       },
       {
@@ -49,41 +50,40 @@
         "type": "if",
         "color": "white",
         "isGroup": false,
-        "text": "#i <= 5",
+        "text": "$ == 2",
         "opt": 5,
         "__gohashid": 4
-        },
+      },
       {
         "key": 1005,
-        "name": "Random",
-        "type": "random",
-        "color": "pink",
+        "name": "Light",
+        "type": "light",
+        "color": "#ffa500",
         "isGroup": false,
         "group": "",
-        "min": 1,
-        "max": 20,
+        "lcolor": "#0000ff",
+        "state": "on",
         "__gohashid": 5
       },
       {
         "key": 1006,
-        "name": "Counter",
-        "type": "counter",
-        "color": "lightblue",
-        "isGroup": false,
-        "group": "",
-        "count": "i",
-        "ops": "sum",
-        "value": 1,
-        "__gohashid": 6
-      },
-      {
-        "key": 1007,
         "name": "Condition",
         "type": "if",
         "color": "white",
         "isGroup": false,
-        "text": "",
-        "opt": 4,
+        "text": "$ == 3",
+        "opt": 5,
+        "__gohashid": 6
+      },
+      {
+        "key": 1007,
+        "name": "Light",
+        "type": "light",
+        "color": "#ffa500",
+        "isGroup": false,
+        "group": "",
+        "lcolor": "#00ff00",
+        "state": "on",
         "__gohashid": 7
       },
       {
@@ -92,18 +92,29 @@
         "type": "if",
         "color": "white",
         "isGroup": false,
-        "text": "$ == 1",
-        "opt": 5,
+        "text": "",
+        "opt": 4,
         "__gohashid": 8
       },
       {
         "key": 1009,
-        "name": "Talk",
-        "type": "speak",
-        "color": "#00ff00",
+        "name": "Light",
+        "type": "light",
+        "color": "#ffa500",
         "isGroup": false,
-        "text": "Ok",
+        "group": "",
+        "lcolor": "#e6007e",
+        "state": "on",
         "__gohashid": 9
+      },
+      {
+        "key": 1010,
+        "name": "Wait",
+        "type": "wait",
+        "color": "lightblue",
+        "isGroup": false,
+        "time": 1000,
+        "__gohashid": 10
       }
     ],
     "link": [
@@ -123,7 +134,7 @@
         "__gohashid": 2
       },
       { 
-        "from": 1003,
+        "from": 1001,
         "to": 1004,
         "__gohashid": 3
       },
@@ -133,34 +144,44 @@
         "__gohashid": 4
       },
       { 
-        "from": 1005,
+        "from": 1001,
         "to": 1006,
         "__gohashid": 5
       },
       { 
         "from": 1006,
-        "to": 1004,
+        "to": 1007,
         "__gohashid": 6
       },
       { 
-        "from": 1006,
-        "to": 1007,
-        "__gohashid": 7
-      },
-      { 
-        "from": 1003,
-        "to": 1007,
-        "__gohashid": 8
-      },
-      { 
-        "from": 1007,
+        "from": 1001,
         "to": 1008,
-        "__gohashid": 9
+        "__gohashid": 7
       },
       { 
         "from": 1008,
         "to": 1009,
+        "__gohashid": 8
+      },
+      { 
+        "from": 1003,
+        "to": 1010,
+        "__gohashid": 9
+      },
+      { 
+        "from": 1005,
+        "to": 1010,
         "__gohashid": 10
+      },
+      { 
+        "from": 1007,
+        "to": 1010,
+        "__gohashid": 11
+      },
+      { 
+        "from": 1010,
+        "to": 1001,
+        "__gohashid": 12
       }
     ]
   }

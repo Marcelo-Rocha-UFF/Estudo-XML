@@ -9,8 +9,21 @@
       <audioEffects mode="on" vol="100%" />
     </settings>
     <script>
-      <random min="1" max="5" />
       <listen />
-      <talk>Speaking dolar, $</talk>
+      <counter var="i" op="=" value="1" />
+      <userEmotion />
+      <switch id="LOOP" var="i">
+        <case op="lte" value="5">
+          <random min="1" max="20" />
+          <counter var="i" op="+" value="1" />
+          <goto target="LOOP" />
+        </case>
+        <default></default>
+      </switch>
+      <switch var="$">
+        <case op="eq" value="1">
+          <talk>Ok</talk>
+        </case>
+      </switch>
     </script>
 </evaml>
