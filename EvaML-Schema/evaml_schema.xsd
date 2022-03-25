@@ -30,6 +30,39 @@
 		<xs:union memberTypes="voiceListType voiceStringType" />
 	</xs:simpleType>
 
+	<xs:simpleType name="audioListType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="applause-moderate"/>
+			<xs:enumeration value="beep-09"/>
+			<xs:enumeration value="cheering"/>
+			<xs:enumeration value="fanfare2"/>
+			<xs:enumeration value="laugh-01"/>
+			<xs:enumeration value="mario-end-01"/>
+			<xs:enumeration value="mario-end-02"/>
+			<xs:enumeration value="mario-end-03"/>
+			<xs:enumeration value="mario-fundo"/>
+			<xs:enumeration value="mario-game-intro"/>
+			<xs:enumeration value="mario-sound1"/>
+			<xs:enumeration value="mario-sound2"/>
+			<xs:enumeration value="mario-start-01"/>
+			<xs:enumeration value="mario-start-02"/>
+			<xs:enumeration value="oh-no"/>
+			<xs:enumeration value="song-exodus"/>
+			<xs:enumeration value="song-the-girl-from-ipanema"/>
+			<xs:enumeration value="song-the-imperial-march"/>
+			<xs:enumeration value="song-vivaldi-spring"/>
+			<xs:enumeration value="song-exodus"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="audioStringType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+
+	<xs:simpleType name="audioFileType">
+		<xs:union memberTypes="audioListType audioStringType" />
+	</xs:simpleType>
+
 	<xs:simpleType name="caseOpType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="exact"/>
@@ -141,7 +174,6 @@
 		<xs:complexType>
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="state" type="lightStateType" use="required"/>
-			<!-- Dúvida sobre os dois tipos de cor (lista e rgb) -->
 			<xs:attribute name="color" type="lightColorType" default="white"/>
 		</xs:complexType>
 	</xs:element>
@@ -180,7 +212,7 @@
 	<xs:element name="audio">
 		<xs:complexType>
 			<xs:attribute name="id" type="idType"/>
-			<xs:attribute name="source" type="xs:string" use="required"/>
+			<xs:attribute name="source" type="audioFileType" use="required"/>
 			<xs:attribute name="block" type="audioBlockType" use="required"/>
 		</xs:complexType>
 	</xs:element>
@@ -197,7 +229,6 @@
 			<xs:attribute name="id" type="idType"/>
 			<xs:attribute name="var" type="xs:string" use="required"/>
 			<xs:attribute name="op" type="counterOpType" use="required"/>
-			<!-- Verificar se value (no robô) pode ser um float -->
 			<xs:attribute name="value" type="xs:integer" use="required"/>
 		</xs:complexType>
 	</xs:element>

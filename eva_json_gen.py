@@ -154,7 +154,8 @@ def light_process(light_command):
     if color_map.get(color) != None:
         color = color_map.get(color)
 
-    # lightEffects settings processing
+
+    # lightEffects settings processing #########################################################################
     if root.find("settings").find("lightEffects") != None:
       if root.find("settings").find("lightEffects").attrib["mode"] == "off":
         # mode off implies bulb_state off 
@@ -331,7 +332,7 @@ def random_process(random_command):
     return random_node
 
 
-# condition node (case and default) processing
+# condition node (case and default) processing #########################################################################
 def case_process(case_command):
   global gohashid
   
@@ -375,32 +376,25 @@ def case_process(case_command):
   else: # testando um valor em relacao a outra variavel qualquer
     # é preciso que haja um espaço entre os operandos e o operador. ex #x == 1
     # opt": 5 é comparacao matematica, isto é, com operadores do tipo ==, >, <, >=, <= ou !=
+
+    tralha1 = '"#'
     if case_command.attrib["var"] == "$":
-      case_node = """      {
+      tralha1 = '"'
+    # if case_command.attrib['value'] == "$" or case_command.attrib['value'].isnumeric():
+    #   tralha2 = ' '
+
+    case_node = """      {
         "key": """ + case_command.attrib["key"] + """,
         "name": "Condition",
         "type": "if",
         "color": "white",
         "isGroup": false,
-        "text": """ + '"' + case_command.attrib['var'] + ' ' + op + ' ' + case_command.attrib['value'] + '",' + """
-        "opt": 5,
-        "__gohashid": """ + str(gohashid) + """
-      }"""
-      gohashid += 1
-      return case_node
-    else:
-      case_node = """      {
-        "key": """ + case_command.attrib["key"] + """,
-        "name": "Condition",
-        "type": "if",
-        "color": "white",
-        "isGroup": false,
-        "text": """ + '"#' + case_command.attrib['var'] + ' ' + op + ' ' + case_command.attrib['value'] + '",' + """
+        "text": """ + tralha1 + case_command.attrib['var'] + ' ' + op + ' ' + case_command.attrib['value'] + '",' + """
         "opt": 5,
         "__gohashid": """ + str(gohashid) + """
         }"""
-      gohashid += 1
-      return case_node
+    gohashid += 1
+    return case_node
 
 
 # wait node processing #########################################################################

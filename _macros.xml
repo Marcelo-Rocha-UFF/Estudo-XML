@@ -1,25 +1,18 @@
-<evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="teste4" xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd">
+<evaml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="teste_flavio" xsi:noNamespaceSchemaLocation="/home/marcelo/Dropbox/Estudo XML/EvaML-Schema/evaml_schema.xsd">
   <settings>
-      <voice tone="en-US_AllisonV3Voice" />
-      <lightEffects mode="on" />
-      <audioEffects mode="on" vol="100%" />
-    </settings>
-    <script>
-      <listen />
-      <counter var="i" op="=" value="1" />
-      <userEmotion />
-      <switch id="LOOP" var="i">
-        <case op="lte" value="5">
-          <random min="1" max="20" />
-          <counter var="i" op="+" value="1" />
-          <goto target="LOOP" />
-        </case>
-        <default />
-      </switch>
-      <switch var="$">
-        <case op="eq" value="1">
-          <talk>Ok</talk>
-        </case>
-      </switch>
-    </script>
-</evaml>
+    <voice tone="en-US_AllisonV3Voice" />
+  </settings>
+  <script>
+    <light state="on" color="#cc00cc" />
+    <counter var="x" op="=" value="2" />
+    <counter var="x" op="+" value="2" />
+    <switch var="$">
+      <case op="exact" value="2">
+        <stop />
+      </case>
+      <default>
+        <evaEmotion emotion="sad" />
+      </default>
+    </switch>
+  </script>
+  </evaml>

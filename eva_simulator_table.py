@@ -74,7 +74,7 @@ frame_robot = tkinter.Frame(master=window, width= 400, height=h, bg="red")
 frame_robot.pack(fill=tkinter.Y, side=tkinter.LEFT)
 
 # criando o canvas gráfico
-canvas = Canvas(frame_robot, bg = "#d9d9d9", width = 380, height = h) # o canvas e' necessario para usar imagens com transparencia
+canvas = Canvas(frame_robot, width = 380, height = h) # o canvas e' necessario para usar imagens com transparencia
 canvas.pack()
 
 # define o frame para o terminal e o menu de botões
@@ -95,13 +95,13 @@ frame_terminal.pack(fill=tkinter.X)
 
 # cria a tabela de memoria
 # define as propriedads da tabela com o mapa de memoria de $
-tkinter.Label(frame_memory, bg="gray70", width="30", relief="raised", font = font1, text="Variable $ (Memory Map)", pady=4).pack()
+tkinter.Label(frame_memory, bg="gray70", width="30", relief="raised", font = font1, text="System Variables $ (Memory Map)", pady=1).pack()
 
-# define o estilo das dabelas
+# define o estilo das tabelas
 style = ttk.Style()
-style.configure("mystyle.Treeview", highlightthickness=0, bd=0, font=('Aerial', 8)) # Modify the font of the body
+style.configure("mystyle.Treeview", highlightthickness=0, bd=0, font=('Aerial', 8), rowheight=15) # Modify the font of the body
 style.configure("mystyle.Treeview.Heading", font=('Aerial', 8,'bold')) # Modify the font of the headings
-tab_dollar = ttk.Treeview(frame_memory, style="mystyle.Treeview", height=11)
+tab_dollar = ttk.Treeview(frame_memory, style="mystyle.Treeview", height=15)
 tab_dollar.pack()
 
 tab_dollar['columns']= ('Index', 'Content', "Source")
@@ -116,11 +116,11 @@ tab_dollar.heading("Content",text="Content",anchor=CENTER)
 tab_dollar.heading("Source",text="Source",anchor=CENTER)
 
 # label so pra separar as tabelas
-tkinter.Label(frame_memory, text="").pack()
+tkinter.Label(frame_memory, text="", font = ('Aerial', 6)).pack()
 
-# define as propriedads da tabela com o mapa de memoria de variaveis do usuario
-tkinter.Label(frame_memory, width="30", relief="raised", bg="gray70", font = font1, text="User Variables (Memory Map)", pady=4).pack()
-tab_vars = ttk.Treeview(frame_memory, style="mystyle.Treeview", height=6)
+# define as propriedades da tabela com o mapa de memoria de variaveis do usuario
+tkinter.Label(frame_memory, width="30", relief="raised", bg="gray70", font = font1, text="User Variables (Memory Map)", pady=1).pack()
+tab_vars = ttk.Treeview(frame_memory, style="mystyle.Treeview", height=9)
 tab_vars.pack(fill=tkinter.Y)
 
 tab_vars['columns']= ('Var', 'Value')
@@ -187,11 +187,11 @@ def evaInit():
     bt_power['state'] = DISABLED
     evaEmotion("power_on")
     terminal.insert(INSERT, "\nstate: Initializing.")
-    #playsound("my_sounds/power_on.mp3", block = True)
+    playsound("my_sounds/power_on.mp3", block = True)
     terminal.insert(INSERT, "\nstate: Speaking a greeting text.")
-    #playsound("my_sounds/greetings.mp3", block = True)
+    playsound("my_sounds/greetings.mp3", block = True)
     terminal.insert(INSERT, '\nstate: Speaking "Load a script file and enjoy."')
-    #playsound("my_sounds/load_a_script.mp3", block = True)
+    playsound("my_sounds/load_a_script.mp3", block = True)
     terminal.insert(INSERT, "\nstate: Entering in standby mode.")
     bt_import['state'] = NORMAL
     while bt_run['state'] == DISABLED: # animacao da luz da matrix em stand by
@@ -399,6 +399,7 @@ def exec_comando(node):
 
 
     elif node.tag == "led":
+        print(node.attrib["animation"])
         ledAnimation(node.attrib["animation"])
         terminal.insert(INSERT, "\nstate: Matrix Leds. Animation=" + node.attrib["animation"])
         terminal.see(tkinter.END)
@@ -578,215 +579,95 @@ def exec_comando(node):
         # trata os tipos de comparacao e operadores
         # caso 1 op="Exact"
         if node.attrib['op'] == "exact":
-            ################################################################verificar se pode exact com $ comp. com #x
-            # if "#" in valor: # verifica se valor é uma variável
-            #     print("valor ", valor, type(valor))
-            #     if eva_memory.var_dolar[-1][0] == str(eva_memory.vars[valor[1:]]).lower(): # compara valor $ com a variavel #..
-            #         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-            # else:
-                          
             # verifica se a memória de var_dolar tem algum valor
             if (len(eva_memory.var_dolar)) == 0:
                 terminal.insert(INSERT, "\nError -> The variable $ has no value. Please, check your code.", "error")
                 terminal.see(tkinter.END)
                 exit(1)  
 
+            # compara valor com o topo da pilha da variavel var_dolar
             print("valor ", valor, type(valor))
-            if valor == eva_memory.var_dolar[-1][0].lower(): # compara valor com o topo da pilha da variavel var_dolar
+            if valor == eva_memory.var_dolar[-1][0].lower():
                 eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
         
         # case 2 (tipo de op="contain")
-        elif node.attrib['op'] == "contain":
-            # if "#" in valor: # verifica se valor é uma variável
-            #     print("valor ", valor, type(valor))
-            #     if str(eva_memory.vars[valor[1:]][0]).lower() in eva_memory.var_dolar[-1][0]: # verifica se var #.. está contida em $
-            #         eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-            # else:
-        
+        elif node.attrib['op'] == "contain":      
             # verifica se a memória de var_dolar tem algum valor
             if (len(eva_memory.var_dolar)) == 0:
                 terminal.insert(INSERT, "\nError -> The variable $ has no value. Please, check your code.", "error")
                 terminal.see(tkinter.END)
                 exit(1)  
+
+            # verifica se a string em valor está contida em $
             print("valor ", valor, type(valor))
-            if valor in eva_memory.var_dolar[-1][0].lower(): # verifica se valor está contido em $
+            if valor in eva_memory.var_dolar[-1][0].lower(): 
                 eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
+        # caso 3 (COMPARAÇÃO MATEMÁTICA) 
         else:
-            # caso 3 (COMPARAÇÃO MATEMÁTICA)       
-            # case 3.1 (tipo de op="MATEMATICA") Comparando $ com #n uma var (em valor) de maneira matemática
-            if "$" in node.attrib['var']:
-                # verifica se var_dolar esta sem indice. somente pode ser usado o indice dentro do texto de <talk>
-                if len(node.attrib['var']) > 1: # $1, $2, $-1 ....
-                    terminal.insert(INSERT, '\nError -> Do not use "$" associated with an index in <switch> commands, only in texts for the <talk> command', "error")
-                    terminal.see(tkinter.END)
-                    exit(1)
-                # verifica se a memória de var_dolar tem algum valor
-                if (len(eva_memory.var_dolar)) == 0:
-                    terminal.insert(INSERT, "\nError -> The variable $ has no value. Please, check your code.", "error")
-                    terminal.see(tkinter.END)
-                    exit(1)
+            # funcao para obtencao de um operando a partir de $, n, #n, ou valor
+            def get_op(st_var_value):
+                # é uma constante?
+                if st_var_value.isnumeric():
+                    return int(st_var_value)
 
-                if "#" in valor: # verifica se valor é uma variável
+                # é $
+                if st_var_value == "$":
+                    # verifica se a memória de var_dolar tem algum valor
+                    if (len(eva_memory.var_dolar)) == 0:
+                        terminal.insert(INSERT, "\nError -> The variable $ has no value. Please, check your code.", "error")
+                        terminal.see(tkinter.END)
+                        exit(1)
+                    return int(eva_memory.var_dolar[-1][0]) # retorna o valor de $ conv. para int
+
+                # é uma variavel do tipo #n?
+                if "#" in st_var_value:
                     # verifica se var #... NÂO existe na memória
-                    if (valor[1:] not in eva_memory.vars):
+                    if (st_var_value[1:] not in eva_memory.vars):
                         error_string = "\nError -> The variable #" + valor[1:] + " has not been declared. Please, check your code."
                         terminal.insert(INSERT, error_string, "error")
                         terminal.see(tkinter.END)
                         exit(1)
-                    # realiza as operações    
-                    if node.attrib['op'] == "eq": # 
-                        if int(eva_memory.var_dolar[-1][0]) == int(eva_memory.vars[valor[1:]]): # é preciso retirar o # da variável
-                            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                    elif node.attrib['op'] == "lt": # igualdade
-                        if int(eva_memory.var_dolar[-1][0]) < int(eva_memory.vars[valor[1:]]):
-                            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                    elif node.attrib['op'] == "gt": # igualdade
-                        if int(eva_memory.var_dolar[-1][0]) > int(eva_memory.vars[valor[1:]]):
-                            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-                    
-                    elif node.attrib['op'] == "lte": # igualdade
-                        if int(eva_memory.var_dolar[-1][0]) <= int(eva_memory.vars[valor[1:]]):
-                            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                    elif node.attrib['op'] == "gte": # igualdade
-                        if int(eva_memory.var_dolar[-1][0]) >= int(eva_memory.vars[valor[1:]]):
-                            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                    elif node.attrib['op'] == "ne": # igualdade
-                        if int(eva_memory.var_dolar[-1][0]) != int(eva_memory.vars[valor[1:]]):
-                            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+                    return int(eva_memory.vars[st_var_value[1:]])# retorna o valor de #n conv. para int
                 
-
-                else: # case 3.2 comparação MATEMÁTICA entre $ e uma constante
-                    if node.attrib['op'] == "eq": # 
-                        if int(eva_memory.var_dolar[-1][0]) == int(valor): # converte valor para int (comparação matemática)
-                            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                    elif node.attrib['op'] == "lt": # igualdade
-                        if int(eva_memory.var_dolar[-1][0]) < int(valor):
-                            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                    elif node.attrib['op'] == "gt": # igualdade
-                        if int(eva_memory.var_dolar[-1][0]) > int(valor):
-                            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-                    
-                    elif node.attrib['op'] == "lte": # igualdade
-                        if int(eva_memory.var_dolar[-1][0]) <= int(valor):
-                            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                    elif node.attrib['op'] == "gte": # igualdade
-                        if int(eva_memory.var_dolar[-1][0]) >= int(valor):
-                            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                    elif node.attrib['op'] == "ne": # igualdade
-                        if int(eva_memory.var_dolar[-1][0]) != int(valor):
-                            eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-    ########
-   
-            # caso var seja uma variável, tipo #x. É UMA COMPARAÇÃO MATEMÁTICA, USA NÚMEROS
-            # case 4.1 - comparando var #n com outra var #m
-            elif "#" in valor: # valor é uma variável
-                # verifica se var #... NÂO existe na memória
-                if (valor[1:] not in eva_memory.vars):
+                # se não é numero, nem dolar , nem tem #, então é uma variavel deste tipo var="x" em <switch>
+                # verifica se a variavel existe na memoria
+                if (st_var_value not in eva_memory.vars):
                     error_string = "\nError -> The variable #" + valor[1:] + " has not been declared. Please, check your code."
                     terminal.insert(INSERT, error_string, "error")
                     terminal.see(tkinter.END)
                     exit(1)
+                return int(eva_memory.vars[st_var_value])# retorna o valor de var n conv. para int
 
-                if node.attrib['op'] == "eq": # testa a igualdade do valor contido em var com o valor da var contida "valor".
-                    if int(eva_memory.vars[node.attrib['var']]) == int(eva_memory.vars[valor[1:]]):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+            # obtém os operandos para realizar a operações de comparação matemáticas
+            # a restrição do não uso de constantes em var de <switch> foi garantida no parser
+            op1 = get_op(node.attrib['var'])
+            op2 = get_op(valor)
 
-                if node.attrib['op'] == "lt": # menor que
-                    if int(eva_memory.vars[node.attrib['var']]) < int(eva_memory.vars[valor[1:]]):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+            # realiza as operações ==, >, <, >=, <= e != ) de comparação com os operandos 1 e 2
+            if node.attrib['op'] == "eq": # 
+                if op1 == op2: # é preciso retirar o # da variável
+                    eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-                if node.attrib['op'] == "gt": # maior que
-                    if int(eva_memory.vars[node.attrib['var']]) > int(eva_memory.vars[valor[1:]]):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-                
-                if node.attrib['op'] == "lte": # menor ou igual
-                    if int(eva_memory.vars[node.attrib['var']]) <= int(eva_memory.vars[valor[1:]]):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+            elif node.attrib['op'] == "lt": # igualdade
+                if op1 < op2:
+                    eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-                if node.attrib['op'] == "gte": # maior ou igual
-                    if int(eva_memory.vars[node.attrib['var']]) >= int(eva_memory.vars[valor[1:]]):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+            elif node.attrib['op'] == "gt": # igualdade
+                if op1 > op2:
+                    eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+            
+            elif node.attrib['op'] == "lte": # igualdade
+                if op1 <= op2:
+                    eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-                if node.attrib['op'] == "ne": # diferente
-                    if int(eva_memory.vars[node.attrib['var']]) != int(eva_memory.vars[valor[1:]]):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
+            elif node.attrib['op'] == "gte": # igualdade
+                if op1 >= op2:
+                    eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
 
-
-            # case 4.2 - comparando var #n com $
-            elif "$" in valor: # valor é $
-                # verifica se a memória de var_dolar tem algum valor
-                if (len(eva_memory.var_dolar)) == 0:
-                    terminal.insert(INSERT, "\nError -> The variable $ has no value. Please, check your code.", "error")
-                    terminal.see(tkinter.END)
-                    exit(1) 
-
-                if node.attrib['op'] == "eq": # testa a igualdade do valor contido em var com o $".
-                    if int(eva_memory.vars[node.attrib['var']]) == int(eva_memory.var_dolar[-1][0]):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                if node.attrib['op'] == "lt": # menor que
-                    if int(eva_memory.vars[node.attrib['var']]) < int(eva_memory.var_dolar[-1][0]):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                if node.attrib['op'] == "gt": # maior que
-                    if int(eva_memory.vars[node.attrib['var']]) > int(eva_memory.var_dolar[-1][0]):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-                
-                if node.attrib['op'] == "lte": # menor ou igual
-                    if int(eva_memory.vars[node.attrib['var']]) <= int(eva_memory.var_dolar[-1][0]):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                if node.attrib['op'] == "gte": # maior ou igual
-                    if int(eva_memory.vars[node.attrib['var']]) >= int(eva_memory.var_dolar[-1][0]):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                if node.attrib['op'] == "ne": # diferente
-                    if int(eva_memory.vars[node.attrib['var']]) != int(eva_memory.var_dolar[-1][0]):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-
-####        # case 4.3 - comparando var com um valor constante
-            else: # valor é uma variável
-                # verifica se var ... NÂO existe na memória
-                if (node.attrib['var'] not in eva_memory.vars):
-                    error_string = "\nError -> The variable " + node.attrib['var'] + " has not been declared. Please, check your code."
-                    terminal.insert(INSERT, error_string, "error")
-                    terminal.see(tkinter.END)
-                    exit(1)
-                    
-                if node.attrib['op'] == "eq": # testa a igualdade do valor contido em var com uma constante dentro de valor.
-                    if int(eva_memory.vars[node.attrib['var']]) == int(node.attrib['value']):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                if node.attrib['op'] == "lt": # menor que
-                    if int(eva_memory.vars[node.attrib['var']]) < int(node.attrib['value']):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                if node.attrib['op'] == "gt": # maior que
-                    if int(eva_memory.vars[node.attrib['var']]) > int(node.attrib['value']):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-                
-                if node.attrib['op'] == "lte": # menor ou igual
-                    if int(eva_memory.vars[node.attrib['var']]) <= int(node.attrib['value']):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                if node.attrib['op'] == "gte": # maior ou igual
-                    if int(eva_memory.vars[node.attrib['var']]) >= int(node.attrib['value']):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-
-                if node.attrib['op'] == "ne": # diferente
-                    if int(eva_memory.vars[node.attrib['var']]) != int(node.attrib['value']):
-                        eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira
-                
+            elif node.attrib['op'] == "ne": # igualdade
+                if op1 != op2:
+                    eva_memory.reg_case = 1 # liga o reg case indicando que o resultado da comparacao foi verdadeira          
 
 
     elif node.tag == "default": # default sempre será verdadeiro
@@ -798,6 +679,13 @@ def exec_comando(node):
         var_name = node.attrib["var"]
         var_value = int(node.attrib["value"])
         op = node.attrib["op"]
+        # verifica se a operação é diferente de atribuição e verifica se var ... NÂO existe na memória
+        if op != "=":
+            if (var_name not in eva_memory.vars):
+                error_string = "\nError -> The variable " + var_name + " has not been declared. Please, check your code."
+                terminal.insert(INSERT, error_string, "error")
+                terminal.see(tkinter.END)
+                exit(1)
 
         if op == "=": # efetua a atribuicao
             eva_memory.vars[var_name] = var_value

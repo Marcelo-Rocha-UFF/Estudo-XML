@@ -7,12 +7,12 @@
     <counter var="x" op="=" value="2" key="1002" />
     <counter var="x" op="+" value="2" key="1003" />
     <switch var="$">
-      <case op="exact" value="2" key="1004" child_proc="false">
+      <case op="exact" value="2" key="1004" child_proc="true" var="$">
         <stop />
       </case>
-      <default key="1005" child_proc="false">
+      <default key="1005" child_proc="true" value="" op="exact">
         <evaEmotion emotion="sad" key="1006" />
       </default>
     </switch>
   </script>
-  </evaml>
+  <links><link from="1000" to="1001" /><link from="1001" to="1002" /><link from="1002" to="1003" /><link from="1003" to="1004" /><link from="1003" to="1005" /><link from="1005" to="1006" /></links></evaml>

@@ -66,31 +66,32 @@ def cria_link(node_from, node_to):
     elif (node_to.tag == "switch"): # trata o node "switch"
         for case_elem in node_to:
             # todas os cases passam a ter o atrib. "var" igual ao "var" do switch (node_to)
-            # verifica se ha o atrib. "var", senão emite o sinal de erro e pára.
-            if node_to.get("var") != None:
-                case_elem.attrib["var"] = node_to.attrib["var"] # existe "var" no switch, então transfere para o <case>
-                # restrição. "exact" e "contain" só podem ser usados com va="$"" no switch.
-                if case_elem.tag == "case":
-                    if ("$" not in case_elem.attrib["var"]) and (case_elem.attrib["op"] == "exact"): 
-                        # uso indevido de exact com outra variavel que não é o $
-                        print('  Error -> The "exact" comparison type should only be used with var="$"')
-                        exit(1) # termina com erro
-                    if ("$" not in case_elem.attrib["var"]) and (case_elem.attrib["op"] == "contain"): 
-                        # uso indevido de contain com outra variavel que não é o $
-                        print('  Error -> The "contain" comparison type should only be used with var="$"')
-                        exit(1) # termina com erro
-                    # o uso de $ com indices, em var e em value, não é permitido no robô físico
-                    # uso indevido de $ com indice no atributo var do <switch>  
-                    if ("$" in case_elem.attrib["var"]) and (len(case_elem.attrib["var"]) > 1):
-                        print('  Error -> Do not use "$" associated with an index in a "var" attribute of a <switch>, only use it in the texts of the <talk> command')
-                        exit(1) # termina com erro 
-                    # uso indevido de $ com indice no atributo value do <case>  
-                    if ("$" in case_elem.attrib["value"]) and (len(case_elem.attrib["value"]) > 1):
-                        print('  Error -> Do not use "$" associated with an index in a "value" attribute of a <case>, only use it in the texts of the <talk> command')
-                        exit(1) # termina com erro    
+            # sempre havera conteudo em var do <switch>. Isso é garantido pelo xmlschema
+            # restrição. "exact" e "contain" só podem ser usados com va="$"" no switch.
+            if case_elem.tag == "case":
+                case_elem.attrib["var"] = node_to.attrib["var"] # copia "var" do <switch> para <case>
+                if case_elem.attrib["var"].isnumeric(): # var só pode conter vars e nunca números (ESSA RESTRIÇÃO FOI MINHA OPÇÃO)
+                    print('  Error -> The use of constants of any type in the "var" attribute of the <switch> command is not allowed. Please, check var="' + node_to.attrib["var"] + '"')
+                    exit(1) # termina com erro
+                if ("$" not in case_elem.attrib["var"]) and (case_elem.attrib["op"] == "exact"):
+                    # uso indevido de exact com outra variavel que não é o $
+                    print('  Error -> The "exact" comparison type should only be used with var="$" and not with var="' + node_to.attrib["var"] + '"')
+                    exit(1) # termina com erro
+                if ("$" not in case_elem.attrib["var"]) and (case_elem.attrib["op"] == "contain"): 
+                    # uso indevido de contain com outra variavel que não é o $
+                    print('  Error -> The "contain" comparison type should only be used with var="$" and not with var="' + node_to.attrib["var"] + '"')
+                    exit(1) # termina com erro
+                # o uso de $ com indices, em var e em value, não é permitido no robô físico
+                # uso indevido de $ com indice no atributo var do <switch>  
+                if ("$" in case_elem.attrib["var"]) and (len(case_elem.attrib["var"]) > 1):
+                    print('  Error -> Do not use "$" associated with an index in a "var" attribute of a <switch>, only use it in the texts of the <talk> command')
+                    exit(1) # termina com erro 
+                # uso indevido de $ com indice no atributo value do <case>  
+                if ("$" in case_elem.attrib["value"]) and (len(case_elem.attrib["value"]) > 1):
+                    print('  Error -> Do not use "$" associated with an index in a "value" attribute of a <case>, only use it in the texts of the <talk> command')
+                    exit(1) # termina com erro 
 
-
-            if case_elem.tag == "default": # preenche o default com os parametros default
+            elif case_elem.tag == "default": # preenche o default com os parametros default
                 # nao precisa de var="$" pois sendo do tipo exact, o robô físico sabe que var="$"
                 # e no EvaSIM, um case (default) é sempre verdadeiro
                 case_elem.attrib["value"] = ""
