@@ -14,70 +14,22 @@
       },
       {
         "key": 1001,
-        "name": "Light",
-        "type": "light",
-        "color": "#ffa500",
+        "name": "Listen",
+        "type": "listen",
+        "color": "#ffff00",
         "isGroup": false,
-        "group": "",
-        "lcolor": "#cc00cc",
-        "state": "on",
+        "opt": "",
         "__gohashid": 1
       },
       {
         "key": 1002,
-        "name": "Counter",
-        "type": "counter",
-        "color": "lightblue",
+        "name": "User_Emotion",
+        "type": "user_emotion",
+        "color": "lightgreen",
         "isGroup": false,
         "group": "",
-        "count": "x",
-        "ops": "assign",
-        "value": 2,
+        "vision": "capture",
         "__gohashid": 2
-      },
-      {
-        "key": 1003,
-        "name": "Counter",
-        "type": "counter",
-        "color": "lightblue",
-        "isGroup": false,
-        "group": "",
-        "count": "x",
-        "ops": "sum",
-        "value": 2,
-        "__gohashid": 3
-      },
-      {
-        "key": 1004,
-        "name": "Condition",
-        "type": "if",
-        "color": "white",
-        "isGroup": false,
-        "text": "2",
-        "opt": 4,
-        "__gohashid": 4
-      },
-      {
-        "key": 1005,
-        "name": "Condition",
-        "type": "if",
-        "color": "white",
-        "isGroup": false,
-        "text": "",
-        "opt": 4,
-        "__gohashid": 5
-      },
-      {
-        "key": 1006,
-        "name": "Eva_Emotion",
-        "type": "emotion",
-        "color": "lightcoral",
-        "isGroup": false,
-        "group": "",
-        "emotion": "sad",
-        "level": 0,
-        "speed": 0,
-        "__gohashid": 6
       }
     ],
     "link": [
@@ -90,26 +42,6 @@
         "from": 1001,
         "to": 1002,
         "__gohashid": 1
-      },
-      { 
-        "from": 1002,
-        "to": 1003,
-        "__gohashid": 2
-      },
-      { 
-        "from": 1003,
-        "to": 1004,
-        "__gohashid": 3
-      },
-      { 
-        "from": 1003,
-        "to": 1005,
-        "__gohashid": 4
-      },
-      { 
-        "from": 1005,
-        "to": 1006,
-        "__gohashid": 5
       }
     ]
   }

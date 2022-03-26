@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import hashlib
 import re # expressões regulares
 import os
@@ -63,18 +63,18 @@ def on_closing():
 window = Tk()
 window.title("Eva Simulator for EvaML - Version 1.0 - UFF/MidiaCom/CICESE")
 w = 1200
-h = 525
+h = 525  # on linux use 525 # on windows use 550
 window.geometry(str(w) + "x" + str(h))
 
 # fonte tamanho 9 para botoes e textos em geral
-font1 = ('Aerial', 9) 
+font1 = ('Arial', 9) 
 
 # define o frame para a imagem do robô
 frame_robot = tkinter.Frame(master=window, width= 400, height=h, bg="red")
 frame_robot.pack(fill=tkinter.Y, side=tkinter.LEFT)
 
 # criando o canvas gráfico
-canvas = Canvas(frame_robot, width = 380, height = h) # o canvas e' necessario para usar imagens com transparencia
+canvas = Canvas(frame_robot, width = 400, height = h) # o canvas e' necessario para usar imagens com transparencia
 canvas.pack()
 
 # define o frame para o terminal e o menu de botões
@@ -95,20 +95,20 @@ frame_terminal.pack(fill=tkinter.X)
 
 # cria a tabela de memoria
 # define as propriedads da tabela com o mapa de memoria de $
-tkinter.Label(frame_memory, bg="gray70", width="30", relief="raised", font = font1, text="System Variables $ (Memory Map)", pady=1).pack()
+tkinter.Label(frame_memory, bg="gray70", width="34", font = font1, text="System Variables $ (Memory Map)", pady=1).pack()
 
 # define o estilo das tabelas
 style = ttk.Style()
-style.configure("mystyle.Treeview", highlightthickness=0, bd=0, font=('Aerial', 8), rowheight=15) # Modify the font of the body
-style.configure("mystyle.Treeview.Heading", font=('Aerial', 8,'bold')) # Modify the font of the headings
+style.configure("mystyle.Treeview", highlightthickness=0, bd=0, font=('Arial', 8), rowheight=15) # Modify the font of the body
+style.configure("mystyle.Treeview.Heading", font=('Arial', 8,'bold')) # Modify the font of the headings
 tab_dollar = ttk.Treeview(frame_memory, style="mystyle.Treeview", height=15)
 tab_dollar.pack()
 
 tab_dollar['columns']= ('Index', 'Content', "Source")
 tab_dollar.column("#0", width=0,  stretch=NO)
 tab_dollar.column("Index",anchor=CENTER, width=45)
-tab_dollar.column("Content",anchor=CENTER, width=90)
-tab_dollar.column("Source",anchor=CENTER, width=107)
+tab_dollar.column("Content",anchor=CENTER, width=107)
+tab_dollar.column("Source",anchor=CENTER, width=90)
 
 tab_dollar.heading("#0",text="",anchor=CENTER)
 tab_dollar.heading("Index",text="Index",anchor=CENTER)
@@ -116,10 +116,10 @@ tab_dollar.heading("Content",text="Content",anchor=CENTER)
 tab_dollar.heading("Source",text="Source",anchor=CENTER)
 
 # label so pra separar as tabelas
-tkinter.Label(frame_memory, text="", font = ('Aerial', 6)).pack()
+tkinter.Label(frame_memory, text="", font = ('Arial', 6)).pack()
 
 # define as propriedades da tabela com o mapa de memoria de variaveis do usuario
-tkinter.Label(frame_memory, width="30", relief="raised", bg="gray70", font = font1, text="User Variables (Memory Map)", pady=1).pack()
+tkinter.Label(frame_memory, width="34", bg="gray70", font = font1, text="User Variables (Memory Map)", pady=1).pack()
 tab_vars = ttk.Treeview(frame_memory, style="mystyle.Treeview", height=9)
 tab_vars.pack(fill=tkinter.Y)
 
@@ -266,10 +266,10 @@ def importFile():
 def clear_terminal():
     terminal.delete('1.0', END)
     # criando terminal text
-    terminal.insert(INSERT, "==========================================================\n")
+    terminal.insert(INSERT, "=====================================================================================\n")
     terminal.insert(INSERT, "                                                                Eva Simulator for EvaML\n")
     terminal.insert(INSERT, "                                                Version 1.0 - UFF/MidiaCom/CICESE [2022]\n")
-    terminal.insert(INSERT, "==========================================================")
+    terminal.insert(INSERT, "=====================================================================================")
 
 
 # criacao dos botoes da interface com usuário
@@ -279,14 +279,14 @@ bt_import = Button (frame_botoes, text = "Import Script File...", font = font1, 
 bt_import.pack(side=tkinter.LEFT, padx=5)
 bt_run = Button (frame_botoes, text = "Run", image = im_bt_play, font = font1, state = DISABLED, compound = LEFT, command = runScript)
 bt_run.pack(side=tkinter.LEFT, padx=5)
-bt_stop = Button (frame_botoes, text = "Stop", image = im_bt_stop, state = DISABLED, compound = LEFT, command = stopScript)
+bt_stop = Button (frame_botoes, text = "Stop", font = font1, image = im_bt_stop, state = DISABLED, compound = LEFT, command = stopScript)
 bt_stop.pack(side=tkinter.LEFT, padx=5)
 bt_clear = Button (frame_botoes, text = "Clear Term.", font = font1, state = NORMAL, compound = LEFT, command = clear_terminal)
 bt_clear.pack(side=tkinter.LEFT, padx=5)
 
 # Terminal text configuration
-terminal = Text (frame_terminal, fg = "cyan", bg = "black", height = "34", width = "75")
-terminal.configure(font = ("Aerial", 8))
+terminal = Text (frame_terminal, fg = "cyan", bg = "black", height = "34", width = "85")
+terminal.configure(font = ("Arial", 8))
 terminal.tag_configure("error", foreground="red")
 # limpa e desenha e coloca terminal no frame dele
 clear_terminal()
@@ -458,9 +458,9 @@ def exec_comando(node):
         y = (hs/2) - (h/2)  
         pop.geometry('%dx%d+%d+%d' % (w, h, x, y))
         pop.grab_set()
-        label = Label(pop, text="Eva is listening... Please, enter your answer!", font = ('Aerial', 9))
+        label = Label(pop, text="Eva is listening... Please, enter your answer!", font = ('Arial', 10))
         label.pack(pady=20)
-        E1 = Entry(pop, textvariable = var, font = ('Aerial', 8))
+        E1 = Entry(pop, textvariable = var, font = ('Arial', 10))
         E1.bind("<Return>", fechar_pop_ret)
         E1.pack()
         Button(pop, text="    OK    ", font = font1, command=fechar_pop_bt).pack(pady=20)
@@ -741,7 +741,7 @@ def exec_comando(node):
         y = (hs/2) - (h/2)  
         pop.geometry('%dx%d+%d+%d' % (w, h, x, y))
         pop.grab_set() # faz com que a janela receba todos os eventos
-        Label(pop, text="Eva is analysing your face expression. Please, choose one emotion!", font = ('Aerial', 9)).place(x = 95, y = 10)
+        Label(pop, text="Eva is analysing your face expression. Please, choose one emotion!", font = ('Arial', 10)).place(x = 146, y = 10)
         # imagens são exibidas usando os lables
         Label(pop, image=img_neutral).place(x = 10, y = 50)
         Label(pop, image=img_happy).place(x = 147, y = 50)

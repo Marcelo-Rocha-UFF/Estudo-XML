@@ -6,21 +6,7 @@
     <voice tone="en-US_AllisonV3Voice" />
   </settings>
   <script>
-    <light state="on" color="#cc00cc"/>
-    <counter var="x" op="=" value="2" />
-    <counter var="x" op="+" value="2" />
-    <switch var="$">
-      <case op="exact" value="2">
-        <stop />
-      </case>
-      <default>
-        <evaEmotion emotion="sad" />
-      </default>
-    </switch>
+    <listen />
+    <userEmotion />
   </script>
-  <macros>
-    <macro id="Teste">
-      <audio source="applause-moderate" block="true" />
-    </macro>
-  </macros>
 </evaml>
