@@ -70,8 +70,8 @@ window.geometry(str(w) + "x" + str(h))
 font1 = ('Arial', 9) 
 
 # define o frame para a imagem do robô
-frame_robot = tkinter.Frame(master=window, width= 400, height=h, bg="red")
-frame_robot.pack(fill=tkinter.Y, side=tkinter.LEFT)
+frame_robot = tkinter.Frame(master=window, width= 400, height=h)
+frame_robot.pack(pady= 5, side=tkinter.LEFT)
 
 # criando o canvas gráfico
 canvas = Canvas(frame_robot, width = 400, height = h) # o canvas e' necessario para usar imagens com transparencia
@@ -87,7 +87,7 @@ frame_memory.place(x=938, y=60)
 
 # define o frame para o menu de botões
 frame_botoes = tkinter.Frame(master=frame_centro)
-frame_botoes.pack(fill=tkinter.X, pady=15, padx=10)
+frame_botoes.pack(pady=15, padx=10)
 
 # define o frame para o terminal
 frame_terminal = tkinter.Frame(master=frame_centro, height=400)
@@ -273,16 +273,17 @@ def clear_terminal():
 
 
 # criacao dos botoes da interface com usuário
+bt_padx = 4 # ajuste de espaçamento entre botões
 bt_power = Button (frame_botoes, text = "Power On", font = font1, command = powerOn)
-bt_power.pack(side=tkinter.LEFT, padx=5)
+bt_power.pack(side=tkinter.LEFT, padx=bt_padx)
 bt_import = Button (frame_botoes, text = "Import Script File...", font = font1, state = DISABLED, command = importFile)
-bt_import.pack(side=tkinter.LEFT, padx=5)
+bt_import.pack(side=tkinter.LEFT, padx=bt_padx)
 bt_run = Button (frame_botoes, text = "Run", image = im_bt_play, font = font1, state = DISABLED, compound = LEFT, command = runScript)
-bt_run.pack(side=tkinter.LEFT, padx=5)
+bt_run.pack(side=tkinter.LEFT, padx=bt_padx)
 bt_stop = Button (frame_botoes, text = "Stop", font = font1, image = im_bt_stop, state = DISABLED, compound = LEFT, command = stopScript)
-bt_stop.pack(side=tkinter.LEFT, padx=5)
-bt_clear = Button (frame_botoes, text = "Clear Term.", font = font1, state = NORMAL, compound = LEFT, command = clear_terminal)
-bt_clear.pack(side=tkinter.LEFT, padx=5)
+bt_stop.pack(side=tkinter.LEFT, padx=bt_padx)
+bt_clear = Button (frame_botoes, text = "Clear Terminal", font = font1, state = NORMAL, compound = LEFT, command = clear_terminal)
+bt_clear.pack(side=tkinter.LEFT, padx=bt_padx)
 
 # Terminal text configuration
 terminal = Text (frame_terminal, fg = "cyan", bg = "black", height = "34", width = "85")
